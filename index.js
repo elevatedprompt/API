@@ -40,7 +40,6 @@ app.all('/GetServiceStatus',epSystem.GetServiceStatus);
 app.all('/IsServiceRunning',epSystem.IsServiceRunning);
 app.all('/StartService',epSystem.StartService);
 app.all('/StopService',epSystem.StopService);
-//app.all('/GetCronJobs',epSystem.GetCronJobs);
 app.all('/GetLogstashConfigDirectoryListing',epSystem.GetLogstashConfigDirectoryListing);
 app.all('/GetCronJobDirectory',epSystem.GetCronJobDirectory);
 app.all('/GetElasticConfigDirectoryListing',epSystem.GetElasticConfigDirectoryListing);

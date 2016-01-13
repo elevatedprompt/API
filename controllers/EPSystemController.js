@@ -2,14 +2,11 @@
 System controller
 
 Methods
-
 GetConfFiles - Gets Config File
-
 GetServiceStatus - returns the status of a service by name.
-
 RestartAllServices - Restarts all services
-
 UpdateConfigFiles - Updates Config Files
+GetTimeZone - Returns the System time.
 
 Update Cron Jobs - Updates logstash delete and close index cron settings
 */
@@ -30,14 +27,7 @@ module.exports =   function(app, route){
 
 };
 
-//Logstash Config File Directory
-// /etc/logstash/conf.d/
 
-//Elastic Search Config Files
-/*\etc\elasticsearch
-\etc\elasticsearch\logging.yml
-\etc\elasticsearch\elasticsearch.yml
-*/
 //reads the contents of the config file at (configfile)
 module.exports.GetConfFile = function(req,res,next)
 {
@@ -294,26 +284,23 @@ module.exports.UpdateConfFile = function(req,res,next)
 };
 
 
-//Updates cron job information
-//Post Content-Type: application/x-www-form-urlencoded
-/*
-module.exports.UpdateCronJobs = function(req,res,next)
-{
-  res.send('Updating Cron Jobs');
-  console.log("Updating Cron Jobs");
-  console.log(req.body);
-  var logstashDeleteDays = req.body.logstashdeletedays;
-  var logstashDeleteDays = req.body.logstashclosedays;
-  //TODO: update cron values.
-
-  next();
-};
-*/
-
+//returns the system time.
 module.exports.GetTimeZone = function(req,res,next)
 {
+  console.log('Get Timezone');
 
-next();
+  var result = exec("date +%z", function (error, stdout, stderr,res, next) {
+    console.log('stdout: ' + stdout);
+    console.log('stderr: ' + stderr);
+    if (error !== null) {
+      console.log('exec error: ' + error);
+    }
+    return stdout;
+  })
+
+  result.stdout.on('data', function (data) {
+      res.send(data);
+ });
 }
 
 //Update timezone
@@ -368,30 +355,3 @@ module.exports.UpdateTimeZone = function(req,res,next)
 
   next();
 };
-/*
-//Gets cron information
-//Post Content-Type: application/x-www-form-urlencoded
-module.exports.GetCronJobs = function(req,res,next)
-{
-  //res.send('Geting Cron Info');
-  console.log("Geting Cron Info");
-  console.log(req.body);
-  var logstashDeleteDays = req.body.logstashdeletedays;
-  var logstashDeleteDays = req.body.logstashclosedays;
-
-    var result = exec("crontab -l", function (error, stdout, stderr,res, next) {
-      var result = stdout;
-      console.log('stdout: ' + stdout);
-      console.log('stderr: ' + stderr);
-      if (error !== null) {
-        console.log('exec error: ' + error);
-        result = error;
-      }
-      return result;
-    });
-  //console.log("outside function: " + JSON.stringify(result));
-  //TODO: send result
-  res.send(result);
-  next();
-};
-*/
