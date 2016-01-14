@@ -308,7 +308,6 @@ module.exports.GetTimeZone = function(req,res,next)
 //ln -s /usr/share/zoneinfo/Etc/GMT+6 /etc/localtime
 module.exports.UpdateTimeZone = function(req,res,next)
 {
-  res.send('Updating Cron Jobs');
   console.log("Updating Timezone to ");
   console.log(req.body.timezoneFromGMT);
   var timezoneFromGMT = req.body.timezoneFromGMT;
