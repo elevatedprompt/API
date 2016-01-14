@@ -48,7 +48,7 @@ app.all('/UpdateConfFile',epSystem.UpdateConfFile);
 //app.all('/UpdateCronJobs',epSystem.UpdateCronJobs);
 
 console.log('Listening on port 3000...');
-app.listen(3000, '127.0.0.1');
+app.listen(3000);//, '127.0.0.1');
 
 // Connect to MongoDB
 //mongoose.connect('mongodb://192.168.1.71/adminpanel');
