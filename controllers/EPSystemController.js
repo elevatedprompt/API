@@ -308,6 +308,7 @@ module.exports.GetTimeZone = function(req,res,next)
 //ln -s /usr/share/zoneinfo/Etc/GMT+6 /etc/localtime
 module.exports.UpdateTimeZone = function(req,res,next)
 {
+
   console.log("Updating Timezone to ");
   console.log(req.body.timezoneFromGMT);
   var timezoneFromGMT = req.body.timezoneFromGMT;
@@ -352,5 +353,4 @@ module.exports.UpdateTimeZone = function(req,res,next)
     res.send(error);
   });
 
-  next();
 };
