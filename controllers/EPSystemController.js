@@ -87,10 +87,9 @@ module.exports.GetElasticConfigDirectoryListing = function(req,res,next)
 
    console.log('Get Logstash File List');
    console.log(results);
-  res.send(results);
+   res.send(results);
 
    next();
-
 };
 
 module.exports.GetCronJobDirectory = function(req,res,next)
@@ -111,7 +110,7 @@ module.exports.GetCronJobDirectory = function(req,res,next)
 
    console.log('Get cron folder File List');
    console.log(results);
-  res.send(results);
+   res.send(results);
    next();
 };
 
@@ -305,13 +304,13 @@ module.exports.GetTimeZone = function(req,res,next)
 
 //Update timezone
 //unlink /etc/localtime
-//ln -s /usr/share/zoneinfo/Etc/GMT+6 /etc/localtime
+//ln -s /usr/share/zoneinfo/ /etc/localtime
 module.exports.UpdateTimeZone = function(req,res,next)
 {
 
   console.log("Updating Timezone to ");
-  console.log(req.body.timezoneFromGMT);
-  var timezoneFromGMT = req.body.timezoneFromGMT;
+  console.log(req.body.timezone);
+  var timezone = req.body.timezone;
   //unlink /etc/localtime
   //ln -s /usr/share/zoneinfo/Etc/GMT+6 /etc/localtime
 
@@ -326,11 +325,8 @@ module.exports.UpdateTimeZone = function(req,res,next)
   var output = '';
 
   unlinkTimezone.on('close', function (data,status) {
-    if(timezoneFromGMT>0)
-    {
-        timezoneFromGMT = "+"+timezoneFromGMT;
-    }
-    var newTimezone = exec("ln -s /usr/share/zoneinfo/Etc/GMT" + timezoneFromGMT +" /etc/localtime", function (error, stdout, stderr) {
+
+    var newTimezone = exec("ln -s /usr/share/zoneinfo/" + timezone +" /etc/localtime", function (error, stdout, stderr) {
       console.log('stdout: ' + stdout);
       console.log('stderr: ' + stderr);
       if (error !== null) {
