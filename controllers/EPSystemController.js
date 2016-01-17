@@ -214,7 +214,7 @@ module.exports.StartService = function(req,res,next)
     console.log('stdout: ' + stdout);
     console.log('stderr: ' + stderr);
     if (error !== null) {
-      console.log('exec error: ' + stderr);
+      console.log('exec Start Service ' + servicename + 'error: ' + stderr);
     }
     return stdout;
   })
@@ -227,7 +227,15 @@ module.exports.StartService = function(req,res,next)
     res.sendStatus(output);
  });
  result.stderr.on('error', function (error) {
-   console.log('start service error');
+   console.log('start service error, attempting restart');
+   var result = exec("service " + servicename + " restart", function (error, stdout, stderr,res, next) {
+     console.log('stdout: ' + stdout);
+     console.log('stderr: ' + stderr);
+     if (error !== null) {
+       console.log('exec Restart Service ' + servicename + 'error: ' + stderr);
+     }
+     return stdout;
+   })
   res.send(error);
 });
 };
