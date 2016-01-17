@@ -299,8 +299,8 @@ module.exports.UpdateTimeZone = function(req,res,next)
 {
 
   console.log("Updating Timezone to ");
-  console.log(req.body.timezoneFromGMT);
-  var timezone = req.body.timezoneFromGMT;
+  console.log(req.body.timezone);
+  var timezone = req.body.timezone;
   //unlink /etc/localtime
   //ln -s /usr/share/zoneinfo/Etc/GMT+6 /etc/localtime
 
