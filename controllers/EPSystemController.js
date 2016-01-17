@@ -359,7 +359,7 @@ module.exports.ListUsers = function(req,res,next)
     });
     newTimezone.on('close', function (data,status) {
       console.log('cat httpasswd:')
-      res.sendStatus(output);
+      res.sendStatus(data);
     });
     newTimezone.stderr.on('error', function (error) {
      console.log('cat htpassword Error:' + error);
@@ -389,7 +389,7 @@ module.exports.UpdateUser = function(req,res,next)
     });
     newTimezone.on('close', function (data,status) {
       console.log('Updated password file for user:  ' + user)
-      res.sendStatus(output);
+      res.sendStatus(data);
     });
     newTimezone.stderr.on('error', function (error) {
      console.log('Update htpassword user: ' + user + ' error: '+ error);
@@ -417,7 +417,7 @@ module.exports.UpdateUser = function(req,res,next)
    });
    newTimezone.on('close', function (data,status) {
      console.log('User Delete ' + user)
-     res.sendStatus(output);
+     res.sendStatus(data);
    });
    newTimezone.stderr.on('error', function (error) {
     console.log('Delete User :' + user + ' error: ' + error);
