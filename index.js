@@ -33,19 +33,24 @@ _.each(routes, function(controller, route) {
 var epSystem = require('./controllers/EPSystemController');
 
 app.get('/RestartAllServices',epSystem.RestartAllServices);
+//TimeZone
 app.all('/UpdateTimeZone',epSystem.UpdateTimeZone);
 app.all('/GetTimeZone',epSystem.GetTimeZone);
-app.all('/GetConfFile',epSystem.GetConfFile);
+//Service status
 app.all('/GetServiceStatus',epSystem.GetServiceStatus);
 app.all('/IsServiceRunning',epSystem.IsServiceRunning);
 app.all('/StartService',epSystem.StartService);
 app.all('/StopService',epSystem.StopService);
+//Configuration
+app.all('/GetConfFile',epSystem.GetConfFile);
 app.all('/GetLogstashConfigDirectoryListing',epSystem.GetLogstashConfigDirectoryListing);
 app.all('/GetCronJobDirectory',epSystem.GetCronJobDirectory);
 app.all('/GetElasticConfigDirectoryListing',epSystem.GetElasticConfigDirectoryListing);
-
 app.all('/UpdateConfFile',epSystem.UpdateConfFile);
-//app.all('/UpdateCronJobs',epSystem.UpdateCronJobs);
+//user methods
+app.all('/UpdateUser',epSystem.UpdateUser);
+app.all('/DeleteUser',epSystem.DeleteUser);
+app.all('/ListUsers',epSystem.ListUsers);
 
 console.log('Listening on port 3000...');
 app.listen(3000, '127.0.0.1');
