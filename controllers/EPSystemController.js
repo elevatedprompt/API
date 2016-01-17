@@ -114,7 +114,7 @@ module.exports.GetCronJobDirectory = function(req,res,next)
 //GetServiceStatus (Gets the status of the service by name)
 module.exports.GetServiceStatus = function(req,res,next)
 {
-  console.log("Get Service Status")
+  console.log('Get Service Status');
   console.log(req.body);
 
   var servicename = req.body.servicename;
@@ -129,13 +129,14 @@ module.exports.GetServiceStatus = function(req,res,next)
   })
 
   result.stdout.on('data', function (data) {
+    console.log('Got service status: ' + data);
    res.send(data);
  });
 };
 
 module.exports.IsServiceRunning = function(req,res,next)
 {
-  console.log("Is Service Running")
+  console.log('Is Service Running');
   console.log(req.body);
 
   var servicename = req.body.servicename;
@@ -144,7 +145,7 @@ module.exports.IsServiceRunning = function(req,res,next)
     console.log('stdout: ' + stdout);
     console.log('stderr: ' + stderr);
     if (error !== null) {
-      console.log('exec error: ' + error);
+      console.log('exec IsServiceRunning error: ' + error);
     }
     return stdout;
   })
@@ -158,21 +159,24 @@ module.exports.IsServiceRunning = function(req,res,next)
     var str = data.toString();
     if(str.match(stopped)){
       res.send(false);
+      console.log(data + ' service stopped');
     }
 
     if(str.match(notrunning)){
       res.send(false);
+      console.log(data + ' service stopped');
     }
 
     if(str.match(running)){
       res.send(true);
+      console.log(data + ' service running');
     }
  });
 };
 //StopService (Gets the status of the service by name)
 module.exports.StopService = function(req,res,next)
 {
-  console.log("Stop Service")
+  console.log('Stop Service');
   console.log(req.body);
 
   var servicename = req.body.servicename;
@@ -181,7 +185,7 @@ module.exports.StopService = function(req,res,next)
     console.log('stdout: ' + stdout);
     console.log('stderr: ' + stderr);
     if (error !== null) {
-      console.log('exec error: ' + stderr);
+      console.log('exec stop service error: ' + stderr);
     }
     return stdout;
   })
@@ -189,14 +193,15 @@ module.exports.StopService = function(req,res,next)
 
  var output = '';
  result.stdout.on('data', function (data) {
+   console.log(data + ' Stop service is complete');
   output+= data;
 });
 result.on('close', function (data,status) {
-  console.log('Stop service close');
+  console.log(data + ' Stop service close');
   res.sendStatus(output);
 });
  result.stderr.on('error', function (error) {
-   console.log('Stop service error');
+   console.log(data + ' Stop service error');
   res.send(error);
 });
 };
@@ -204,7 +209,7 @@ result.on('close', function (data,status) {
 //StartService (Gets the status of the service by name)
 module.exports.StartService = function(req,res,next)
 {
-  console.log("Start Service")
+  console.log('Start Service');
   console.log(req.body);
 
   var servicename = req.body.servicename;
