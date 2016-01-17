@@ -348,14 +348,10 @@ module.exports.UpdateTimeZone = function(req,res,next)
 
 
 
-
-
-
 //ListUsers returns a list of users from the htpasswd file.
 module.exports.ListUsers = function(req,res,next)
 {
   console.log("Getting Users");
-
   //htpasswd to manage the password file
   console.log("cat /etc/nginx/conf.d/kibana.htpasswd ");
     var newTimezone = exec("cat /etc/nginx/conf.d/kibana.htpasswd ", function (error, stdout, stderr) {
@@ -375,7 +371,8 @@ module.exports.ListUsers = function(req,res,next)
      res.send(error);
     });
 
- });
+
+});
 
 //UpdateUser updates a user password or if it does not exist it creates a new once
 module.exports.UpdateUser = function(req,res,next)
