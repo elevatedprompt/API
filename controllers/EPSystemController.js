@@ -12,17 +12,12 @@ Update Cron Jobs - Updates logstash delete and close index cron settings
 */
 var Resource = require('resourcejs');
 var fs = require ('fs');
-//var sys = require('sys');
 var exec = require('child_process').exec,child;
 var moment = require('moment-timezone');
 
 module.exports =   function(app, route){
-
-//  Resource(app, '', route, app.models.movie).rest();
-
   // Setup the controller for REST;
   return function(req, res, next) {
-
     next();
   };
 
@@ -303,24 +298,24 @@ module.exports.UpdateTimeZone = function(req,res,next)
   var timezone = req.body.timezone;
   //unlink /etc/localtime
   //ln -s /usr/share/zoneinfo/Etc/GMT+6 /etc/localtime
-
+  console.log("unlink /etc/localtime ");
   var unlinkTimezone = exec("unlink /etc/localtime ", function (error, stdout, stderr) {
     console.log('stdout: ' + stdout);
     console.log('stderr: ' + stderr);
     if (error !== null) {
-      console.log('exec error: ' + stderr);
+      console.log('exec unlink error: ' + stderr);
     }
     return stdout;
   })
   var output = '';
 
   unlinkTimezone.on('close', function (data,status) {
-
+    console.log("ln -s /usr/share/zoneinfo/" + timezone +" /etc/localtime");
     var newTimezone = exec("ln -s /usr/share/zoneinfo/" + timezone +" /etc/localtime", function (error, stdout, stderr) {
       console.log('stdout: ' + stdout);
       console.log('stderr: ' + stderr);
       if (error !== null) {
-        console.log('exec error: ' + stderr);
+        console.log('exec link error: ' + stderr);
       }
       return stdout;
     });
