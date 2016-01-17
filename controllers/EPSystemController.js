@@ -320,6 +320,7 @@ module.exports.UpdateTimeZone = function(req,res,next)
       return stdout;
     });
     newTimezone.on('close', function (data,status) {
+      console.log('Timezone Set to ' + timezone)
       res.sendStatus(output);
     });
     newTimezone.stderr.on('error', function (error) {
@@ -330,8 +331,8 @@ module.exports.UpdateTimeZone = function(req,res,next)
  });
 
  unlinkTimezone.stderr.on('error', function (error) {
-   console.log('Unlink Timezone Error');
+    console.log('Unlink Timezone Error');
     res.send(error);
   });
-
+  moment.tz.setDefault(timezone);
 };
