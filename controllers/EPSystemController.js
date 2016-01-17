@@ -14,6 +14,7 @@ var Resource = require('resourcejs');
 var fs = require ('fs');
 //var sys = require('sys');
 var exec = require('child_process').exec,child;
+var moment = require('moment-timezone');
 
 module.exports =   function(app, route){
 
@@ -287,19 +288,8 @@ module.exports.UpdateConfFile = function(req,res,next)
 module.exports.GetTimeZone = function(req,res,next)
 {
   console.log('Get Timezone');
-
-  var result = exec("date +%z", function (error, stdout, stderr,res, next) {
-    console.log('stdout: ' + stdout);
-    console.log('stderr: ' + stderr);
-    if (error !== null) {
-      console.log('exec error: ' + error);
-    }
-    return stdout;
-  })
-
-  result.stdout.on('data', function (data) {
-      res.send(data);
- });
+  console.log(moment.tz.guess());
+  res.send(moment.tz.guess());
 }
 
 //Update timezone
