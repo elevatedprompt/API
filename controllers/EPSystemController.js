@@ -279,11 +279,6 @@ module.exports.UpdateConfFile = function(req,res,next)
     console.log('It\'s saved!');
   });
 
-  //TODO: check for service to restart. (future)
-
-//  var configControl = require('./ConfigFileController');
-//  var configfiles = configControl.getList().$object;
-
   next();
 };
 
