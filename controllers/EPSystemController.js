@@ -367,7 +367,7 @@ module.exports.ListUsers = function(req,res,next)
     });
 
 
-});
+};
 
 //UpdateUser updates a user password or if it does not exist it creates a new once
 module.exports.UpdateUser = function(req,res,next)
