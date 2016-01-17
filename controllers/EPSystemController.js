@@ -120,7 +120,7 @@ module.exports.GetServiceStatus = function(req,res,next)
     console.log('stdout: ' + stdout);
     console.log('stderr: ' + stderr);
     if (error !== null) {
-      console.log('exec Get Service Status error: ' + error);
+      console.log('exec Get Service Status ('+servicename+') error: ' + error);
     }
     return stdout;
   })
@@ -142,7 +142,7 @@ module.exports.IsServiceRunning = function(req,res,next)
     console.log('stdout: ' + stdout);
     console.log('stderr: ' + stderr);
     if (error !== null) {
-      console.log('exec IsServiceRunning error: ' + error);
+      console.log('exec IsServiceRunning('+servicename+') error: ' + error);
     }
     return stdout;
   })
