@@ -23,7 +23,6 @@ module.exports =   function(app, route){
 
 };
 
-
 //reads the contents of the config file at (configfile)
 module.exports.GetConfFile = function(req,res,next)
 {
@@ -37,7 +36,6 @@ module.exports.GetConfFile = function(req,res,next)
   res.send(contents);
 
   next();
-
 };
 
 module.exports.GetLogstashConfigDirectoryListing = function(req,res,next)
@@ -61,7 +59,6 @@ module.exports.GetLogstashConfigDirectoryListing = function(req,res,next)
    res.send(results);
 
    next();
-
 };
 
 
@@ -123,7 +120,7 @@ module.exports.GetServiceStatus = function(req,res,next)
     console.log('stdout: ' + stdout);
     console.log('stderr: ' + stderr);
     if (error !== null) {
-      console.log('exec error: ' + error);
+      console.log('exec Get Service Status error: ' + error);
     }
     return stdout;
   })
@@ -190,20 +187,19 @@ module.exports.StopService = function(req,res,next)
     return stdout;
   })
 
-
- var output = '';
- result.stdout.on('data', function (data) {
-   console.log(data + ' Stop service is complete');
-  output+= data;
-});
-result.on('close', function (data,status) {
-  console.log(data + ' Stop service close');
-  res.sendStatus(output);
-});
- result.stderr.on('error', function (error) {
-   console.log(data + ' Stop service error');
-  res.send(error);
-});
+   var output = '';
+   result.stdout.on('data', function (data) {
+     console.log(data + ' Stop service is complete');
+    output+= data;
+  });
+  result.on('close', function (data,status) {
+    console.log(data + ' Stop service close');
+    res.sendStatus(output);
+  });
+   result.stderr.on('error', function (error) {
+     console.log(data + ' Stop service error');
+    res.send(error);
+  });
 };
 
 //StartService (Gets the status of the service by name)
