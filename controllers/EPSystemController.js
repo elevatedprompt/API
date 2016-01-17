@@ -345,3 +345,91 @@ module.exports.UpdateTimeZone = function(req,res,next)
   });
   moment.tz.setDefault(timezone);
 };
+
+
+
+
+
+
+//ListUsers returns a list of users from the htpasswd file.
+module.exports.ListUsers = function(req,res,next)
+{
+  console.log("Getting Users");
+
+  //htpasswd to manage the password file
+  console.log("cat /etc/nginx/conf.d/kibana.htpasswd ");
+    var newTimezone = exec("cat /etc/nginx/conf.d/kibana.htpasswd ", function (error, stdout, stderr) {
+      console.log('stdout: ' + stdout);
+      console.log('stderr: ' + stderr);
+      if (error !== null) {
+        console.log('exec cat htpasswd error: ' + stderr);
+      }
+      return stdout;
+    });
+    newTimezone.on('close', function (data,status) {
+      console.log('cat httpasswd:')
+      res.sendStatus(output);
+    });
+    newTimezone.stderr.on('error', function (error) {
+     console.log('cat htpassword Error:' + error);
+     res.send(error);
+    });
+
+ });
+
+//UpdateUser updates a user password or if it does not exist it creates a new once
+module.exports.UpdateUser = function(req,res,next)
+{
+  console.log("Updating User");
+  console.log(req.body.User);
+  var user = req.body.user;
+  var pass = req.body.passwd;
+
+  //htpasswd to manage the password file
+  console.log("htpasswd -b /etc/nginx/conf.d/kibana.htpasswd " + user);
+    var newTimezone = exec("htpasswd -b /etc/nginx/conf.d/kibana.htpasswd " + user + " " + pass, function (error, stdout, stderr) {
+      console.log('stdout: ' + stdout);
+      console.log('stderr: ' + stderr);
+      if (error !== null) {
+        console.log('exec update htpasswd error: ' + stderr);
+      }
+      return stdout;
+    });
+    newTimezone.on('close', function (data,status) {
+      console.log('Updated password file for user:  ' + user)
+      res.sendStatus(output);
+    });
+    newTimezone.stderr.on('error', function (error) {
+     console.log('Update htpassword user: ' + user + ' error: '+ error);
+     res.send(error);
+    });
+
+ });
+
+//Delete User
+ module.exports.DeleteUser = function(req,res,next)
+ {
+   console.log("Delete User");
+   console.log(req.body.User);
+   var user = req.body.User;
+
+   //htpasswd to manage the password file
+   console.log("htpasswd -d /etc/nginx/conf.d/kibana.htpasswd " + user);
+   var newTimezone = exec("htpasswd -d /etc/nginx/conf.d/kibana.htpasswd " + user , function (error, stdout, stderr) {
+     console.log('stdout: ' + stdout);
+     console.log('stderr: ' + stderr);
+     if (error !== null) {
+       console.log('exec Delete User error: ' + stderr);
+     }
+     return stdout;
+   });
+   newTimezone.on('close', function (data,status) {
+     console.log('User Delete ' + user)
+     res.sendStatus(output);
+   });
+   newTimezone.stderr.on('error', function (error) {
+    console.log('Delete User :' + user + ' error: ' + error);
+    res.send(error);
+   });
+
+  });
