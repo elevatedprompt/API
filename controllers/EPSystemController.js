@@ -396,7 +396,7 @@ module.exports.UpdateUser = function(req,res,next)
      res.send(error);
     });
 
- });
+ };
 
 //Delete User
  module.exports.DeleteUser = function(req,res,next)
@@ -423,5 +423,4 @@ module.exports.UpdateUser = function(req,res,next)
     console.log('Delete User :' + user + ' error: ' + error);
     res.send(error);
    });
-
-  });
+  };
