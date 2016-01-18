@@ -289,9 +289,9 @@ module.exports.GetTimeZone = function(req,res,next)
   console.log('Get Timezone');
   //readlink /etc/localtime
   fs.readlink("/etc/localtime", function(err, linkString){
-    console.log(linkstring);
+    console.log(linkString);
     //trim string /usr/share/zoneinfo/
-    linkstring = linkstring.replace('/usr/share/zoneinfo/','');
+    linkString = linkString.replace('/usr/share/zoneinfo/','');
     res.send(linkString);
   });
 }
