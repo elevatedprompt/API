@@ -54,8 +54,8 @@ app.all('/ListUsers',epSystem.ListUsers);
 
 console.log('Listening on port 3000...');
 app.listen(3000, '127.0.0.1');
-console.log('Listening on port 3001...');
-app.listen(3001);//testing port
+//console.log('Listening on port 3001...');
+//app.listen(3001);//testing port
 
 // Connect to MongoDB
 //mongoose.connect('mongodb://192.168.1.71/adminpanel');
