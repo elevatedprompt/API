@@ -366,7 +366,8 @@ module.exports.ListUsers = function(req,res,next)
 
       function extractUser(element, index, array) {
         var user = stdout.toString().split(':');
-        userArray.push(user);
+        console.log(user[0]);
+        userArray.push(user[0]);
         //var username = user[0];
         //console.log('a[' + index + '] = ' + element);
       }
