@@ -287,8 +287,11 @@ module.exports.UpdateConfFile = function(req,res,next)
 module.exports.GetTimeZone = function(req,res,next)
 {
   console.log('Get Timezone');
-  console.log(moment.tz.guess());
-  res.send(moment.tz.guess());
+  //readlink /etc/localtime
+  fs.readlink("/etc/localtime", function(err, linkString){
+    console.log(moment.tz.guess());
+    res.send(linkString);
+  });
 }
 
 //Update timezone
