@@ -289,7 +289,9 @@ module.exports.GetTimeZone = function(req,res,next)
   console.log('Get Timezone');
   //readlink /etc/localtime
   fs.readlink("/etc/localtime", function(err, linkString){
-    console.log(moment.tz.guess());
+    console.log(linkstring);
+    //trim string /usr/share/zoneinfo/
+    linkstring = linkstring.replace('/usr/share/zoneinfo/','');
     res.send(linkString);
   });
 }
@@ -352,7 +354,7 @@ module.exports.ListUsers = function(req,res,next)
   console.log("Getting Users");
   //htpasswd to manage the password file
   console.log("cat /etc/nginx/conf.d/kibana.htpasswd ");
-    var newTimezone = exec("cat /etc/nginx/conf.d/kibana.htpasswd ", function (error, stdout, stderr) {
+    var listUsers = exec("cat /etc/nginx/conf.d/kibana.htpasswd ", function (error, stdout, stderr) {
       console.log('stdout: ' + stdout);
       console.log('stderr: ' + stderr);
       if (error !== null) {
@@ -360,11 +362,11 @@ module.exports.ListUsers = function(req,res,next)
       }
       res.sendStatus(stdout);
     });
-    newTimezone.on('close', function (data,status) {
+    listUsers.on('close', function (data,status) {
       console.log('cat httpasswd:')
       //res.send(status);
     });
-    newTimezone.stderr.on('error', function (error) {
+    listUsers.stderr.on('error', function (error) {
      console.log('cat htpassword Error:' + error);
      res.send(error);
     });
@@ -382,7 +384,7 @@ module.exports.UpdateUser = function(req,res,next)
 
   //htpasswd to manage the password file
   console.log("htpasswd -b /etc/nginx/conf.d/kibana.htpasswd " + user);
-    var newTimezone = exec("htpasswd -b /etc/nginx/conf.d/kibana.htpasswd " + user + " " + pass, function (error, stdout, stderr) {
+    var updateUserCall = exec("htpasswd -b /etc/nginx/conf.d/kibana.htpasswd " + user + " " + pass, function (error, stdout, stderr) {
       console.log('stdout: ' + stdout);
       console.log('stderr: ' + stderr);
       if (error !== null) {
@@ -390,11 +392,11 @@ module.exports.UpdateUser = function(req,res,next)
       }
       return stdout;
     });
-    newTimezone.on('close', function (data,status) {
+    updateUserCall.on('close', function (data,status) {
       console.log('Updated password file for user:  ' + user)
       res.sendStatus(data);
     });
-    newTimezone.stderr.on('error', function (error) {
+    updateUserCall.stderr.on('error', function (error) {
      console.log('Update htpassword user: ' + user + ' error: '+ error);
      res.send(error);
     });
@@ -410,7 +412,7 @@ module.exports.UpdateUser = function(req,res,next)
 
    //htpasswd to manage the password file
    console.log("htpasswd -D /etc/nginx/conf.d/kibana.htpasswd " + user);
-   var newTimezone = exec("htpasswd -D /etc/nginx/conf.d/kibana.htpasswd " + user , function (error, stdout, stderr) {
+   var deleteUserCall = exec("htpasswd -D /etc/nginx/conf.d/kibana.htpasswd " + user , function (error, stdout, stderr) {
      console.log('stdout: ' + stdout);
      console.log('stderr: ' + stderr);
      if (error !== null) {
@@ -418,11 +420,11 @@ module.exports.UpdateUser = function(req,res,next)
      }
      return stdout;
    });
-   newTimezone.on('close', function (data,status) {
+   deleteUserCall.on('close', function (data,status) {
      console.log('User Delete ' + user)
      res.sendStatus(data);
    });
-   newTimezone.stderr.on('error', function (error) {
+   deleteUserCall.stderr.on('error', function (error) {
     console.log('Delete User :' + user + ' error: ' + error);
     res.send(error);
    });
