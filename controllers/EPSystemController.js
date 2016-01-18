@@ -359,7 +359,7 @@ module.exports.ListUsers = function(req,res,next)
     });
     newTimezone.on('close', function (data,status) {
       console.log('cat httpasswd:')
-      res.sendStatus(status);
+      //res.send(status);
     });
     newTimezone.stderr.on('error', function (error) {
      console.log('cat htpassword Error:' + error);
