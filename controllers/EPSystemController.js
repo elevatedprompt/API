@@ -363,16 +363,13 @@ module.exports.ListUsers = function(req,res,next)
       var userArray = [];
       arr.forEach(extractUser);
 
-
       function extractUser(element, index, array) {
         var user = element.toString().split(':');
         console.log(user[0]);
         userArray.push(user[0]);
-        //var username = user[0];
-        //console.log('a[' + index + '] = ' + element);
       }
 
-      res.sendStatus(userArray);
+      res.sendStatus(JSON.stringify(userArray));
     });
     listUsers.on('close', function (data,status) {
       console.log('cat httpasswd:')
