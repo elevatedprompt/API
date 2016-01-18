@@ -374,7 +374,7 @@ module.exports.UpdateUser = function(req,res,next)
 {
   console.log("Updating User");
   console.log(req.body.User);
-  var user = req.body.user;
+  var user = req.body.User;
   var pass = req.body.passwd;
 
   //htpasswd to manage the password file
