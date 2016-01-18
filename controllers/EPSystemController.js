@@ -406,7 +406,7 @@ module.exports.UpdateUser = function(req,res,next)
    var user = req.body.User;
 
    //htpasswd to manage the password file
-   console.log("htpasswd -d /etc/nginx/conf.d/kibana.htpasswd " + user);
+   console.log("htpasswd -D /etc/nginx/conf.d/kibana.htpasswd " + user);
    var newTimezone = exec("htpasswd -D /etc/nginx/conf.d/kibana.htpasswd " + user , function (error, stdout, stderr) {
      console.log('stdout: ' + stdout);
      console.log('stderr: ' + stderr);
