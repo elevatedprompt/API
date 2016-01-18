@@ -359,10 +359,10 @@ module.exports.ListUsers = function(req,res,next)
       if (error !== null) {
         console.log('exec cat htpasswd error: ' + stderr);
       }
-
       var arr = stdout.toString().split('\n');
-      arr.forEach(extractUser);
       var userArray = [];
+      arr.forEach(extractUser);
+
 
       function extractUser(element, index, array) {
         var user = stdout.toString().split(':');
