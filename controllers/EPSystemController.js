@@ -360,7 +360,8 @@ module.exports.ListUsers = function(req,res,next)
       if (error !== null) {
         console.log('exec cat htpasswd error: ' + stderr);
       }
-      res.sendStatus(stdout);
+      var arr = stdout.toString().split("/n");
+      res.sendStatus(arr);
     });
     listUsers.on('close', function (data,status) {
       console.log('cat httpasswd:')
