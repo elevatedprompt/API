@@ -361,7 +361,7 @@ module.exports.ListUsers = function(req,res,next)
       }
 
       var arr = stdout.toString().split('\n');
-      arr.forEach(logArrayElements);
+      arr.forEach(extractUser);
       var userArray = [];
 
       function extractUser(element, index, array) {
