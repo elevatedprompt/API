@@ -347,7 +347,6 @@ module.exports.UpdateTimeZone = function(req,res,next)
 };
 
 
-
 //ListUsers returns a list of users from the htpasswd file.
 module.exports.ListUsers = function(req,res,next)
 {
@@ -360,19 +359,27 @@ module.exports.ListUsers = function(req,res,next)
       if (error !== null) {
         console.log('exec cat htpasswd error: ' + stderr);
       }
+
       var arr = stdout.toString().split('\n');
-      res.sendStatus(arr);
+      arr.forEach(logArrayElements);
+      var userArray = [];
+
+      function extractUser(element, index, array) {
+        var user = stdout.toString().split(':');
+        userArray.push(user);
+        //var username = user[0];
+        //console.log('a[' + index + '] = ' + element);
+      }
+
+      res.sendStatus(userArray);
     });
     listUsers.on('close', function (data,status) {
       console.log('cat httpasswd:')
-      //res.send(status);
     });
     listUsers.stderr.on('error', function (error) {
      console.log('cat htpassword Error:' + error);
      res.send(error);
     });
-
-
 };
 
 //UpdateUser updates a user password or if it does not exist it creates a new once
