@@ -366,7 +366,8 @@ module.exports.ListUsers = function(req,res,next)
       function extractUser(element, index, array) {
         var user = element.toString().split(':');
         console.log(user[0]);
-        userArray.push(user[0]);
+        if(user[0]!="")
+          userArray.push(user[0]);
       }
 
       res.sendStatus(JSON.stringify(userArray));
