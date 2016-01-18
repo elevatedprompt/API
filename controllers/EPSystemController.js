@@ -355,11 +355,11 @@ module.exports.ListUsers = function(req,res,next)
       if (error !== null) {
         console.log('exec cat htpasswd error: ' + stderr);
       }
-      return stdout;
+      res.sendStatus(stdout);
     });
     newTimezone.on('close', function (data,status) {
       console.log('cat httpasswd:')
-      res.send(data);
+      res.sendStatus(status);
     });
     newTimezone.stderr.on('error', function (error) {
      console.log('cat htpassword Error:' + error);
