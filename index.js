@@ -1,5 +1,4 @@
 var express = require('express');
-var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 var _ = require('lodash');
@@ -21,14 +20,14 @@ app.use(function(req, res, next) {
   next();
 });
 
-// Load the models.
-app.models = require('./models/index');
+// Load the models.FUTURE
+//app.models = require('./models/index');
 
-// Load the routes.
-var routes = require('./routes');
-_.each(routes, function(controller, route) {
-  app.use(route, controller(app, route));
-});
+// Load the routes.FUTURE
+//var routes = require('./routes');
+//_.each(routes, function(controller, route) {
+//  app.use(route, controller(app, route));
+//});
 
 var epSystem = require('./controllers/EPSystemController');
 
@@ -54,26 +53,3 @@ app.all('/ListUsers',epSystem.ListUsers);
 
 console.log('Listening on port 3000...');
 app.listen(3000, '127.0.0.1');
-//console.log('Listening on port 3001...');
-//app.listen(3001);//testing port
-
-// Connect to MongoDB
-//mongoose.connect('mongodb://192.168.1.71/adminpanel');
-//mongoose.connection.once('open', function() {
-
-  // Load the models.
-//  app.models = require('./models/index');
-
-  // Load the routes.
-//  var routes = require('./routes');
-//  _.each(routes, function(controller, route) {
-//    app.use(route, controller(app, route));
-//  });
-
-//SETUP calls to restart services.
-//  var epSystem = require('./controllers/EPSystemController');
-//  app.get('/RestartAllServices',epSystem.RestartAllServices);
-
-//  console.log('Listening on port 3000...');
-//  app.listen(3000);
-//});

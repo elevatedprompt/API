@@ -1,5 +1,5 @@
 /*
-System controller
+EPSystem controller
 
 Methods
 GetConfFiles - Gets Config File
