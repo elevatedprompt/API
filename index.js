@@ -46,6 +46,7 @@ app.all('/GetLogstashConfigDirectoryListing',epSystem.GetLogstashConfigDirectory
 app.all('/GetCronJobDirectory',epSystem.GetCronJobDirectory);
 app.all('/GetElasticConfigDirectoryListing',epSystem.GetElasticConfigDirectoryListing);
 app.all('/UpdateConfFile',epSystem.UpdateConfFile);
+app.all('/ValidateLogstashFile',epSystem.ValidateLogstashFile);
 //user methods
 app.all('/UpdateUser',epSystem.UpdateUser);
 app.all('/DeleteUser',epSystem.DeleteUser);
