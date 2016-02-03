@@ -282,6 +282,31 @@ module.exports.UpdateConfFile = function(req,res,next)
   next();
 };
 
+//Updates Config file based on config file information.
+//Paramerters
+//conffilename - path to filename
+//conffilecontent - content of the file
+//servicetorestart - service that requires a restart
+module.exports.DeleteConfFile = function(req,res,next)
+{
+  console.log("Delete Config File")
+  console.log(req.body);
+
+  var configfilename = req.body.conffilename;
+  
+  fs.unlink(configfilenamefunction (err) {
+    if (err) throw err;
+    console.log(configfilename + ' It\'s gone!');
+  });
+  //Consider writing a backup...
+//  fs.writeFileSync(configfilename, configcontent, 'utf8', function (err) {
+//    if (err) throw err;
+//    console.log(configfilename + ' It\'s gone!');
+//  });
+  next();
+};
+
+
 //Validate the Logstash config file
 //Paramerters
 //conffilename - path to filename
