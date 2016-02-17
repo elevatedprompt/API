@@ -282,11 +282,9 @@ module.exports.UpdateConfFile = function(req,res,next)
   next();
 };
 
-//Updates Config file based on config file information.
+//Delete Config file
 //Paramerters
 //conffilename - path to filename
-//conffilecontent - content of the file
-//servicetorestart - service that requires a restart
 module.exports.DeleteConfFile = function(req,res,next)
 {
   console.log("Delete Config File")
