@@ -1,5 +1,5 @@
 /*
-System controller
+EPSystem controller
 
 Methods
 GetConfFiles - Gets Config File
@@ -280,6 +280,79 @@ module.exports.UpdateConfFile = function(req,res,next)
   });
 
   next();
+};
+
+//Delete Config file
+//Paramerters
+//conffilename - path to filename
+module.exports.DeleteConfFile = function(req,res,next)
+{
+  console.log("Delete Config File")
+  console.log(req.body);
+
+  var configfilename = req.body.conffilename;
+
+  fs.unlink(configfilenamefunction (err) {
+    if (err) throw err;
+    console.log(configfilename + ' It\'s gone!');
+  });
+  //Consider writing a backup...
+//  fs.writeFileSync(configfilename, configcontent, 'utf8', function (err) {
+//    if (err) throw err;
+//    console.log(configfilename + ' It\'s gone!');
+//  });
+  next();
+};
+
+
+//Validate the Logstash config file
+//Paramerters
+//conffilename - path to filename
+module.exports.ValidateLogstashFile = function(req,res,next)
+{
+  console.log("Validate Logstash File")
+  console.log(req.body);
+  var validationResponse= {};
+  validationResponse.IsValid = false;
+  validationResponse.Message ="";
+  var configfilename = req.body.conffilename;
+
+  console.log('Validate Logstash File');
+  console.log(req.body);
+
+  var result = exec("/opt/logstash/bin/logstash --configtest -f  " + configfilename, function (error, stdout, stderr,res, next) {
+    console.log('stdout: ' + stdout);
+    console.log('stderr: ' + stderr);
+    if (error !== null) {
+      console.log('exec config test file ' + configfilename + 'error: ' + stderr);
+    }
+    return stdout;
+  })
+  var output = '';
+  result.stdout.on('data', function (data) {
+   output+= data;
+ });
+  result.on('close', function (data,status) {
+    console.log('Logstash Config File test close');
+    //check for "Configuration OK"
+    //Otherwise Build Error output
+    var configOK = "Configuration OK";
+
+    var str = data.toString();
+    if(str.match(configOK)){
+      validationResponse.IsValid = true;
+    }
+    else{
+      validationResponse.IsValid = false;
+    }
+    validationResponse.Message = output;
+    res.sendStatus(JSON.stringify(validationResponse));
+ });
+ result.stderr.on('error', function (error) {
+     console.log('Logstash Config File error: ' + error);
+     validationResponse.IsValid = false;
+     validationResponse.Message = error;
+  });
 };
 
 
