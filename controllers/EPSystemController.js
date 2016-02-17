@@ -292,7 +292,7 @@ module.exports.DeleteConfFile = function(req,res,next)
 
   var configfilename = req.body.conffilename;
 
-  fs.unlink(configfilenamefunction (err) {
+  fs.unlink(configfilename, function (err) {
     if (err) throw err;
     console.log(configfilename + ' It\'s gone!');
   });
