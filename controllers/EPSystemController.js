@@ -10,7 +10,7 @@ GetTimeZone - Returns the System time.
 
 Update Cron Jobs - Updates logstash delete and close index cron settings
 */
-var Resource = require('resourcejs');
+
 var fs = require ('fs');
 var exec = require('child_process').exec,child;
 var moment = require('moment-timezone');
@@ -359,14 +359,20 @@ module.exports.ValidateLogstashFile = function(req,res,next)
 //returns the system time.
 module.exports.GetTimeZone = function(req,res,next)
 {
-  console.log('Get Timezone');
-  //readlink /etc/localtime
-  fs.readlink("/etc/localtime", function(err, linkString){
-    console.log(linkString);
-    //trim string /usr/share/zoneinfo/
-    linkString = linkString.replace('/usr/share/zoneinfo/','');
-    res.send(linkString);
+  try {
+    console.log('Get Timezone');
+    //readlink /etc/localtime
+    fs.readlink("/etc/localtime", function(err, linkString){
+      console.log(linkString);
+      //trim string /usr/share/zoneinfo/
+      linkString = linkString.replace('/usr/share/zoneinfo/','');
+      res.send(linkString);
+
   });
+  } catch (e) {
+    callback(e);
+  } finally {
+  }
 }
 
 //Update timezone
