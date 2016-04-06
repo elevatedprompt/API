@@ -372,7 +372,7 @@ module.exports.GetTimeZone = function(req,res,next)
       res.send(linkString);
     }
     catch(ex){
-      callback(ex);
+      console.log(ex);
       next();
     }
   });
