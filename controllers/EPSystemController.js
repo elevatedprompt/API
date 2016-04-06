@@ -363,11 +363,18 @@ module.exports.GetTimeZone = function(req,res,next)
     console.log('Get Timezone');
     //readlink /etc/localtime
     fs.readlink("/etc/localtime", function(err, linkString){
+      try{
+
+
       console.log(linkString);
       //trim string /usr/share/zoneinfo/
       linkString = linkString.replace('/usr/share/zoneinfo/','');
       res.send(linkString);
-
+    }
+    catch(ex){
+      callback(ex);
+      next();
+    }
   });
   } catch (e) {
     callback(e);
