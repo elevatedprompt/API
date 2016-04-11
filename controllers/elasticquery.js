@@ -60,8 +60,7 @@ console.log('Get List Of searches');
 
   //return a list of search types.
   elasticClient.search({
-    type:'search',
-    name:''
+    type:'search'
   }).then(function (body) {
     var searches=[];
     for(var result in body.hits.hits)
