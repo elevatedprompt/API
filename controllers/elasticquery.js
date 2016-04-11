@@ -67,9 +67,11 @@ console.log('Get List Of searches');
     for(var result in body.hits.hits)
     {
       searches.push(result);
+      console.log(result);
     }
     res.sendStatus(searches);
-  //  next();
+    console.log(result);
+    next();
   }, function (error) {
     console.trace(error.message);
   });
