@@ -41,7 +41,7 @@ module.exports.GetNotification = function(req,res,next)
 };
 
 //return the list of notifications
-module.exports.GetNotificationListing = function(req,res,next)
+module.exports.GetNotifications = function(req,res,next)
 {
   var results = [];
   var dir = '/opt/API/Notifications/';
