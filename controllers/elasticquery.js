@@ -66,13 +66,14 @@ console.log('Get List Of searches');
 
     var ii = 0, hits_in, hits_out = [];
     hits_in = (result.hits || {}).hits || [];
-    deferred.resolve(result.hits);
+    //deferred.resolve(result.hits);
     var result;
     for(; ii < hits_in.length; ii++) {
         result = JSON.stringify(hits_in[ii]._source.kibanaSavedObjectMeta.searchSourceJSON);
     }
-    res.sendStatus(result);  
-    next();
+    res.sendStatus(result);
+    console.log(result);
+    //next();
   }, function (error) {
     console.trace(error.message);
   });
