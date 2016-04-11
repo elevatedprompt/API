@@ -73,7 +73,7 @@ console.log('Get List Of searches');
         console.log(result);
       //  console.log(hits_in[ii]);
     }
-    res.sendStatus(result);
+    res.sendStatus(JSON.stringify(result));
     console.log(result);
     //next();
   //  return result;
