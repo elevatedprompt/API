@@ -66,17 +66,17 @@ console.log('Get List Of searches');
 
     var ii = 0, hits_in, hits_out = [];
     hits_in = (results.hits || {}).hits || [];
-    deferred.resolve(results.hits);
+//    deferred.resolve(results.hits);
     var result;
     for(; ii < hits_in.length; ii++) {
-        result.push(hits_in[ii]._source);//.kibanaSavedObjectMeta.searchSourceJSON);
+        result.push(JSON.stringify(hits_in[ii]._source));//.kibanaSavedObjectMeta.searchSourceJSON);
         console.log(result);
-        console.log(hits_in[ii]);
+      //  console.log(hits_in[ii]);
     }
     res.sendStatus(result);
     console.log(result);
     //next();
-    return result;
+  //  return result;
   }, function (error) {
     console.trace(error.message);
   });
