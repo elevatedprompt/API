@@ -69,7 +69,7 @@ console.log('Get List Of searches');
 //    deferred.resolve(results.hits);
     var result=[];
     for(; ii < hits_in.length; ii++) {
-        result.push(JSON.stringify(hits_in[ii]._source));//.kibanaSavedObjectMeta.searchSourceJSON);
+        result.push(hits_in[ii]._source);//.kibanaSavedObjectMeta.searchSourceJSON);
         console.log(result);
       //  console.log(hits_in[ii]);
     }
