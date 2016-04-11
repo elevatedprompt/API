@@ -67,7 +67,7 @@ console.log('Get List Of searches');
     var ii = 0, hits_in, hits_out = [];
     hits_in = (results.hits || {}).hits || [];
 //    deferred.resolve(results.hits);
-    var result;
+    var result=[];
     for(; ii < hits_in.length; ii++) {
         result.push(JSON.stringify(hits_in[ii]._source));//.kibanaSavedObjectMeta.searchSourceJSON);
         console.log(result);
