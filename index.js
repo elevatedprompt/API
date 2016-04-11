@@ -1,7 +1,9 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
+var moment = require('moment-timezone');
 var _ = require('lodash');
+//var Resource = require('resourcejs');
 
 // Create the application.
 var app = express();
@@ -30,6 +32,7 @@ app.use(function(req, res, next) {
 //});
 
 var epSystem = require('./controllers/EPSystemController');
+var epNotificationSystem = require('./controllers/EPNotificationController');
 
 app.get('/RestartAllServices',epSystem.RestartAllServices);
 //TimeZone
@@ -52,6 +55,43 @@ app.all('/ValidateLogstashFile',epSystem.ValidateLogstashFile);
 app.all('/UpdateUser',epSystem.UpdateUser);
 app.all('/DeleteUser',epSystem.DeleteUser);
 app.all('/ListUsers',epSystem.ListUsers);
+
+//notification methods.
+app.all('/GetNotification',epNotificationSystem.GetNotification);
+app.all('/GetNotificationListing',epNotificationSystem.GetNotificationListing);
+app.all('/UpdateNotification',epNotificationSystem.UpdateNotification);
+app.all('/DeleteNotification',epNotificationSystem.DeleteNotification);
+app.all('/ListSearches',epNotificationSystem.ListSearches);
+
+
+/*Notification Functions*/
+
+var emailcontroller = require('./controllers/emailcontroller');
+var notificationController = require('./controllers/notificationcontroller');
+var elasticquery = require('./controllers/elasticquery');
+
+
+//var notifications = notificationController.GetAllNotifications();
+app.all('/testQuery',elasticquery.testQuery);
+//app.all('/testSearchExists',elasticquery.testSearchExists);
+
+
+//ElasticSearch Controller
+app.all("/Notification/ListSearches",elasticquery.ListSearches)
+app.all('/Notification/runSearch',elasticquery.runSearch);
+app.all('/Notification/getQuery',elasticquery.getQuery);
+app.all('/Notification/CallQuery',elasticquery.CallQuery);
+app.all('/Notification/EvaluateSearch',elasticquery.EvaluateSearch);
+app.all('/Notification/PingCluster',elasticquery.pingCluster)
+//app.all('/CallQueryStep1',elasticquery.CallQueryStep1);
+
+//Email Controller
+app.all('/Notification/testEmail',emailcontroller.testEmail);
+//app.all('/sendMessage',emailcontroller.sendMessage);
+app.all('/Notification/SendMail',emailcontroller.SendMail);
+
+
+
 
 console.log('Listening on port 3000...');
 app.listen(3000, '127.0.0.1');
