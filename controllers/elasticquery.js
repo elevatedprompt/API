@@ -63,14 +63,15 @@ console.log('Get List Of searches');
     type:'search',
     'index-pattern': "/settings/objects/savedSearches/"
   }).then(function (body) {
-    var searches=[];
-    for(var result in body.hits.hits)
-    {
-      searches.push(result);
-      console.log(result);
+
+    var ii = 0, hits_in, hits_out = [];
+    hits_in = (result.hits || {}).hits || [];
+    deferred.resolve(result.hits);
+    var result;
+    for(; ii < hits_in.length; ii++) {
+        result = JSON.stringify(hits_in[ii]._source.kibanaSavedObjectMeta.searchSourceJSON);
     }
-    res.sendStatus(searches);
-    console.log(result);
+    res.sendStatus(result);  
     next();
   }, function (error) {
     console.trace(error.message);
