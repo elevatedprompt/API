@@ -62,18 +62,18 @@ console.log('Get List Of searches');
   elasticClient.search({
     type:'search',
     'index-pattern': "/settings/objects/savedSearches/"
-  }).then(function (body) {
+  }).then(function (results) {
 
     var ii = 0, hits_in, hits_out = [];
-    hits_in = (result.hits || {}).hits || [];
+    hits_in = (results.hits || {}).hits || [];
     //deferred.resolve(result.hits);
     var result;
     for(; ii < hits_in.length; ii++) {
-        result = JSON.stringify(hits_in[ii]._source.kibanaSavedObjectMeta.searchSourceJSON);
+        result = JSON.stringify(hits_in[ii]);//._source.kibanaSavedObjectMeta.searchSourceJSON);
     }
     res.sendStatus(result);
     console.log(result);
-    //next();
+    next();
   }, function (error) {
     console.trace(error.message);
   });
