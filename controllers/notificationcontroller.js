@@ -72,8 +72,8 @@ module.exports.UpdateNotification = function(req,res,next)
 {
     console.log('Save Notification');
     console.log(req.body);
-    var configfile = req.body.configfile;
-    var contents = fs.readFileSync(configfile,'utf8');
+  //  var configfile = req.body.configfile;
+  //  var contents = fs.readFileSync(configfile,'utf8');
     var dir = '/opt/API/Notifications/' + req.body.notificationName;
     console.log("File to Write");
     console.log(dir);
@@ -92,4 +92,22 @@ module.exports.UpdateNotification = function(req,res,next)
     jsonfile.writeFile(dir , newNotification, function (err) {
       console.error(err);
     });
+    next();
 }
+
+//Delete Notification
+//Paramerters
+//notificationName - name of the notification
+module.exports.DeleteConfFile = function(req,res,next)
+{
+  console.log("Delete Notification")
+  console.log(req.body);
+
+  var notification = '/opt/API/Notifications/' + req.body.notificationName;
+
+  fs.unlink(notification, function (err) {
+    if (err) throw err;
+    console.log(notification + ' It\'s gone!');
+  });
+  next();
+};
