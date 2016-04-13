@@ -87,7 +87,7 @@ module.exports.UpdateNotification = function(req,res,next)
     newNotification.notificationDescription = req.body.notificationDescription;
     console.log(JSON.stringify(newNotification));
 
-    jsonfile.writeFile(dir +'\' +  selectedSearch.notificationName + '.json', newNotification, function (err) {
+    jsonfile.writeFile(dir + '/' +  selectedSearch.notificationName + '.json', newNotification, function (err) {
       console.error(err);
     });
 }
