@@ -78,21 +78,16 @@ module.exports.SaveNotification = function(req,res,next)
 
     var newNotification = {};
 
-    selectedSearch.notificationName = req.body.notificationName;
-    //+ req.body.notificationName
-    selectedSearch.selectedSearch = req.body.selectedSearch;
-    //+ encodeURIComponent($scope.selectedSearch);
-    selectedSearch.thresholdType = req.body.thresholdType;
-    //+ encodeURIComponent($scope.thresholdType);
-    selectedSearch.thresholdCount = req.body.thresholdCount;
-    //+ encodeURIComponent($scope.thresholdCount);
-    selectedSearch.timeValue = req.body.timeValue;
-    //+ encodeURIComponent($scope.timeValue);
-    selectedSearch.timeFrame = req.body.timeFrame;
-    //+ encodeURIComponent($scope.timeFrame);
-    selectedSearch.notificationDescription = req.body.notificationDescription;
-    //+ encodeURIComponent($scope.notificationDescription);
-    jsonfile.writeFile(dir + selectedSearch.notificationName + '.json', selectedSearch, function (err) {
+    newNotification.notificationName = req.body.notificationName;
+    newNotification.selectedSearch = req.body.selectedSearch;
+    newNotification.thresholdType = req.body.thresholdType;
+    newNotification.thresholdCount = req.body.thresholdCount;
+    newNotification.timeValue = req.body.timeValue;
+    newNotification.timeFrame = req.body.timeFrame;
+    newNotification.notificationDescription = req.body.notificationDescription;
+    console.log(JSON.stringify(newNotification));
+
+    jsonfile.writeFile(dir + selectedSearch.notificationName + '.json', newNotification, function (err) {
       console.error(err);
     });
 }
