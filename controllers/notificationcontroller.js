@@ -93,7 +93,7 @@ module.exports.UpdateNotification = function(req,res,next)
     next();
 }
 
-module.exports.GetNotificaions = function(req,res,next){
+module.exports.GetNotifications = function(req,res,next){
   var results = [];
   var dir = '/opt/API/Notifications/';
   fs.readdirSync(dir)
