@@ -75,7 +75,8 @@ module.exports.UpdateNotification = function(req,res,next)
     var configfile = req.body.configfile;
     var contents = fs.readFileSync(configfile,'utf8');
     var dir = '/opt/API/Notifications/' + req.body.notificationName;
-
+    console.log("File to Write");
+    console.log(dir);
     var newNotification = {};
 
     newNotification.notificationName = req.body.notificationName;
