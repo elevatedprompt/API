@@ -13,6 +13,7 @@ var Resource = require('resourcejs');
 var fs = require ('fs');
 //var moment = require('moment-timezone');
 var elasticsearch = require("elasticsearch");
+var jsonfile = require('jsonfile')
 
 module.exports = function(app, route){
   // Setup the controller for REST;
@@ -65,4 +66,33 @@ module.exports.GetAllNotifications = function ()
    });
 
   return notifications;
+}
+
+module.exports.SaveNotification = function(req,res,next)
+{
+    console.log('Save Notification');
+    console.log(req.body);
+    var configfile = req.body.configfile;
+    var contents = fs.readFileSync(configfile,'utf8');
+    var dir = '/opt/API/Notifications/';
+
+    var newNotification = {};
+
+    selectedSearch.notificationName = req.body.notificationName;
+    //+ req.body.notificationName
+    selectedSearch.selectedSearch = req.body.selectedSearch;
+    //+ encodeURIComponent($scope.selectedSearch);
+    selectedSearch.thresholdType = req.body.thresholdType;
+    //+ encodeURIComponent($scope.thresholdType);
+    selectedSearch.thresholdCount = req.body.thresholdCount;
+    //+ encodeURIComponent($scope.thresholdCount);
+    selectedSearch.timeValue = req.body.timeValue;
+    //+ encodeURIComponent($scope.timeValue);
+    selectedSearch.timeFrame = req.body.timeFrame;
+    //+ encodeURIComponent($scope.timeFrame);
+    selectedSearch.notificationDescription = req.body.notificationDescription;
+    //+ encodeURIComponent($scope.notificationDescription);
+    jsonfile.writeFile(dir + selectedSearch.notificationName + '.json', selectedSearch, function (err) {
+      console.error(err);
+    });
 }

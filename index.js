@@ -77,13 +77,18 @@ app.all('/testQuery',elasticquery.testQuery);
 
 
 //ElasticSearch Controller
-app.all("/Notification/ListSearches",elasticquery.ListSearches)
+app.all("/Notification/ListSearches",elasticquery.ListSearches);
 app.all('/Notification/runSearch',elasticquery.runSearch);
 app.all('/Notification/getQuery',elasticquery.getQuery);
 app.all('/Notification/CallQuery',elasticquery.CallQuery);
 app.all('/Notification/EvaluateSearch',elasticquery.EvaluateSearch);
-app.all('/Notification/PingCluster',elasticquery.pingCluster)
+app.all('/Notification/PingCluster',elasticquery.pingCluster);
 //app.all('/CallQueryStep1',elasticquery.CallQueryStep1);
+
+//Notification Controller
+app.all('/Notification/SaveNotification', notificationController.SaveNotification);
+
+
 
 //Email Controller
 app.all('/Notification/testEmail',emailcontroller.testEmail);
