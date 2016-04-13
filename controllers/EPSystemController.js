@@ -75,13 +75,11 @@ module.exports.GetElasticConfigDirectoryListing = function(req,res,next)
        if (stat && stat.isDirectory()) {
            results = results.concat(_getAllFilesFromFolder(file))
        } else results.push(file);
-
    });
 
    console.log('Get Logstash File List');
    console.log(results);
    res.send(results);
-
    next();
 };
 
@@ -106,7 +104,6 @@ module.exports.GetCronJobDirectory = function(req,res,next)
    res.send(results);
    next();
 };
-
 
 //GetServiceStatus (Gets the status of the service by name)
 module.exports.GetServiceStatus = function(req,res,next)

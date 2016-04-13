@@ -87,6 +87,7 @@ app.all('/Notification/PingCluster',elasticquery.pingCluster);
 
 //Notification Controller
 app.all('/Notification/UpdateNotification', notificationController.UpdateNotification);
+app.all('/Notification/GetNotificaions', notificationController.GetNotificaions);
 
 
 

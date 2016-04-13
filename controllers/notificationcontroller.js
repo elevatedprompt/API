@@ -7,7 +7,6 @@ RegisterNotifications
 UpdateNotification
 EvaluateNotification
 
-
 */
 var Resource = require('resourcejs');
 var fs = require ('fs');
@@ -20,9 +19,7 @@ module.exports = function(app, route){
   return function(req, res, next) {
     next();
   };
-
 };
-
 
 //return the list of notifications
 module.exports.GetNotifications = function(req,res,next)
@@ -95,6 +92,27 @@ module.exports.UpdateNotification = function(req,res,next)
     });
     next();
 }
+
+module.exports.GetNotificaions = function(req,res,next){
+  var results = [];
+  var dir = '/opt/API/Notifications/';
+  fs.readdirSync(dir)
+    .forEach(function(file) {
+
+       file = dir+'/'+file;
+       var stat = fs.statSync(file);
+
+       if (stat && stat.isDirectory()) {
+           results = results.concat(_getAllFilesFromFolder(file))
+       } else results.push(file);
+   });
+
+   console.log('Get notification folder File List');
+   console.log(results);
+   res.send(results);
+   next();
+}
+
 
 //Delete Notification
 //Paramerters
