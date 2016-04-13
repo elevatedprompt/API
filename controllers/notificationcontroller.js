@@ -68,7 +68,7 @@ module.exports.GetAllNotifications = function ()
   return notifications;
 }
 
-module.exports.SaveNotification = function(req,res,next)
+module.exports.UpdateNotification = function(req,res,next)
 {
     console.log('Save Notification');
     console.log(req.body);
