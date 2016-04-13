@@ -86,6 +86,7 @@ module.exports.UpdateNotification = function(req,res,next)
     newNotification.timeValue = req.body.timeValue;
     newNotification.timeFrame = req.body.timeFrame;
     newNotification.notificationDescription = req.body.notificationDescription;
+    newNotification.enabled = req.body.enabled;
     console.log(JSON.stringify(newNotification));
     //var fileToWrite = dir + '/' +  selectedSearch.notificationName + '.json';
     console.log("Saving Configuration to: " + dir);

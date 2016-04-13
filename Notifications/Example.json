@@ -1,10 +1,9 @@
 {
-  'Name':'Example Notification',
-  'ThresholdType':'Max',
-  'SelectedSearch':'TemperatureSearch',
-  'ThresholdCount':10,
-  'ThresholdTimeInterval':10,
-  'TimeValue':10,
-  'TimeFrame':'m',
-  'Description':'This is an example notification.'
+  "notificationName":"Example Notification",
+  "selectedSearch":"AnotherSearch_Time",
+  "thresholdType":"Max",
+  "thresholdCount":"2",
+  "timeValue":"2",
+  "timeFrame":"h",
+  "notificationDescription":"testtest"
 }
