@@ -28,9 +28,8 @@ module.exports.GetNotifications = function(req,res,next)
   fs.readdirSync(dir)
     .forEach(function(file) {
        // dir+'/'+
-       file =file;
+       file = file;
        var stat = fs.statSync(file);
-
        if (stat && stat.isDirectory()) {
            results = results.concat(_getAllFilesFromFolder(file))
        } else results.push(file);
