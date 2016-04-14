@@ -39,7 +39,7 @@ module.exports.GetNotifications = function(req,res,next)
 
    console.log('Get Notifiation File List');
    console.log(results);
-   res.send(results);
+   res.sendStatus(results);
 
    next();
 };
