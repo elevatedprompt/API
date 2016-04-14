@@ -47,8 +47,8 @@ module.exports.GetNotifications = function(req,res,next)
   var dir = '/opt/API/Notifications/';
   fs.readdirSync(dir)
     .forEach(function(file) {
-//dir+'/'+
-      file = file;
+
+       file = dir+'/'+file;
        var stat = fs.statSync(file);
 
        if (stat && stat.isDirectory()) {
