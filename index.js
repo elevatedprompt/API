@@ -57,7 +57,7 @@ app.all('/DeleteUser',epSystem.DeleteUser);
 app.all('/ListUsers',epSystem.ListUsers);
 
 //notification methods.
-//app.all('/GetNotification',epNotificationSystem.GetNotification);
+app.all('/Notification/GetNotification',epNotificationSystem.GetNotification);
 app.all('/Notification/GetNotifications',epNotificationSystem.GetNotifications);
 app.all('/UpdateNotification',epNotificationSystem.UpdateNotification);
 app.all('/DeleteNotification',epNotificationSystem.DeleteNotification);
@@ -87,7 +87,7 @@ app.all('/Notification/PingCluster',elasticquery.pingCluster);
 
 //Notification Controller
 app.all('/Notification/UpdateNotification', notificationController.UpdateNotification);
-app.all('/Notification/GetNotifications', notificationController.GetNotifications);
+//app.all('/Notification/GetNotifications', notificationController.GetNotifications);
 
 //Email Controller
 app.all('/Notification/testEmail',emailcontroller.testEmail);
