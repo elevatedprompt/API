@@ -13,6 +13,8 @@ var fs = require ('fs');
 //var moment = require('moment-timezone');
 var elasticsearch = require("elasticsearch");
 var jsonfile = require('jsonfile')
+var notificationEngine = require("NotificationEngine");
+
 
 module.exports = function(app, route){
   // Setup the controller for REST;
@@ -79,16 +81,47 @@ module.exports.UpdateNotification = function(req,res,next)
     newNotification.selectedSearch = req.body.selectedSearch;
     newNotification.thresholdType = req.body.thresholdType;
     newNotification.thresholdCount = req.body.thresholdCount;
+
     newNotification.timeValue = req.body.timeValue;
     newNotification.timeFrame = req.body.timeFrame;
+    //Calculate the time interval in ms. 1000
+    //m = 60,000 ms
+    //h = 3600000
+    //d = 86400000
+    var multiplier = 300000; //default 5 min sec
+
+    switch(newNotification.timeFrame)
+    {
+      case "m":
+      multiplier = 60000;
+      break;
+      case "h":
+      multiplier = 3600000;
+      break;
+      case "d":
+      multiplier = 86400000;
+      break;
+    }
+
+    newNotification.interval = newNotification.timeValue * multiplier;
     newNotification.notificationDescription = req.body.notificationDescription;
     newNotification.enabled = req.body.enabled;
+    newNotification.notifyEmail = req.body.notifyEmail;
+
     console.log(JSON.stringify(newNotification));
     //var fileToWrite = dir + '/' +  selectedSearch.notificationName + '.json';
     console.log("Saving Configuration to: " + dir);
     jsonfile.writeFile(dir , newNotification, function (err) {
       console.error(err);
     });
+
+    //A save has happened, refresh the notification
+    notificationEngine.UnregisterNotification(newNotification.notificationName);
+    //IF the notification is enabled register it to run
+    if (newNotification.enabled)
+    {
+      notificationEngine.RegisterNotification(newNotification);
+    }
     next();
 }
 
@@ -116,13 +149,14 @@ module.exports.GetNotifications = function(req,res,next){
 //Delete Notification
 //Paramerters
 //notificationName - name of the notification
-module.exports.DeleteConfFile = function(req,res,next)
+module.exports.DeleteConfFile = function(req,res,next,http)
 {
   console.log("Delete Notification")
   console.log(req.body);
 
   var notification = '/opt/API/Notifications/' + req.body.notificationName;
 
+  notificationEngine.UnregisterNotification(req.body.notificationName);
   fs.unlink(notification, function (err) {
     if (err) throw err;
     console.log(notification + ' It\'s gone!');
