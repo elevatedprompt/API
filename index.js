@@ -65,7 +65,6 @@ app.all('/ListSearches',epNotificationSystem.ListSearches);
 
 
 /*Notification Functions*/
-
 var emailcontroller = require('./controllers/emailcontroller');
 var notificationController = require('./controllers/notificationcontroller');
 var elasticquery = require('./controllers/elasticquery');
