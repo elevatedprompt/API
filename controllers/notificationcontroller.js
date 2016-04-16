@@ -6,14 +6,13 @@ List Notifications
 RegisterNotifications
 UpdateNotification
 EvaluateNotification
-
 */
+
 var Resource = require('resourcejs');
 var fs = require ('fs');
-//var moment = require('moment-timezone');
 var elasticsearch = require("elasticsearch");
 var jsonfile = require('jsonfile')
-//var notificationEngine = require("NotificationEngine");
+
 
 
 module.exports = function(app, route){
@@ -35,7 +34,6 @@ module.exports.GetNotifications = function(req,res,next)
        if (stat && stat.isDirectory()) {
            results = results.concat(_getAllFilesFromFolder(file))
        } else results.push(file);
-
    });
 
    console.log('Get Notifiation File List');
@@ -103,18 +101,18 @@ module.exports.UpdateNotification = function(req,res,next)
     newNotification.notifyEmail = req.body.notifyEmail;
 
     console.log(JSON.stringify(newNotification));
-    //var fileToWrite = dir + '/' +  selectedSearch.notificationName + '.json';
+
     console.log("Saving Configuration to: " + dir);
     jsonfile.writeFile(dir , newNotification, function (err) {
       console.error(err);
     });
 
     //A save has happened, refresh the notification
-    notificationEngine.UnregisterNotification(newNotification.notificationName);
+  //  notificationEngine.UnregisterNotification(newNotification.notificationName);
     //IF the notification is enabled register it to run
     if (newNotification.enabled)
     {
-      notificationEngine.RegisterNotification(newNotification);
+//      notificationEngine.RegisterNotification(newNotification);
     }
     next();
 }
@@ -150,7 +148,7 @@ module.exports.DeleteConfFile = function(req,res,next,http)
 
   var notification = '/opt/API/Notifications/' + req.body.notificationName;
 
-  notificationEngine.UnregisterNotification(req.body.notificationName);
+//  notificationEngine.UnregisterNotification(req.body.notificationName);
   fs.unlink(notification, function (err) {
     if (err) throw err;
     console.log(notification + ' It\'s gone!');
