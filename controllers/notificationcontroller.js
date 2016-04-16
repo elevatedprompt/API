@@ -13,7 +13,7 @@ var fs = require ('fs');
 //var moment = require('moment-timezone');
 var elasticsearch = require("elasticsearch");
 var jsonfile = require('jsonfile')
-var notificationEngine = require("NotificationEngine");
+//var notificationEngine = require("NotificationEngine");
 
 
 module.exports = function(app, route){
@@ -46,12 +46,6 @@ module.exports.GetNotifications = function(req,res,next)
 };
 
 
-// $scope.NotificationList = [
-//   {NotifyID:"1",SearchID:"1",Threshold:"2",Period:""}//Period in minutes.
-//   {NotifyID:"2",SearchID:"1",Threshold:"2",Period:""}
-//   {NotifyID:"3",SearchID:"2",Threshold:"2",Period:""}
-//   {NotifyID:"4",SearchID:"3",Threshold:"2",Period:""}
-// ];
 module.exports.GetAllNotifications = function ()
 {
   var notifications = [];
