@@ -167,7 +167,8 @@ module.exports.IsServiceRunning = function(req,res,next)
     }
  });
 };
-//StopService (Gets the status of the service by name)
+
+
 module.exports.StopService = function(req,res,next)
 {
   console.log('Stop Service');
@@ -294,10 +295,10 @@ module.exports.DeleteConfFile = function(req,res,next)
     console.log(configfilename + ' It\'s gone!');
   });
   //Consider writing a backup...
-//  fs.writeFileSync(configfilename, configcontent, 'utf8', function (err) {
-//    if (err) throw err;
-//    console.log(configfilename + ' It\'s gone!');
-//  });
+  //  fs.writeFileSync(configfilename, configcontent, 'utf8', function (err) {
+  //    if (err) throw err;
+  //    console.log(configfilename + ' It\'s gone!');
+  //  });
   next();
 };
 
@@ -361,8 +362,6 @@ module.exports.GetTimeZone = function(req,res,next)
     //readlink /etc/localtime
     fs.readlink("/etc/localtime", function(err, linkString){
       try{
-
-
       console.log(linkString);
       //trim string /usr/share/zoneinfo/
       linkString = linkString.replace('/usr/share/zoneinfo/','');
