@@ -12,8 +12,7 @@ var Resource = require('resourcejs');
 var fs = require ('fs');
 var elasticsearch = require("elasticsearch");
 var jsonfile = require('jsonfile')
-
-
+var notificationService  = 'http://127.0.0.1:3003/';
 
 module.exports = function(app, route){
   // Setup the controller for REST;
@@ -108,13 +107,43 @@ module.exports.UpdateNotification = function(req,res,next)
     });
 
     //A save has happened, refresh the notification
-  //  notificationEngine.UnregisterNotification(newNotification.notificationName);
+    UnregisterNotification(newNotification.notificationName);
     //IF the notification is enabled register it to run
     if (newNotification.enabled)
     {
-//      notificationEngine.RegisterNotification(newNotification);
+      RegisterNotification(newNotification.notificationName);
     }
     next();
+}
+
+
+function RegisterNotification(notification){
+  var methodCall = notificationService + 'RegisterNotification';
+  var config = {headers:{
+    "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
+    }};
+
+  var data = "notificationName="+ encodeURIComponent(notification.notificationName);
+
+  $http.post(methodCall,notification,config)
+    .success(function(data)
+      {
+      console.log(data)  ;
+      });
+}
+
+function UnregisterNotification(notificationName){
+  var methodCall = notificationService + 'UnRegisterNotification';
+  var config = {headers:{
+    "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
+    }};
+    var data = "notificationName="+ encodeURIComponent(notificationName);
+  $http.post(methodCall,data,config)
+    .success(function(data)
+      {
+        console.log(data);
+         $scope.avalibleSearches=data;
+      });
 }
 
 module.exports.GetNotifications = function(req,res,next){
