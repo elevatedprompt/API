@@ -126,7 +126,7 @@ function RegisterNotification(notification){
 
   var data = "notificationName="+ encodeURIComponent(notification.notificationName);
 
-  $http.post(methodCall,notification,config)
+  http.post(methodCall,notification,config)
     .success(function(data)
       {
       console.log(data)  ;
@@ -139,7 +139,7 @@ function UnregisterNotification(notificationName){
     "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
     }};
     var data = "notificationName="+ encodeURIComponent(notificationName);
-  $http.post(methodCall,data,config)
+  http.post(methodCall,data,config)
     .success(function(data)
       {
         console.log(data);
