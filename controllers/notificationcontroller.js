@@ -190,7 +190,7 @@ function UnregisterNotification(notificationName){
 
     var req =client.post(methodCall + "?" + data,args, function (data, response) {
         console.log(data);
-         $scope.avalibleSearches=data;
+         //$scope.avalibleSearches=data;
       });
 
       req.on('requestTimeout', function (req) {
