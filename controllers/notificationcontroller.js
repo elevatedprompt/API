@@ -121,7 +121,7 @@ module.exports.UpdateNotification = function(req,res,next)
 function RegisterNotification(notification){
   var methodCall = notificationService + 'RegisterNotification';
   var http = require('node-http');
-  var http = new http;
+  var http = new Http;
   var config = {headers:{
     "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
     }};
@@ -142,7 +142,7 @@ function UnregisterNotification(notificationName){
     "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
     }};
     var data = "notificationName="+ encodeURIComponent(notificationName);
-    var http = new http;
+    var http = new Http;
 
     http.post(methodCall,data,config)
     .success(function(data)
