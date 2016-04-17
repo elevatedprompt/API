@@ -128,7 +128,7 @@ var Client = require('node-rest-client').Client;
     }};
 
   var data = "notificationName="+ encodeURIComponent(notification.notificationName);
-  var http = new Http();
+  
 
   client.post(methodCall,notification,config)
     .success(function(data)
@@ -145,7 +145,7 @@ function UnregisterNotification(notificationName){
     "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
     }};
     var data = "notificationName="+ encodeURIComponent(notificationName);
-    var http = new Http();
+
 
     client.post(methodCall,data,config)
     .success(function(data)
