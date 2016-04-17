@@ -120,7 +120,8 @@ module.exports.UpdateNotification = function(req,res,next)
 
 function RegisterNotification(notification){
   var methodCall = notificationService + 'RegisterNotification';
-  var Http = require('node-rest-client');
+var Client = require('node-rest-client').Client;
+  var client = new Client();
 
   var config = {headers:{
     "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
@@ -129,7 +130,7 @@ function RegisterNotification(notification){
   var data = "notificationName="+ encodeURIComponent(notification.notificationName);
   var http = new Http();
 
-  http.post(methodCall,notification,config)
+  client.post(methodCall,notification,config)
     .success(function(data)
       {
       console.log(data)  ;
@@ -138,14 +139,15 @@ function RegisterNotification(notification){
 
 function UnregisterNotification(notificationName){
   var methodCall = notificationService + 'UnRegisterNotification';
-  var Http = require('node-rest-client');
+  var Client = require('node-rest-client').Client;
+  var client = new Client();
   var config = {headers:{
     "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
     }};
     var data = "notificationName="+ encodeURIComponent(notificationName);
     var http = new Http();
 
-    http.post(methodCall,data,config)
+    client.post(methodCall,data,config)
     .success(function(data)
       {
         console.log(data);
