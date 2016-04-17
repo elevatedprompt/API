@@ -3,7 +3,7 @@ var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 var moment = require('moment-timezone');
 var _ = require('lodash');
-var http = require('http');
+
 //var Resource = require('resourcejs');
 
 // Create the application.

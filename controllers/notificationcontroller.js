@@ -12,6 +12,7 @@ var Resource = require('resourcejs');
 var fs = require ('fs');
 var elasticsearch = require("elasticsearch");
 var jsonfile = require('jsonfile')
+var http = require('http');
 var notificationService  = 'http://127.0.0.1:3003/';
 
 module.exports = function(app, route){
@@ -170,7 +171,7 @@ module.exports.GetNotifications = function(req,res,next){
 //Delete Notification
 //Paramerters
 //notificationName - name of the notification
-module.exports.DeleteConfFile = function(req,res,next,http)
+module.exports.DeleteConfFile = function(req,res,next)
 {
   console.log("Delete Notification")
   console.log(req.body);
