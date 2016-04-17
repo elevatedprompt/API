@@ -12,7 +12,7 @@ var Resource = require('resourcejs');
 var fs = require ('fs');
 var elasticsearch = require("elasticsearch");
 var jsonfile = require('jsonfile')
-var http = require('http');
+
 var notificationService  = 'http://127.0.0.1:3003/';
 
 module.exports = function(app, route){
@@ -120,6 +120,7 @@ module.exports.UpdateNotification = function(req,res,next)
 
 function RegisterNotification(notification){
   var methodCall = notificationService + 'RegisterNotification';
+  var http = require('http');
   var config = {headers:{
     "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
     }};
@@ -135,11 +136,12 @@ function RegisterNotification(notification){
 
 function UnregisterNotification(notificationName){
   var methodCall = notificationService + 'UnRegisterNotification';
+  var http = require('http');
   var config = {headers:{
     "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
     }};
     var data = "notificationName="+ encodeURIComponent(notificationName);
-  http.post(methodCall,data,config)
+    http.post(methodCall,data,config)
     .success(function(data)
       {
         console.log(data);
