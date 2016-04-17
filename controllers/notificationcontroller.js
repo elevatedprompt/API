@@ -130,9 +130,9 @@ var Client = require('node-rest-client').Client;
   var data = "notificationName="+ encodeURIComponent(notification.notificationName);
   var args = {
   	path: { "id": 120 },
-  	parameters: { arg1: "hello", arg2: "world" },
+  	// parameters: { arg1: "hello", arg2: "world" },
   	headers: {   "Content-type": "application/x-www-form-urlencoded; charset=utf-8" },
-  	data: "<xml><arg1>hello</arg1><arg2>world</arg2></xml>",
+  	// data: "<xml><arg1>hello</arg1><arg2>world</arg2></xml>",
   	requestConfig: {
   		timeout: 1000, //request timeout in milliseconds
   		noDelay: true, //Enable/disable the Nagle algorithm
@@ -174,9 +174,9 @@ function UnregisterNotification(notificationName){
     var data = "notificationName="+ encodeURIComponent(notificationName);
     var args = {
     	path: { "id": 120 },
-    	parameters: { arg1: "hello", arg2: "world" },
+    	// parameters: { arg1: "hello", arg2: "world" },
     	headers: {   "Content-type": "application/x-www-form-urlencoded; charset=utf-8" },
-    	data: "<xml><arg1>hello</arg1><arg2>world</arg2></xml>",
+    	// data: "<xml><arg1>hello</arg1><arg2>world</arg2></xml>",
     	requestConfig: {
     		timeout: 1000, //request timeout in milliseconds
     		noDelay: true, //Enable/disable the Nagle algorithm
