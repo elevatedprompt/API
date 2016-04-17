@@ -128,13 +128,27 @@ var Client = require('node-rest-client').Client;
     }};
 
   var data = "notificationName="+ encodeURIComponent(notification.notificationName);
-  
 
-  client.post(methodCall,notification,config)
+
+  var req =client.post(methodCall,notification,config)
     .success(function(data)
       {
       console.log(data)  ;
       });
+  req.on('requestTimeout', function (req) {
+  	console.log('request has expired');
+  	req.abort();
+  });
+
+  req.on('responseTimeout', function (res) {
+  	console.log('response has expired');
+
+  });
+
+  //it's usefull to handle request errors to avoid, for example, socket hang up errors on request timeouts
+  req.on('error', function (err) {
+  	console.log('request error', err);
+  });
 }
 
 function UnregisterNotification(notificationName){
@@ -153,6 +167,21 @@ function UnregisterNotification(notificationName){
         console.log(data);
          $scope.avalibleSearches=data;
       });
+
+      req.on('requestTimeout', function (req) {
+	console.log('request has expired');
+	req.abort();
+});
+
+req.on('responseTimeout', function (res) {
+	console.log('response has expired');
+
+});
+
+//it's usefull to handle request errors to avoid, for example, socket hang up errors on request timeouts
+req.on('error', function (err) {
+	console.log('request error', err);
+});
 }
 
 module.exports.GetNotifications = function(req,res,next){
