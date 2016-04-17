@@ -6,8 +6,6 @@ List Notifications
 RegisterNotifications
 UpdateNotification
 EvaluateNotification
-
-
 */
 var express = require('express');
 //var Resource = require('resourcejs');
