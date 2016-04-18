@@ -62,7 +62,7 @@ app.all('/Notification/GetNotification',epNotificationSystem.GetNotification);
 app.all('/Notification/GetNotifications',epNotificationSystem.GetNotifications);
 //app.all('/UpdateNotification',epNotificationSystem.UpdateNotification);
 app.all('/DeleteNotification',epNotificationSystem.DeleteNotification);
-app.all('/ListSearches',epNotificationSystem.ListSearches);
+//app.all('/ListSearches',epNotificationSystem.ListSearches);
 
 
 /*Notification Functions*/
