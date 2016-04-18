@@ -60,7 +60,7 @@ app.all('/ListUsers',epSystem.ListUsers);
 //notification methods.
 app.all('/Notification/GetNotification',epNotificationSystem.GetNotification);
 app.all('/Notification/GetNotifications',epNotificationSystem.GetNotifications);
-app.all('/UpdateNotification',epNotificationSystem.UpdateNotification);
+//app.all('/UpdateNotification',epNotificationSystem.UpdateNotification);
 app.all('/DeleteNotification',epNotificationSystem.DeleteNotification);
 app.all('/ListSearches',epNotificationSystem.ListSearches);
 
