@@ -146,6 +146,7 @@ function RegisterNotification(notification){
     }};
 
   var data = "notificationName="+ notification;
+  data+= "&notification="+ JSON.stringify(notification);
   var args = {
   	path: { "id": 120 },
   	// parameters: { arg1: "hello", arg2: "world" },
