@@ -103,14 +103,14 @@ module.exports.UpdateNotification = function(req,res,next)
     console.log(JSON.stringify(newNotification));
 
     console.log("Saving Configuration to: " + dir);
-    jsonfile.writeFile(dir , newNotification, function (err) {
-      console.error(err);
-    });
-
-    // fs.writeFileSync(dir, JSON.stringify(newNotification), 'utf8', function (err) {
-    //   if (err) throw err;
-    //   console.log('It\'s saved!');
+    // jsonfile.writeFile(dir , newNotification, function (err) {
+    //   console.error(err);
     // });
+
+    fs.writeFileSync(dir, JSON.stringify(newNotification), 'utf8', function (err) {
+      if (err) throw err;
+      console.log('It\'s saved!');
+    });
 
     //A save has happened, refresh the notification
   //  UnregisterNotification(newNotification.notificationName);
