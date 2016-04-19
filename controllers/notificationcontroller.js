@@ -111,16 +111,20 @@ module.exports.UpdateNotification = function(req,res,next)
       if (err) {throw err;
       }
       console.log('It\'s saved!');
-    });
 
-    //A save has happened, refresh the notification
-  //  UnregisterNotification(newNotification.notificationName);
-    //IF the notification is enabled register it to run
-    if (newNotification.enabled)
-    {
-//      RegisterNotification(newNotification.notificationName);
-    }
-    next();
+    }).then(
+      function(){
+        console.log("Completed Save");
+            //A save has happened, refresh the notification
+          //  UnregisterNotification(newNotification.notificationName);
+            //IF the notification is enabled register it to run
+            if (newNotification.enabled)
+            {
+        //      RegisterNotification(newNotification.notificationName);
+            }
+            next();
+      }
+    );
 }
 
 
