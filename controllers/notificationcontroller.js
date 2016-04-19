@@ -107,10 +107,10 @@ module.exports.UpdateNotification = function(req,res,next)
       console.error(err);
     });
 
-    fs.writeFileSync(dir, JSON.stringify(newNotification), 'utf8', function (err) {
-      if (err) throw err;
-      console.log('It\'s saved!');
-    });
+    // fs.writeFileSync(dir, JSON.stringify(newNotification), 'utf8', function (err) {
+    //   if (err) throw err;
+    //   console.log('It\'s saved!');
+    // });
 
     //A save has happened, refresh the notification
   //  UnregisterNotification(newNotification.notificationName);
