@@ -136,7 +136,7 @@ module.exports.UpdateNotification = function(req,res,next)
 
 function RegisterNotification(notification){
 
-  console.log("Register Notification: " + notification.notificationName);
+  console.log("Register Notification: " + notification);
   var methodCall = notificationService + 'RegisterNotification';
 
   var client = new Client();
@@ -145,7 +145,7 @@ function RegisterNotification(notification){
     "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
     }};
 
-  var data = "notificationName="+ notification.notificationName;
+  var data = "notificationName="+ notification;
   var args = {
   	path: { "id": 120 },
   	// parameters: { arg1: "hello", arg2: "world" },
