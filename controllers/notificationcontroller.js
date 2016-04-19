@@ -12,7 +12,7 @@ var Resource = require('resourcejs');
 var fs = require ('fs');
 var elasticsearch = require("elasticsearch");
 var jsonfile = require('jsonfile')
-
+var Client = require('node-rest-client').Client;
 var notificationService  = 'http://127.0.0.1:3003/';
 
 module.exports = function(app, route){
@@ -136,7 +136,7 @@ module.exports.UpdateNotification = function(req,res,next)
 
 function RegisterNotification(notification){
   var methodCall = notificationService + 'RegisterNotification';
-  var Client = require('node-rest-client').Client;
+
   var client = new Client();
 
   var config = {headers:{
@@ -182,7 +182,7 @@ function RegisterNotification(notification){
 
 function UnregisterNotification(notificationName){
   var methodCall = notificationService + 'UnRegisterNotification';
-  var Client = require('node-rest-client').Client;
+//  var Client = require('node-rest-client').Client;
   var client = new Client();
   var config = {headers:{
     "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
