@@ -125,9 +125,9 @@ module.exports.UpdateNotification = function(req,res,next)
       console.log("Completed Save");
       //A save has happened, refresh the notification
 
-      if (err!=null) {throw err;
-        next();
-      }
+      // if (err!=null) {throw err;
+      //   next();
+       }
       next();
     });
 }
