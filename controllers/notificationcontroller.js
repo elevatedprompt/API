@@ -104,7 +104,7 @@ module.exports.UpdateNotification = function(req,res,next)
 
     console.log("Saving Configuration to: " + dir);
 
-    jsonfile.writeFile(dir , newNotification, function (err) {
+    jsonfile.writeFile(dir , JSON.stringify(newNotification), function (err) {
   // //    console.error(err);
   //     UnregisterNotification(newNotification.notificationName);
   //     //IF the notification is enabled register it to run
@@ -112,6 +112,7 @@ module.exports.UpdateNotification = function(req,res,next)
   //     {
   //        RegisterNotification(newNotification.notificationName);
   //     }
+    console.log("in complete");
       console.log(err);
       if (err!=null) {throw err;
         next();
