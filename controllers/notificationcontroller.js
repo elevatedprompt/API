@@ -103,6 +103,7 @@ module.exports.UpdateNotification = function(req,res,next)
     console.log(JSON.stringify(newNotification));
 
     console.log("Saving Configuration to: " + dir);
+
     // jsonfile.writeFile(dir , newNotification, function (err) {
     //   console.error(err);
     // });
@@ -119,7 +120,7 @@ module.exports.UpdateNotification = function(req,res,next)
       }
       console.log(err);
       if (err) {throw err;
-        next
+        next();
       }
       next();
     });
