@@ -118,7 +118,9 @@ module.exports.UpdateNotification = function(req,res,next)
           {
       //      RegisterNotification(newNotification.notificationName);
           }
+          console.log(err);
           if (err) {throw err;
+            next
           }
           next();
     });
