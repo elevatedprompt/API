@@ -135,6 +135,8 @@ module.exports.UpdateNotification = function(req,res,next)
 
 
 function RegisterNotification(notification){
+
+  console.log("Register Notification: " + notification.notificationName);
   var methodCall = notificationService + 'RegisterNotification';
 
   var client = new Client();
@@ -160,7 +162,6 @@ function RegisterNotification(notification){
   	}
   };
 
-
   var req =client.post(methodCall + "?" + data,args, function (data, response) {
       console.log(data)  ;
       });
@@ -181,13 +182,14 @@ function RegisterNotification(notification){
 }
 
 function UnregisterNotification(notificationName){
+  console.log("Unregister Called: " + notificationName);
   var methodCall = notificationService + 'UnRegisterNotification';
 //  var Client = require('node-rest-client').Client;
   var client = new Client();
   var config = {headers:{
     "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
-    }};
     var data = "notificationName="+ notificationName;
+    }};
     var args = {
     	path: { "id": 120 },
     	// parameters: { arg1: "hello", arg2: "world" },
