@@ -106,12 +106,7 @@ module.exports.UpdateNotification = function(req,res,next)
 
   //   jsonfile.writeFile(dir , newNotification, function (err) {
   // // //    console.error(err);
-  // //     UnregisterNotification(newNotification.notificationName);
-  // //     //IF the notification is enabled register it to run
-  // //     if (newNotification.enabled)
-  // //     {
-  // //        RegisterNotification(newNotification.notificationName);
-  // //     }
+
   //     console.log("in complete");
   //     //console.log(err);
   //     if (err!=null) {throw err;
@@ -124,7 +119,12 @@ module.exports.UpdateNotification = function(req,res,next)
       console.log('It\'s saved!');
       console.log("Completed Save");
       //A save has happened, refresh the notification
-
+          UnregisterNotification(newNotification.notificationName);
+          //IF the notification is enabled register it to run
+          if (newNotification.enabled)
+          {
+             RegisterNotification(newNotification.notificationName);
+          }
       // if (err!=null) {throw err;
       //   next();
       next();
