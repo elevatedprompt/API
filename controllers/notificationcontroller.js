@@ -108,18 +108,20 @@ module.exports.UpdateNotification = function(req,res,next)
     // });
 
     fs.writeFileSync(dir, newNotification, 'utf8', function (err) {
-      if (err) {throw err;
-      }
+
       console.log('It\'s saved!');
       console.log("Completed Save");
-          //A save has happened, refresh the notification
-        //  UnregisterNotification(newNotification.notificationName);
-          //IF the notification is enabled register it to run
-          if (newNotification.enabled)
-          {
-      //      RegisterNotification(newNotification.notificationName);
-          }
-          next();
+        //A save has happened, refresh the notification
+      //  UnregisterNotification(newNotification.notificationName);
+        //IF the notification is enabled register it to run
+        if (newNotification.enabled)
+        {
+    //      RegisterNotification(newNotification.notificationName);
+        }
+        if (err) {throw err;
+        }
+        next();
+
     });
 
 }
