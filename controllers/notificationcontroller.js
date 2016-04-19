@@ -143,7 +143,7 @@ function RegisterNotification(notification){
     "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
     }};
 
-  var data = "notificationName="+ encodeURIComponent(notification.notificationName);
+  var data = "notificationName="+ notification.notificationName;
   var args = {
   	path: { "id": 120 },
   	// parameters: { arg1: "hello", arg2: "world" },
@@ -187,7 +187,7 @@ function UnregisterNotification(notificationName){
   var config = {headers:{
     "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
     }};
-    var data = "notificationName="+ encodeURIComponent(notificationName);
+    var data = "notificationName="+ notificationName;
     var args = {
     	path: { "id": 120 },
     	// parameters: { arg1: "hello", arg2: "world" },
