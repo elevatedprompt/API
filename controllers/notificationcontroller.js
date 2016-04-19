@@ -104,7 +104,7 @@ module.exports.UpdateNotification = function(req,res,next)
 
     console.log("Saving Configuration to: " + dir);
 
-    jsonfile.writeFile(dir , JSON.stringify(newNotification), function (err) {
+    jsonfile.writeFile(dir , newNotification, function (err) {
   // //    console.error(err);
   //     UnregisterNotification(newNotification.notificationName);
   //     //IF the notification is enabled register it to run
@@ -130,7 +130,7 @@ module.exports.UpdateNotification = function(req,res,next)
 
 function RegisterNotification(notification){
   var methodCall = notificationService + 'RegisterNotification';
-var Client = require('node-rest-client').Client;
+  var Client = require('node-rest-client').Client;
   var client = new Client();
 
   var config = {headers:{
