@@ -120,13 +120,18 @@ module.exports.UpdateNotification = function(req,res,next)
           console.log(JSON.stringify(newNotification));
       //A save has happened, refresh the notification
           console.log(newNotification.notificationName);
-          UnregisterNotification(newNotification.notificationName);
+
+
           //IF the notification is enabled register it to run
           if (newNotification.enabled)
           {
             console.log(newNotification.notificationName);
              RegisterNotification(newNotification.notificationName);
           }
+          else {
+            UnregisterNotification(newNotification.notificationName);
+          }
+
       // if (err!=null) {throw err;
       //   next();
       next();
@@ -146,7 +151,7 @@ function RegisterNotification(notification){
     }};
 
   var data = "notificationName="+ notification;
-  data+= "&notification="+ JSON.stringify(notification);
+//  data+= "&notification="+ JSON.stringify(notification);
   var args = {
   	path: { "id": 120 },
   	// parameters: { arg1: "hello", arg2: "world" },
