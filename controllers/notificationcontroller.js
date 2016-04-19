@@ -128,8 +128,9 @@ module.exports.UpdateNotification = function(req,res,next)
       // if (err!=null) {throw err;
       //   next();
        }
-      next();
+
     });
+    next();
 }
 
 
