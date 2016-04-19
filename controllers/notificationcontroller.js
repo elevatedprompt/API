@@ -113,12 +113,12 @@ module.exports.UpdateNotification = function(req,res,next)
   //        RegisterNotification(newNotification.notificationName);
   //     }
       console.log(err);
-      if (err) {throw err;
+      if (err!=null) {throw err;
         next();
       }
       next();
     });
-
+    console.log('complete');
     // fs.writeFile(dir, newNotification, 'utf8', function (err) {
     //   console.log('It\'s saved!');
     //   console.log("Completed Save");
