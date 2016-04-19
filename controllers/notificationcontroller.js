@@ -108,6 +108,7 @@ module.exports.UpdateNotification = function(req,res,next)
     // });
 
     fs.writeFileSync(dir, JSON.stringify(newNotification), 'utf8', function (err) {
+      if(err)console.log("thrown error");
       if (err) throw err;
       console.log('It\'s saved!');
     });
