@@ -186,9 +186,9 @@ function UnregisterNotification(notificationName){
   var methodCall = notificationService + 'UnRegisterNotification';
 //  var Client = require('node-rest-client').Client;
   var client = new Client();
+  var data = "notificationName="+ notificationName;
   var config = {headers:{
     "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
-    var data = "notificationName="+ notificationName;
     }};
     var args = {
     	path: { "id": 120 },
