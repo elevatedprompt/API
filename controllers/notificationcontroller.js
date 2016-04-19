@@ -104,14 +104,8 @@ module.exports.UpdateNotification = function(req,res,next)
 
     console.log("Saving Configuration to: " + dir);
 
-    // jsonfile.writeFile(dir , newNotification, function (err) {
-    //   console.error(err);
-    // });
-
-    fs.writeFileSync(dir, newNotification, 'utf8', function (err) {
-      console.log('It\'s saved!');
-      console.log("Completed Save");
-      //A save has happened, refresh the notification
+    jsonfile.writeFile(dir , newNotification, function (err) {
+      console.error(err);
       UnregisterNotification(newNotification.notificationName);
       //IF the notification is enabled register it to run
       if (newNotification.enabled)
@@ -124,6 +118,12 @@ module.exports.UpdateNotification = function(req,res,next)
       }
       next();
     });
+
+    // fs.writeFile(dir, newNotification, 'utf8', function (err) {
+    //   console.log('It\'s saved!');
+    //   console.log("Completed Save");
+    //   //A save has happened, refresh the notification
+    // });
 }
 
 
