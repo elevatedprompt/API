@@ -20,6 +20,7 @@
     "node-restful": "^0.2.2",
     "q": "^1.4.1",
     "resourcejs": "^1.0.0",
-    "node-rest-client": "^1.8.0"
+    "node-rest-client": "^1.8.0",
+    "unirest": "^0.4.2"
   }
 }
