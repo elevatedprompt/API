@@ -14,6 +14,7 @@ var elasticsearch = require("elasticsearch");
 var jsonfile = require('jsonfile')
 var Client = require('node-rest-client').Client;
 var notificationService  = 'http://127.0.0.1:3003/';
+var unirest = require('unirest');
 
 module.exports = function(app, route){
   // Setup the controller for REST;
@@ -140,51 +141,66 @@ module.exports.UpdateNotification = function(req,res,next)
 
 
 function RegisterNotification(notification){
-
   console.log("Register Notification: " + notification);
   var methodCall = notificationService + 'RegisterNotification';
 
-  var client = new Client();
-
-  var config = {headers:{
-    "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
-    }};
-
-  var data = "notificationName="+ notification;
-//  data+= "&notification="+ JSON.stringify(notification);
-  var args = {
-  	path: { "id": 120 },
-  	// parameters: { arg1: "hello", arg2: "world" },
-  	headers: {   "Content-type": "application/x-www-form-urlencoded; charset=utf-8" },
-  	// data: "<xml><arg1>hello</arg1><arg2>world</arg2></xml>",
-  	requestConfig: {
-  		timeout: 1000, //request timeout in milliseconds
-  		noDelay: true, //Enable/disable the Nagle algorithm
-  		keepAlive: true, //Enable/disable keep-alive functionalityidle socket.
-  		keepAliveDelay: 1000 //and optionally set the initial delay before the first keepalive probe is sent
-  	},
-  	responseConfig: {
-  		timeout: 1000 //response timeout
-  	}
-  };
-
-  var req =client.post(methodCall + "?" + data,args, function (data, response) {
-      console.log(data)  ;
-      });
-  req.on('requestTimeout', function (req) {
-  	console.log('request has expired');
-  	req.abort();
+  unirest.post(methodCall)
+  .headers({'Accept': 'application/json', 'Content-Type': 'application/json'})
+  .send(notification)
+  .end(function (response) {
+    console.log(response.body);
+    console.log("complete");
   });
 
-  req.on('responseTimeout', function (res) {
-  	console.log('response has expired');
 
-  });
 
-  //it's usefull to handle request errors to avoid, for example, socket hang up errors on request timeouts
-  req.on('error', function (err) {
-  	console.log('request error', err);
-  });
+
+
+
+
+//
+//
+//   var client = new Client();
+//
+//   var config = {headers:{
+//     "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
+//     }};
+//
+//   var data = "notificationName="+ notification;
+// //  data+= "&notification="+ JSON.stringify(notification);
+//   var args = {
+//   	path: { "id": 120 },
+//   	// parameters: { arg1: "hello", arg2: "world" },
+//   	headers: {   "Content-type": "application/x-www-form-urlencoded; charset=utf-8" },
+//   	// data: "<xml><arg1>hello</arg1><arg2>world</arg2></xml>",
+//   	requestConfig: {
+//   		timeout: 1000, //request timeout in milliseconds
+//   		noDelay: true, //Enable/disable the Nagle algorithm
+//   		keepAlive: true, //Enable/disable keep-alive functionalityidle socket.
+//   		keepAliveDelay: 1000 //and optionally set the initial delay before the first keepalive probe is sent
+//   	},
+//   	responseConfig: {
+//   		timeout: 1000 //response timeout
+//   	}
+//   };
+//
+//   var req =client.post(methodCall + "?" + data,args, function (data, response) {
+//       console.log(data)  ;
+//       });
+//   req.on('requestTimeout', function (req) {
+//   	console.log('request has expired');
+//   	req.abort();
+//   });
+//
+//   req.on('responseTimeout', function (res) {
+//   	console.log('response has expired');
+//
+//   });
+//
+//   //it's usefull to handle request errors to avoid, for example, socket hang up errors on request timeouts
+//   req.on('error', function (err) {
+//   	console.log('request error', err);
+//   });
 }
 
 function UnregisterNotification(notificationName){
