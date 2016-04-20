@@ -127,10 +127,10 @@ module.exports.UpdateNotification = function(req,res,next)
           if (newNotification.enabled)
           {
             console.log(newNotification.notificationName);
-             RegisterNotification(newNotification.notificationName);
+             RegisterNotification(newNotification);
           }
           else {
-            UnregisterNotification(newNotification.notificationName);
+            UnregisterNotification(newNotification);
           }
 
       // if (err!=null) {throw err;
