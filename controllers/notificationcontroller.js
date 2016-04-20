@@ -133,8 +133,6 @@ module.exports.UpdateNotification = function(req,res,next)
             UnregisterNotification(newNotification);
           }
 
-      // if (err!=null) {throw err;
-      //   next();
       next();
     });
 }
@@ -151,62 +149,11 @@ function RegisterNotification(notification){
     console.log(response.body);
     console.log("complete");
   });
-
-//
-
-
-
-
-
-//
-//
-//   var client = new Client();
-//
-//   var config = {headers:{
-//     "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
-//     }};
-//
-//   var data = "notificationName="+ notification;
-// //  data+= "&notification="+ JSON.stringify(notification);
-//   var args = {
-//   	path: { "id": 120 },
-//   	// parameters: { arg1: "hello", arg2: "world" },
-//   	headers: {   "Content-type": "application/x-www-form-urlencoded; charset=utf-8" },
-//   	// data: "<xml><arg1>hello</arg1><arg2>world</arg2></xml>",
-//   	requestConfig: {
-//   		timeout: 1000, //request timeout in milliseconds
-//   		noDelay: true, //Enable/disable the Nagle algorithm
-//   		keepAlive: true, //Enable/disable keep-alive functionalityidle socket.
-//   		keepAliveDelay: 1000 //and optionally set the initial delay before the first keepalive probe is sent
-//   	},
-//   	responseConfig: {
-//   		timeout: 1000 //response timeout
-//   	}
-//   };
-//
-//   var req =client.post(methodCall + "?" + data,args, function (data, response) {
-//       console.log(data)  ;
-//       });
-//   req.on('requestTimeout', function (req) {
-//   	console.log('request has expired');
-//   	req.abort();
-//   });
-//
-//   req.on('responseTimeout', function (res) {
-//   	console.log('response has expired');
-//
-//   });
-//
-//   //it's usefull to handle request errors to avoid, for example, socket hang up errors on request timeouts
-//   req.on('error', function (err) {
-//   	console.log('request error', err);
-//   });
 }
 
 function UnregisterNotification(notificationName){
   console.log("Unregister Called: " + notificationName);
   var methodCall = notificationService + 'UnRegisterNotification';
-
 
   console.log(notification);
   unirest.post(methodCall)
@@ -216,49 +163,6 @@ function UnregisterNotification(notificationName){
     console.log(response.body);
     console.log("complete");
   });
-
-
-//  var Client = require('node-rest-client').Client;
-  var client = new Client();
-  var data = "notificationName="+ notificationName;
-  var config = {headers:{
-    "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
-    }};
-    var args = {
-    	path: { "id": 120 },
-    	// parameters: { arg1: "hello", arg2: "world" },
-    	headers: {   "Content-type": "application/x-www-form-urlencoded; charset=utf-8" },
-    	// data: "<xml><arg1>hello</arg1><arg2>world</arg2></xml>",
-    	requestConfig: {
-    		timeout: 1000, //request timeout in milliseconds
-    		noDelay: true, //Enable/disable the Nagle algorithm
-    		keepAlive: true, //Enable/disable keep-alive functionalityidle socket.
-    		keepAliveDelay: 1000 //and optionally set the initial delay before the first keepalive probe is sent
-    	},
-    	responseConfig: {
-    		timeout: 1000 //response timeout
-    	}
-    };
-
-    var req =client.post(methodCall + "?" + data,args, function (data, response) {
-        console.log(data);
-         //$scope.avalibleSearches=data;
-      });
-
-      req.on('requestTimeout', function (req) {
-      	console.log('request has expired');
-      	req.abort();
-      });
-
-      req.on('responseTimeout', function (res) {
-      	console.log('response has expired');
-
-      });
-
-      //it's usefull to handle request errors to avoid, for example, socket hang up errors on request timeouts
-      req.on('error', function (err) {
-      	console.log('request error', err);
-      });
 }
 
 module.exports.GetNotifications = function(req,res,next){
