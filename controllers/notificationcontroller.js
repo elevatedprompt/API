@@ -206,6 +206,18 @@ function RegisterNotification(notification){
 function UnregisterNotification(notificationName){
   console.log("Unregister Called: " + notificationName);
   var methodCall = notificationService + 'UnRegisterNotification';
+
+
+  console.log(notification);
+  unirest.post(methodCall)
+  .headers({'Accept': 'application/json','Content-Type': 'application/json'})
+  .send(JSON.stringify(notification))
+  .end(function (response) {
+    console.log(response.body);
+    console.log("complete");
+  });
+
+
 //  var Client = require('node-rest-client').Client;
   var client = new Client();
   var data = "notificationName="+ notificationName;
