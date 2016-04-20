@@ -104,23 +104,11 @@ module.exports.UpdateNotification = function(req,res,next)
 
     console.log("Saving Configuration to: " + dir);
 
-  //   jsonfile.writeFile(dir , newNotification, function (err) {
-  // // //    console.error(err);
-
-  //     console.log("in complete");
-  //     //console.log(err);
-  //     if (err!=null) {throw err;
-  //       next();
-  //     }
-  //     next();
-  //   });
 
     fs.writeFile(dir, JSON.stringify(newNotification), 'utf8', function (err) {
-          console.log('It\'s saved!');
           console.log(JSON.stringify(newNotification));
       //A save has happened, refresh the notification
           console.log(newNotification.notificationName);
-
 
           //IF the notification is enabled register it to run
           if (newNotification.enabled)
@@ -167,7 +155,6 @@ module.exports.GetNotifications = function(req,res,next){
   var dir = '/opt/API/Notifications/';
   fs.readdirSync(dir)
     .forEach(function(file) {
-
        file = dir+'/'+file;
        var stat = fs.statSync(file);
 
@@ -191,11 +178,13 @@ module.exports.DeleteConfFile = function(req,res,next)
   console.log(req.body);
 
   var notification = '/opt/API/Notifications/' + req.body.notificationName;
+  var data = fs.readFileSync(notification,'utf8');
+  var removedNotification = JSON.parse(data);
+  UnregisterNotification(removedNotification);
 
-//  notificationEngine.UnregisterNotification(req.body.notificationName);
   fs.unlink(notification, function (err) {
     if (err) throw err;
-    console.log(notification + ' It\'s gone!');
+    console.log(notification + ' Deleted');
   });
   next();
 };
