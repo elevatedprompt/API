@@ -12,7 +12,6 @@ var Resource = require('resourcejs');
 var fs = require ('fs');
 var elasticsearch = require("elasticsearch");
 var jsonfile = require('jsonfile')
-var Client = require('node-rest-client').Client;
 var notificationService  = 'http://127.0.0.1:3003/';
 var unirest = require('unirest');
 
