@@ -146,8 +146,7 @@ function RegisterNotification(notification){
   .headers({'Accept': 'application/json','Content-Type': 'application/json'})
   .send(JSON.stringify(notification))
   .end(function (response) {
-    console.log(response.body);
-    console.log("complete");
+    console.log(response);
   });
 }
 
@@ -160,8 +159,7 @@ function UnregisterNotification(notificationName){
   .headers({'Accept': 'application/json','Content-Type': 'application/json'})
   .send(JSON.stringify(notification))
   .end(function (response) {
-    console.log(response.body);
-    console.log("complete");
+    console.log(response);
   });
 }
 
@@ -180,7 +178,6 @@ module.exports.GetNotifications = function(req,res,next){
    });
 
    console.log('Get notification folder File List');
-   console.log(results);
    res.send(results);
    next();
 }
