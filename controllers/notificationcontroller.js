@@ -145,14 +145,14 @@ function RegisterNotification(notification){
   var methodCall = notificationService + 'RegisterNotification';
 
   unirest.post(methodCall)
-  .headers({'Content-Type': 'application/json'})
+  .headers({'Accept': 'application/json','Content-Type': 'application/json'})
   .send(JSON.stringify(notification))
   .end(function (response) {
     console.log(response.body);
     console.log("complete");
   });
 
-//'Accept': 'application/json',
+//
 
 
 
