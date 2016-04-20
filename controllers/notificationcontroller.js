@@ -143,7 +143,7 @@ module.exports.UpdateNotification = function(req,res,next)
 function RegisterNotification(notification){
   console.log("Register Notification: " + notification);
   var methodCall = notificationService + 'RegisterNotification';
-
+  console.log(notification);
   unirest.post(methodCall)
   .headers({'Accept': 'application/json','Content-Type': 'application/json'})
   .send(JSON.stringify(notification))
