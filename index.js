@@ -66,13 +66,13 @@ app.all('/DeleteNotification',epNotificationSystem.DeleteNotification);
 
 
 /*Notification Functions*/
-var emailcontroller = require('./controllers/emailcontroller');
+// var emailcontroller = require('./controllers/emailcontroller');
 var notificationController = require('./controllers/notificationcontroller');
 var elasticquery = require('./controllers/elasticquery');
 
 
 //var notifications = notificationController.GetAllNotifications();
-app.all('/testQuery',elasticquery.testQuery);
+// app.all('/testQuery',elasticquery.testQuery);
 //app.all('/testSearchExists',elasticquery.testSearchExists);
 
 
@@ -90,7 +90,7 @@ app.all('/Notification/UpdateNotification', notificationController.UpdateNotific
 //app.all('/Notification/GetNotifications', notificationController.GetNotifications);
 
 //Email Controller
-app.all('/Notification/testEmail',emailcontroller.testEmail);
+// app.all('/Notification/testEmail',emailcontroller.testEmail);
 
 //app.all('/sendMessage',emailcontroller.sendMessage);
 app.all('/Notification/SendMail',emailcontroller.SendMail);

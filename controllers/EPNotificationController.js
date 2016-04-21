@@ -19,16 +19,13 @@ module.exports = function(app, route){
   return function(req, res, next) {
     next();
   };
-
 };
 
+//GetNotification
 //reads the contents of the notification file at (configfile)
-//
 module.exports.GetNotification = function(req,res,next)
 {
-
-  console.log('Get Notification File');
-  console.log(req.body);
+  console.log('Get Notification File:' + req.body);
   var configfile = req.body.configfile;
   var contents = fs.readFileSync(configfile,'utf8');
 
@@ -38,6 +35,7 @@ module.exports.GetNotification = function(req,res,next)
   next();
 };
 
+//GetNotifications
 //return the list of notifications
 module.exports.GetNotifications = function(req,res,next)
 {
@@ -106,7 +104,6 @@ module.exports.UpdateNotification = function(req,res,next)
     if (err) throw err;
     console.log('It\'s saved!');
   });
-
   next();
 };
 

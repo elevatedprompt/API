@@ -23,45 +23,44 @@ module.exports =   function(app, route){
 
 };
 
+//GetConfFile
 //reads the contents of the config file at (configfile)
 module.exports.GetConfFile = function(req,res,next)
 {
-
   console.log('Get Config File');
-  console.log(req.body);
+  // console.log(req.body);
   var configfile = req.body.configfile;
   var contents = fs.readFileSync(configfile,'utf8');
 
-  console.log(contents);
+  // console.log(contents);
   res.send(contents);
-
   next();
 };
 
+//GetLogstashConfigDirectoryListing
+//Returns a list of files in the logstash config directory
 module.exports.GetLogstashConfigDirectoryListing = function(req,res,next)
 {
   var results = [];
   var dir = '/etc/logstash/conf.d/';
   fs.readdirSync(dir)
     .forEach(function(file) {
-
        file = dir+'/'+file;
        var stat = fs.statSync(file);
 
        if (stat && stat.isDirectory()) {
            results = results.concat(_getAllFilesFromFolder(file))
        } else results.push(file);
-
    });
 
-   console.log('Get Logstash File List');
-   console.log(results);
+  //  console.log('Get Logstash File List');
+  //  console.log(results);
    res.send(results);
-
    next();
 };
 
-
+//GetElasticConfigDirectoryListing
+//Returns a list of Elastic Config files
 module.exports.GetElasticConfigDirectoryListing = function(req,res,next)
 {
   var results = [];
@@ -77,8 +76,8 @@ module.exports.GetElasticConfigDirectoryListing = function(req,res,next)
        } else results.push(file);
    });
 
-   console.log('Get Logstash File List');
-   console.log(results);
+  //  console.log('Get Logstash File List');
+  //  console.log(results);
    res.send(results);
    next();
 };
@@ -99,8 +98,8 @@ module.exports.GetCronJobDirectory = function(req,res,next)
 
    });
 
-   console.log('Get cron folder File List');
-   console.log(results);
+  //  console.log('Get cron folder File List');
+  //  console.log(results);
    res.send(results);
    next();
 };
@@ -108,14 +107,13 @@ module.exports.GetCronJobDirectory = function(req,res,next)
 //GetServiceStatus (Gets the status of the service by name)
 module.exports.GetServiceStatus = function(req,res,next)
 {
-  console.log('Get Service Status');
-  console.log(req.body);
+  console.log('Get Service Status:' + req.body);
 
   var servicename = req.body.servicename;
 
   var result = exec("service " + servicename + " status", function (error, stdout, stderr,res, next) {
-    console.log('stdout: ' + stdout);
-    console.log('stderr: ' + stderr);
+    // console.log('stdout: ' + stdout);
+    // console.log('stderr: ' + stderr);
     if (error !== null) {
       console.log('exec Get Service Status ('+servicename+') error: ' + error);
     }
@@ -128,16 +126,17 @@ module.exports.GetServiceStatus = function(req,res,next)
  });
 };
 
+//IsServiceRunning
+//Returns the service status
 module.exports.IsServiceRunning = function(req,res,next)
 {
-  console.log('Is Service Running');
-  console.log(req.body);
+  console.log('Is Service Running' + req.body);
 
   var servicename = req.body.servicename;
 
   var result = exec("service " + servicename + " status", function (error, stdout, stderr,res, next) {
-    console.log('stdout: ' + stdout);
-    console.log('stderr: ' + stderr);
+    // console.log('stdout: ' + stdout);
+    // console.log('stderr: ' + stderr);
     if (error !== null) {
       console.log('exec IsServiceRunning('+servicename+') error: ' + error);
     }
@@ -168,11 +167,11 @@ module.exports.IsServiceRunning = function(req,res,next)
  });
 };
 
-
+//StopService
+//Executes a Stop Service Request
 module.exports.StopService = function(req,res,next)
 {
-  console.log('Stop Service');
-  console.log(req.body);
+  console.log('Stop Service: ' + req.body);
 
   var servicename = req.body.servicename;
 
@@ -191,7 +190,7 @@ module.exports.StopService = function(req,res,next)
     output+= data;
   });
   result.on('close', function (data,status) {
-    console.log(data + ' Stop service close');
+    // console.log(data + ' Stop service close');
     res.sendStatus(output);
   });
    result.stderr.on('error', function (error) {
@@ -203,20 +202,21 @@ module.exports.StopService = function(req,res,next)
 //StartService (Gets the status of the service by name)
 module.exports.StartService = function(req,res,next)
 {
-  console.log('Start Service');
-  console.log(req.body);
+  console.log('Start Service:' + req.body);
 
   var servicename = req.body.servicename;
+  var output = '';
 
   var result = exec("service " + servicename + " start", function (error, stdout, stderr,res, next) {
-    console.log('stdout: ' + stdout);
-    console.log('stderr: ' + stderr);
+    // console.log('stdout: ' + stdout);
+    // console.log('stderr: ' + stderr);
     if (error !== null) {
       console.log('exec Start Service ' + servicename + 'error: ' + stderr);
     }
     return stdout;
   })
-  var output = '';
+
+
   result.stdout.on('data', function (data) {
    output+= data;
  });
@@ -262,8 +262,7 @@ module.exports.RestartAllServices = function(req,res,next)
 module.exports.UpdateConfFile = function(req,res,next)
 {
 
-  console.log("Update Config File")
-  console.log(req.body);
+  console.log("Update Config File:" + req.body);
 
   var configfilename = req.body.conffilename;
   var configcontent = req.body.conffilecontent;
@@ -285,8 +284,7 @@ module.exports.UpdateConfFile = function(req,res,next)
 //conffilename - path to filename
 module.exports.DeleteConfFile = function(req,res,next)
 {
-  console.log("Delete Config File")
-  console.log(req.body);
+  console.log("Delete Config File:" + req.body);
 
   var configfilename = req.body.conffilename;
 
@@ -308,28 +306,26 @@ module.exports.DeleteConfFile = function(req,res,next)
 //conffilename - path to filename
 module.exports.ValidateLogstashFile = function(req,res,next)
 {
-  console.log("Validate Logstash File")
-  console.log(req.body);
+  console.log("Validate Logstash File:" + req.body);
+
+  var output = '';
   var validationResponse= {};
   validationResponse.IsValid = false;
   validationResponse.Message ="";
   var configfilename = req.body.conffilename;
 
-  console.log('Validate Logstash File');
-  console.log(req.body);
-
   var result = exec("/opt/logstash/bin/logstash --configtest -f  " + configfilename, function (error, stdout, stderr,res, next) {
-    console.log('stdout: ' + stdout);
-    console.log('stderr: ' + stderr);
+    // console.log('stdout: ' + stdout);
+    // console.log('stderr: ' + stderr);
     if (error !== null) {
       console.log('exec config test file ' + configfilename + 'error: ' + stderr);
     }
     return stdout;
   })
-  var output = '';
+
   result.stdout.on('data', function (data) {
    output+= data;
- });
+  });
   result.on('close', function (data,status) {
     console.log('Logstash Config File test close');
     //check for "Configuration OK"
@@ -345,15 +341,15 @@ module.exports.ValidateLogstashFile = function(req,res,next)
     }
     validationResponse.Message = output;
     res.sendStatus(JSON.stringify(validationResponse));
- });
- result.stderr.on('error', function (error) {
+  });
+  result.stderr.on('error', function (error) {
      console.log('Logstash Config File error: ' + error);
      validationResponse.IsValid = false;
      validationResponse.Message = error;
   });
 };
 
-
+//GetTimeZone
 //returns the system time.
 module.exports.GetTimeZone = function(req,res,next)
 {
@@ -383,16 +379,15 @@ module.exports.GetTimeZone = function(req,res,next)
 //ln -s /usr/share/zoneinfo/ /etc/localtime
 module.exports.UpdateTimeZone = function(req,res,next)
 {
+  console.log("Updating Timezone to :" + req.body.timezone);
 
-  console.log("Updating Timezone to ");
-  console.log(req.body.timezone);
   var timezone = req.body.timezone;
   //unlink /etc/localtime
   //ln -s /usr/share/zoneinfo/Etc/GMT+6 /etc/localtime
   console.log("unlink /etc/localtime ");
   var unlinkTimezone = exec("unlink /etc/localtime ", function (error, stdout, stderr) {
-    console.log('stdout: ' + stdout);
-    console.log('stderr: ' + stderr);
+    // console.log('stdout: ' + stdout);
+    // console.log('stderr: ' + stderr);
     if (error !== null) {
       console.log('exec unlink error: ' + stderr);
     }
@@ -403,8 +398,8 @@ module.exports.UpdateTimeZone = function(req,res,next)
   unlinkTimezone.on('close', function (data,status) {
     console.log("ln -s /usr/share/zoneinfo/" + timezone +" /etc/localtime");
     var newTimezone = exec("ln -s /usr/share/zoneinfo/" + timezone +" /etc/localtime", function (error, stdout, stderr) {
-      console.log('stdout: ' + stdout);
-      console.log('stderr: ' + stderr);
+      // console.log('stdout: ' + stdout);
+      // console.log('stderr: ' + stderr);
       if (error !== null) {
         console.log('exec link error: ' + stderr);
       }
@@ -418,7 +413,6 @@ module.exports.UpdateTimeZone = function(req,res,next)
      console.log('Set Timezone Error');
      res.send(error);
     });
-
  });
 
  unlinkTimezone.stderr.on('error', function (error) {
@@ -428,7 +422,7 @@ module.exports.UpdateTimeZone = function(req,res,next)
   moment.tz.setDefault(timezone);
 };
 
-
+//ListUsers
 //ListUsers returns a list of users from the htpasswd file.
 module.exports.ListUsers = function(req,res,next)
 {
@@ -463,7 +457,8 @@ module.exports.ListUsers = function(req,res,next)
     });
 };
 
-//UpdateUser updates a user password or if it does not exist it creates a new once
+//UpdateUser
+//updates a user password or if it does not exist it creates a new once
 module.exports.UpdateUser = function(req,res,next)
 {
   console.log("Updating User");

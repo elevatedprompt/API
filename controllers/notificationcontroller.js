@@ -26,6 +26,8 @@ module.exports = function(app, route){
 module.exports.GetNotifications = function(req,res,next)
 {
   var dir = '/opt/API/Notifications/';
+  // console.log('Get Notifiation File List');
+
   fs.readdirSync(dir)
     .forEach(function(file) {
        // dir+'/'+
@@ -36,10 +38,8 @@ module.exports.GetNotifications = function(req,res,next)
        } else results.push(file);
    });
 
-   console.log('Get Notifiation File List');
-   console.log(results);
+  //  console.log(results);
    res.sendStatus(results);
-
    next();
 };
 
@@ -58,15 +58,16 @@ module.exports.GetAllNotifications = function ()
   return notifications;
 }
 
+//UpdateNotification
+
 module.exports.UpdateNotification = function(req,res,next)
 {
     console.log('Save Notification');
-    console.log(req.body);
   //  var configfile = req.body.configfile;
   //  var contents = fs.readFileSync(configfile,'utf8');
     var dir = '/opt/API/Notifications/' + req.body.notificationName;
-    console.log("File to Write");
-    console.log(dir);
+    // console.log("File to Write");
+    // console.log(dir);
     var newNotification = {};
 
     newNotification.notificationName = req.body.notificationName;
@@ -100,35 +101,33 @@ module.exports.UpdateNotification = function(req,res,next)
     newNotification.enabled = req.body.enabled;
     newNotification.notifyEmail = req.body.notifyEmail;
 
-    console.log(JSON.stringify(newNotification));
+    //console.log(JSON.stringify(newNotification));
 
     console.log("Saving Configuration to: " + dir);
 
-
     fs.writeFile(dir, JSON.stringify(newNotification), 'utf8', function (err) {
-          console.log(JSON.stringify(newNotification));
-      //A save has happened, refresh the notification
-          console.log(newNotification.notificationName);
-
+          // console.log(JSON.stringify(newNotification));
+          // console.log(newNotification.notificationName);
           //IF the notification is enabled register it to run
           if (newNotification.enabled)
           {
-            console.log(newNotification.notificationName);
              RegisterNotification(newNotification);
           }
           else {
             UnregisterNotification(newNotification);
           }
-
       next();
     });
 }
 
 
+//RegisterNotification
+//Calls Notification API to register notification watcher
 function RegisterNotification(notification){
   console.log("Register Notification: " + notification);
   var methodCall = notificationService + 'RegisterNotification';
-  console.log(notification);
+
+  // console.log(notification);
   unirest.post(methodCall)
   .headers({'Accept': 'application/json','Content-Type': 'application/json'})
   .send(JSON.stringify(notification))
@@ -137,11 +136,13 @@ function RegisterNotification(notification){
   });
 }
 
+//UnRegisterNotification
+//Calls Notification API to unregister a notification watcher
 function UnregisterNotification(notificationName){
-  console.log("Unregister Called: " + notificationName);
+  console.log("Unregister Notification: " + notificationName);
   var methodCall = notificationService + 'UnRegisterNotification';
 
-  console.log(notification);
+  // console.log(notification);
   unirest.post(methodCall)
   .headers({'Accept': 'application/json','Content-Type': 'application/json'})
   .send(JSON.stringify(notification))
@@ -150,6 +151,8 @@ function UnregisterNotification(notificationName){
   });
 }
 
+//GetNotifications
+//Returns a list of Notifications
 module.exports.GetNotifications = function(req,res,next){
   var results = [];
   var dir = '/opt/API/Notifications/';
@@ -157,13 +160,11 @@ module.exports.GetNotifications = function(req,res,next){
     .forEach(function(file) {
        file = dir+'/'+file;
        var stat = fs.statSync(file);
-
        if (stat && stat.isDirectory()) {
            results = results.concat(_getAllFilesFromFolder(file))
        } else results.push(file);
    });
 
-   console.log('Get notification folder File List');
    res.send(results);
    next();
 }
@@ -175,11 +176,12 @@ module.exports.GetNotifications = function(req,res,next){
 module.exports.DeleteConfFile = function(req,res,next)
 {
   console.log("Delete Notification")
-  console.log(req.body);
+  // console.log(req.body);
 
   var notification = '/opt/API/Notifications/' + req.body.notificationName;
   var data = fs.readFileSync(notification,'utf8');
   var removedNotification = JSON.parse(data);
+
   UnregisterNotification(removedNotification);
 
   fs.unlink(notification, function (err) {
