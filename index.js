@@ -93,7 +93,7 @@ app.all('/Notification/UpdateNotification', notificationController.UpdateNotific
 // app.all('/Notification/testEmail',emailcontroller.testEmail);
 
 //app.all('/sendMessage',emailcontroller.sendMessage);
-app.all('/Notification/SendMail',emailcontroller.SendMail);
+//app.all('/Notification/SendMail',emailcontroller.SendMail);
 
 
 
