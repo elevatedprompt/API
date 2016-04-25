@@ -100,6 +100,7 @@ module.exports.UpdateNotification = function(req,res,next)
     newNotification.notificationDescription = req.body.notificationDescription;
     newNotification.enabled = req.body.enabled;
     newNotification.notifyEmail = req.body.notifyEmail;
+    newNotification.checkFreq = req.body.checkFreq;
 
     //console.log(JSON.stringify(newNotification));
 
