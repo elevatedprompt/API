@@ -31,30 +31,26 @@ var elasticClient = new elasticsearch.Client({
 
 
 module.exports.pingCluster = function(req,res,next){
-  elasticClient.ping({
-    requestTimeout: 30000,
+                                                    elasticClient.ping({
+                                                      requestTimeout: 30000,
 
-    // undocumented params are appended to the query string
-    hello: "elasticsearch"
-  }, function (error) {
-    if (error) {
-      console.error('elasticsearch cluster is down!');
-      res.sendStatus(false);
-      next();
-    } else {
-      console.log('All is well');
-      res.sendStatus(true);
-      next();
-    }
-  });
-}
+                                                      // undocumented params are appended to the query string
+                                                      hello: "elasticsearch"
+                                                    }, function (error) {
+                                                      if (error) {
+                                                        console.error('elasticsearch cluster is down!');
+                                                        res.sendStatus(false);
+                                                        next();
+                                                      } else {
+                                                        console.log('All is well');
+                                                        res.sendStatus(true);
+                                                        next();
+                                                      }
+                                                    });
+                                                  }
 
 
-// $scope.searchList= [
-//   {ID:"1",Title:"Search Example",SearchString:"searchstring"},
-//   {ID:"2",Title:"Another Search",SearchString:"searchstring"},
-//   {ID:"3",Title:"Another Example",SearchString:"searchstring"},
-// ];
+
 module.exports.ListSearches= function(req,res,next){
 console.log('Get List Of searches');
 
