@@ -24,7 +24,8 @@ app.use(function(req, res, next) {
 var epSystem = require('./controllers/EPSystemController');
 var epNotificationSystem = require('./controllers/EPNotificationController');
 
-app.get('/RestartAllServices',epSystem.RestartAllServices);
+global.tracelevel =   'debug';
+
 //TimeZone
 app.all('/UpdateTimeZone',epSystem.UpdateTimeZone);
 app.all('/GetTimeZone',epSystem.GetTimeZone);

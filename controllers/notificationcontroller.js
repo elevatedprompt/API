@@ -26,11 +26,10 @@ module.exports = function(app, route){
 module.exports.GetNotifications = function(req,res,next)
 {
   var dir = '/opt/API/Notifications/';
-  // console.log('Get Notifiation File List');
+  logEvent('Get Notifiation File List');
 
   fs.readdirSync(dir)
     .forEach(function(file) {
-       // dir+'/'+
        file = file;
        var stat = fs.statSync(file);
        if (stat && stat.isDirectory()) {
@@ -60,7 +59,7 @@ module.exports.GetAllNotifications = function ()
 //UpdateNotification
 module.exports.UpdateNotification = function(req,res,next)
 {
-    // console.log('Save Notification');
+    logEvent('Save Notification');
     var dir = '/opt/API/Notifications/' + req.body.notificationName;
     var newNotification = {};
 
@@ -75,7 +74,7 @@ module.exports.UpdateNotification = function(req,res,next)
     //m = 60,000 ms
     //h = 3600000
     //d = 86400000
-    var multiplier = 300000; //default 5 min sec
+    var multiplier = 300000; //default 5 min
 
     switch(newNotification.timeFrame)
     {
@@ -96,7 +95,7 @@ module.exports.UpdateNotification = function(req,res,next)
     newNotification.notifyEmail = req.body.notifyEmail;
     newNotification.checkFreq = req.body.checkFreq;
 
-    console.log("Saving Configuration to: " + dir);
+    logEvent("Saving Configuration to: " + dir);
 
     fs.writeFile(dir, JSON.stringify(newNotification), 'utf8', function (err) {
           //IF the notification is enabled register it to run
@@ -115,29 +114,29 @@ module.exports.UpdateNotification = function(req,res,next)
 //RegisterNotification
 //Calls Notification API to register notification watcher
 function RegisterNotification(notification){
-  console.log("Register Notification: " + notification);
+  logEvent("Register Notification: " + notification);
   var methodCall = notificationService + 'RegisterNotification';
 
   unirest.post(methodCall)
   .headers({'Accept': 'application/json','Content-Type': 'application/json'})
   .send(JSON.stringify(notification))
   .end(function (response) {
-    console.log(response);
+    logEvent(response);
   });
 }
 
 //UnRegisterNotification
 //Calls Notification API to unregister a notification watcher
 function UnregisterNotification(notificationName){
-  console.log("Unregister Notification: " + notificationName);
+  logEvent("Unregister Notification: " + notificationName);
   var methodCall = notificationService + 'UnRegisterNotification';
 
-  // console.log(notification);
+  logEvent(notification);
   unirest.post(methodCall)
   .headers({'Accept': 'application/json','Content-Type': 'application/json'})
   .send(JSON.stringify(notification))
   .end(function (response) {
-    console.log(response);
+    logEvent(response);
   });
 }
 
@@ -165,7 +164,7 @@ module.exports.GetNotifications = function(req,res,next){
 //notificationName - name of the notification
 module.exports.DeleteConfFile = function(req,res,next)
 {
-  // console.log("Delete Notification")
+  logEvent("Delete Notification")
 
   var notification = '/opt/API/Notifications/' + req.body.notificationName;
   var data = fs.readFileSync(notification,'utf8');
@@ -175,7 +174,13 @@ module.exports.DeleteConfFile = function(req,res,next)
 
   fs.unlink(notification, function (err) {
     if (err) throw err;
-    console.log(notification + ' Deleted');
+    logEvent(notification + ' Deleted');
   });
   next();
 };
+
+  function logEvent(message){
+                              if(global.tracelevel == 'debug'){
+                                                                console.log(message);
+                                                                }
+                            }
