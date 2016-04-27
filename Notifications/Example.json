@@ -1,9 +1,0 @@
-{
-  "notificationName":"Example Notification",
-  "selectedSearch":"AnotherSearch_Time",
-  "thresholdType":"Max",
-  "thresholdCount":"2",
-  "timeValue":"2",
-  "timeFrame":"h",
-  "notificationDescription":"testtest"
-}
