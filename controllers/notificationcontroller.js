@@ -106,6 +106,7 @@ module.exports.UpdateNotification = function(req,res,next)
           else {
             UnregisterNotification(newNotification);
           }
+      res.sendStatus('');
       next();
     });
 }
@@ -176,6 +177,7 @@ module.exports.DeleteNotification = function(req,res,next)
     if (err) throw err;
     logEvent(notification + ' Deleted');
   });
+  res.sendStatus('');
   next();
 };
 
