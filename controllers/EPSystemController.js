@@ -148,6 +148,7 @@ module.exports.IsServiceRunning = function(req,res,next)
     var stopped = "stopped";
     var notrunning = "not running";
     var running = "is running";
+    var pidFile = "pid file exists";
 
     var str = data.toString();
     if(str.match(stopped)){
@@ -163,6 +164,10 @@ module.exports.IsServiceRunning = function(req,res,next)
     if(str.match(running)){
       res.send(true);
       console.log(data + ' service running');
+    }
+    if(str.match(pidFile)){
+      res.send(true);
+      console.log(data + ' pid file exists. (Stop to Reset)');
     }
  });
 };
@@ -198,6 +203,7 @@ module.exports.StopService = function(req,res,next)
     res.send(error);
   });
 };
+
 
 //StartService (Gets the status of the service by name)
 module.exports.StartService = function(req,res,next)
