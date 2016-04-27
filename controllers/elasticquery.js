@@ -52,7 +52,7 @@ module.exports.pingCluster = function(req,res,next){
 
 
 module.exports.ListSearches= function(req,res,next){
-console.log('Get List Of searches');
+// console.log('Get List Of searches');
 
   //return a list of search types.
   elasticClient.search({
@@ -65,34 +65,18 @@ console.log('Get List Of searches');
 //    deferred.resolve(results.hits);
     var result=[];
     for(; ii < hits_in.length; ii++) {
-        result.push(hits_in[ii]._source);//.kibanaSavedObjectMeta.searchSourceJSON);
-        console.log(result);
-      //  console.log(hits_in[ii]);
+        result.push(hits_in[ii]._source);
+        // console.log(result);
     }
     res.sendStatus(JSON.stringify(result));
-    console.log(result);
+    // console.log(result);
     //next();
   //  return result;
   }, function (error) {
     console.trace(error.message);
   });
 }
-///Alternate
-/*
-module.exports.ListSearches= function(req,res,next){
-  console.log('Get List Of searches');
 
-  //return a list of search types.
-  elasticClient.search({
-    type:'search'
-  }).then(function (body) {
-    var hits = body.hits.hits;
-    res.send(hits);
-  }, function (error) {
-    console.trace(error.message);
-  });
-}
-*/
 
 function getQuery(queryName){
   elasticClient.search({
@@ -100,7 +84,6 @@ function getQuery(queryName){
     name:queryName
   }).then(function (body) {
     var hits = body.hits.hits;
-  //  res.send(hits[0]._source.kibanaSavedObjectMeta.searchSourceJSON);
     return hits[0];
 
   }, function (error) {
@@ -126,18 +109,17 @@ var query = getQueryString(queryName).then(function(result){
 
 //Call search by name
 module.exports.CallQuery= function(req,res,next){
-  console.log("call query called");
+  // console.log("call query called");
   var queryName = req.body.queryName;
 
-  console.log('Get Query');
+  // console.log('Get Query');
    var query = getQueryString(queryName).then(function(result){
-      console.log('return from query');
-      console.log(result);
+      // console.log('return from query');
+      // console.log(result);
       runSearchInternal(result).then(function(innerresult){
-        console.log("return from inner query");
-        console.log(innerresult);
-        console.log(innerresult.total);
-        //console.log(innerresult);
+        // console.log("return from inner query");
+        // console.log(innerresult);
+        // console.log(innerresult.total);
         res.sendStatus(innerresult);
         next();
       },function(err)
@@ -151,11 +133,11 @@ module.exports.CallQuery= function(req,res,next){
 function runSearchInternal(query,timeFrame)
 {
   var deferred = Q.defer();
-  console.log("Run Search Internal");
-  console.log(query);
+  // console.log("Run Search Internal");
+  // console.log(query);
   var search = JSON.parse(query);
-  console.log("post query" + search.query.query_string);
-  console.log("postedquery");
+  // console.log("post query" + search.query.query_string);
+  // console.log("postedquery");
 
   var x = {
     index:search.index,
@@ -174,8 +156,8 @@ function runSearchInternal(query,timeFrame)
       for(; ii < hits_in.length; ii++) {
           result = JSON.stringify(hits_in[ii]._source.kibanaSavedObjectMeta.searchSourceJSON);
       }
-      console.log("Search result");
-      console.log(result.hits);
+      // console.log("Search result");
+      // console.log(result.hits);
       return result.hits;
 
       // console.log("inside result response");
@@ -194,17 +176,16 @@ function runSearchInternal(query,timeFrame)
 function runTimeFrameSearchInternal(query,timeFrame)
 {
   var deferred = Q.defer();
-  console.log("Run Search Internal");
-  console.log(query);
+  // console.log("Run Search Internal");
+  // console.log(query);
   var search = JSON.parse(query);
-  console.log("post query" + search.query.query_string);
-  console.log("postedquery");
+  // console.log("post query" + search.query.query_string);
+  // console.log("postedquery");
 
   var x = {
     index:search.index,
     searchType:"count",
     q:'@timestamp:(>now-' + timeFrame + ') AND ' +search.query.query_string.query//,
-    //'@timestamp':"(>now-15m)"
   };
 
     //search.query
@@ -217,8 +198,8 @@ function runTimeFrameSearchInternal(query,timeFrame)
       for(; ii < hits_in.length; ii++) {
           result = JSON.stringify(hits_in[ii]._source.kibanaSavedObjectMeta.searchSourceJSON);
       }
-      console.log("Search result");
-      console.log(result.hits);
+      // console.log("Search result");
+      // console.log(result.hits);
       return result.hits;
 
       // console.log("inside result response");
@@ -238,10 +219,10 @@ function runTimeFrameSearchInternal(query,timeFrame)
 ///Returns the query based on the query name
 //Params: queryName
 module.exports.getQuery = function (req,res,next){
-  console.log("get query called");
-  console.log(req.body);
+  // console.log("get query called");
+  // console.log(req.body);
   var queryName= req.body.queryName;
-  console.log(queryName);
+  // console.log(queryName);
   elasticClient.search({
     type:'search',
     title: queryName
@@ -270,9 +251,9 @@ module.exports.getQuery = function (req,res,next){
 
 module.exports.runSearch = function (req,res,next){
   var query_string = req.body.searchString;
-  console.log(query_string);
+  // console.log(query_string);
   var search = JSON.parse(query_string);
-  console.log(" test query");
+  // console.log(" test query");
   //search.query.query_string.query.timestamp = "(>now-15m)";
 
   var x =   {
@@ -293,13 +274,13 @@ module.exports.runSearch = function (req,res,next){
     //query_string
   //  {"index":"logstash-*","highlight":{"pre_tags":["@kibana-highlighted-field@"],"post_tags":["@/kibana-highlighted-field@"],"fields":{"*":{}},"fragment_size":2147483647},"filter":[],"query":{"query_string":{"query":"*","analyze_wildcard":true}}}
   ).then(function (result) {
-    console.log("result");
-    console.log(result);
-    console.log("total result " + result.hits.total);
+    // console.log("result");
+    // console.log(result);
+    // console.log("total result " + result.hits.total);
     var ii = 0, hits_in, hits_out = [];
 
     hits_in = (result.hits || {}).hits || [];
-    console.log(hits.length);
+    // console.log(hits.length);
     for(; ii < hits_in.length; ii++) {
      hits_out.push(hits_in[ii]._source);
      //res.sendStatus(JSON.stringify(hits_in[ii]));
@@ -320,24 +301,24 @@ module.exports.runSearch = function (req,res,next){
 function getQueryString(queryName, callback)
 {
   var deferred = Q.defer();
-  console.log("get Query String called");
+  // console.log("get Query String called");
   elasticClient.search({
     type:'search',
     q: queryName
   }).then(function (result) {
-    console.log('Inside get Query string result');
+    // console.log('Inside get Query string result');
     var ii = 0, hits_in, hits_out = [];
 
     hits_in = (result.hits || {}).hits || [];
-    console.log('Count of Results: ' + hits_in.length);
+    // console.log('Count of Results: ' + hits_in.length);
 
     var result;
     for(; ii < hits_in.length; ii++) {
         result = hits_in[ii]._source.kibanaSavedObjectMeta.searchSourceJSON;
     }
     deferred.resolve(result);
-    console.log("Search result");
-    console.log(result);
+    // console.log("Search result");
+    // console.log(result);
     return result;
   //  console.log("returned query string " + result);
   //  deferred.promise.nodeify(callback);
@@ -352,7 +333,7 @@ function getQueryString(queryName, callback)
 
 
 module.exports.testQuery= function(req,res,next){
-console.log('Test Query');
+// console.log('Test Query');
 
   //return a list of search types.
   elasticClient.search({

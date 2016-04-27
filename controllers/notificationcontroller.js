@@ -38,7 +38,6 @@ module.exports.GetNotifications = function(req,res,next)
        } else results.push(file);
    });
 
-  //  console.log(results);
    res.sendStatus(results);
    next();
 };
@@ -59,15 +58,10 @@ module.exports.GetAllNotifications = function ()
 }
 
 //UpdateNotification
-
 module.exports.UpdateNotification = function(req,res,next)
 {
-    console.log('Save Notification');
-  //  var configfile = req.body.configfile;
-  //  var contents = fs.readFileSync(configfile,'utf8');
+    // console.log('Save Notification');
     var dir = '/opt/API/Notifications/' + req.body.notificationName;
-    // console.log("File to Write");
-    // console.log(dir);
     var newNotification = {};
 
     newNotification.notificationName = req.body.notificationName;
@@ -102,13 +96,9 @@ module.exports.UpdateNotification = function(req,res,next)
     newNotification.notifyEmail = req.body.notifyEmail;
     newNotification.checkFreq = req.body.checkFreq;
 
-    //console.log(JSON.stringify(newNotification));
-
     console.log("Saving Configuration to: " + dir);
 
     fs.writeFile(dir, JSON.stringify(newNotification), 'utf8', function (err) {
-          // console.log(JSON.stringify(newNotification));
-          // console.log(newNotification.notificationName);
           //IF the notification is enabled register it to run
           if (newNotification.enabled)
           {
@@ -128,7 +118,6 @@ function RegisterNotification(notification){
   console.log("Register Notification: " + notification);
   var methodCall = notificationService + 'RegisterNotification';
 
-  // console.log(notification);
   unirest.post(methodCall)
   .headers({'Accept': 'application/json','Content-Type': 'application/json'})
   .send(JSON.stringify(notification))
@@ -176,8 +165,7 @@ module.exports.GetNotifications = function(req,res,next){
 //notificationName - name of the notification
 module.exports.DeleteConfFile = function(req,res,next)
 {
-  console.log("Delete Notification")
-  // console.log(req.body);
+  // console.log("Delete Notification")
 
   var notification = '/opt/API/Notifications/' + req.body.notificationName;
   var data = fs.readFileSync(notification,'utf8');
