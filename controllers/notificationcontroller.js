@@ -12,8 +12,8 @@ var Resource = require('resourcejs');
 var fs = require ('fs');
 var elasticsearch = require("elasticsearch");
 var jsonfile = require('jsonfile')
-
-
+var notificationService  = 'http://127.0.0.1:3003/';
+var unirest = require('unirest');
 
 module.exports = function(app, route){
   // Setup the controller for REST;
@@ -26,9 +26,10 @@ module.exports = function(app, route){
 module.exports.GetNotifications = function(req,res,next)
 {
   var dir = '/opt/API/Notifications/';
+  logEvent('Get Notifiation File List');
+
   fs.readdirSync(dir)
     .forEach(function(file) {
-       // dir+'/'+
        file = file;
        var stat = fs.statSync(file);
        if (stat && stat.isDirectory()) {
@@ -36,10 +37,7 @@ module.exports.GetNotifications = function(req,res,next)
        } else results.push(file);
    });
 
-   console.log('Get Notifiation File List');
-   console.log(results);
    res.sendStatus(results);
-
    next();
 };
 
@@ -58,15 +56,11 @@ module.exports.GetAllNotifications = function ()
   return notifications;
 }
 
+//UpdateNotification
 module.exports.UpdateNotification = function(req,res,next)
 {
-    console.log('Save Notification');
-    console.log(req.body);
-  //  var configfile = req.body.configfile;
-  //  var contents = fs.readFileSync(configfile,'utf8');
+    logEvent('Save Notification');
     var dir = '/opt/API/Notifications/' + req.body.notificationName;
-    console.log("File to Write");
-    console.log(dir);
     var newNotification = {};
 
     newNotification.notificationName = req.body.notificationName;
@@ -80,7 +74,7 @@ module.exports.UpdateNotification = function(req,res,next)
     //m = 60,000 ms
     //h = 3600000
     //d = 86400000
-    var multiplier = 300000; //default 5 min sec
+    var multiplier = 300000; //default 5 min
 
     switch(newNotification.timeFrame)
     {
@@ -99,40 +93,67 @@ module.exports.UpdateNotification = function(req,res,next)
     newNotification.notificationDescription = req.body.notificationDescription;
     newNotification.enabled = req.body.enabled;
     newNotification.notifyEmail = req.body.notifyEmail;
+    newNotification.checkFreq = req.body.checkFreq;
 
-    console.log(JSON.stringify(newNotification));
+    logEvent("Saving Configuration to: " + dir);
 
-    console.log("Saving Configuration to: " + dir);
-    jsonfile.writeFile(dir , newNotification, function (err) {
-      console.error(err);
+    fs.writeFile(dir, JSON.stringify(newNotification), 'utf8', function (err) {
+          //IF the notification is enabled register it to run
+          if (newNotification.enabled)
+          {
+             RegisterNotification(newNotification);
+          }
+          else {
+            UnregisterNotification(newNotification);
+          }
+      next();
     });
-
-    //A save has happened, refresh the notification
-  //  notificationEngine.UnregisterNotification(newNotification.notificationName);
-    //IF the notification is enabled register it to run
-    if (newNotification.enabled)
-    {
-//      notificationEngine.RegisterNotification(newNotification);
-    }
-    next();
 }
 
+
+//RegisterNotification
+//Calls Notification API to register notification watcher
+function RegisterNotification(notification){
+  logEvent("Register Notification: " + notification);
+  var methodCall = notificationService + 'RegisterNotification';
+
+  unirest.post(methodCall)
+  .headers({'Accept': 'application/json','Content-Type': 'application/json'})
+  .send(JSON.stringify(notification))
+  .end(function (response) {
+    logEvent(response);
+  });
+}
+
+//UnRegisterNotification
+//Calls Notification API to unregister a notification watcher
+function UnregisterNotification(notificationName){
+  logEvent("Unregister Notification: " + notificationName);
+  var methodCall = notificationService + 'UnRegisterNotification';
+
+  logEvent(notification);
+  unirest.post(methodCall)
+  .headers({'Accept': 'application/json','Content-Type': 'application/json'})
+  .send(JSON.stringify(notification))
+  .end(function (response) {
+    logEvent(response);
+  });
+}
+
+//GetNotifications
+//Returns a list of Notifications
 module.exports.GetNotifications = function(req,res,next){
   var results = [];
   var dir = '/opt/API/Notifications/';
   fs.readdirSync(dir)
     .forEach(function(file) {
-
        file = dir+'/'+file;
        var stat = fs.statSync(file);
-
        if (stat && stat.isDirectory()) {
            results = results.concat(_getAllFilesFromFolder(file))
        } else results.push(file);
    });
 
-   console.log('Get notification folder File List');
-   console.log(results);
    res.send(results);
    next();
 }
@@ -141,17 +162,25 @@ module.exports.GetNotifications = function(req,res,next){
 //Delete Notification
 //Paramerters
 //notificationName - name of the notification
-module.exports.DeleteConfFile = function(req,res,next,http)
+module.exports.DeleteConfFile = function(req,res,next)
 {
-  console.log("Delete Notification")
-  console.log(req.body);
+  logEvent("Delete Notification")
 
   var notification = '/opt/API/Notifications/' + req.body.notificationName;
+  var data = fs.readFileSync(notification,'utf8');
+  var removedNotification = JSON.parse(data);
 
-//  notificationEngine.UnregisterNotification(req.body.notificationName);
+  UnregisterNotification(removedNotification);
+
   fs.unlink(notification, function (err) {
     if (err) throw err;
-    console.log(notification + ' It\'s gone!');
+    logEvent(notification + ' Deleted');
   });
   next();
 };
+
+  function logEvent(message){
+                              if(global.tracelevel == 'debug'){
+                                                                console.log(message);
+                                                                }
+                            }

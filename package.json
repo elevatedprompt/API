@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Colin Goss",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.14.1",
@@ -17,8 +17,8 @@
     "jsonfile": "^2.2.3",
     "lodash": "^3.10.1",
     "method-override": "^2.3.5",
-    "node-restful": "^0.2.2",
     "q": "^1.4.1",
-    "resourcejs": "^1.0.0"
+    "resourcejs": "^1.0.0",
+    "unirest": "^0.4.2"
   }
 }

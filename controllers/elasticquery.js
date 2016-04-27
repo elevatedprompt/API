@@ -18,47 +18,36 @@ var elasticsearch = require('elasticsearch');
 //         }
 //     }
 // }
-var elastichost = '192.168.1.104:9200';//'127.0.0.1:9200';
-var tracelevel = 'debug';
 
 var elasticClient = new elasticsearch.Client({
-    host: elastichost,
+    host: global.elastichost,
     sniffOnStart: true,
     apiVersion:'2.2',
-    log: tracelevel
+    log: global.tracelevel
 });
-//elasticClient.Connection();
-
 
 module.exports.pingCluster = function(req,res,next){
-  elasticClient.ping({
-    requestTimeout: 30000,
+                                                    elasticClient.ping({
+                                                      requestTimeout: 30000,
 
-    // undocumented params are appended to the query string
-    hello: "elasticsearch"
-  }, function (error) {
-    if (error) {
-      console.error('elasticsearch cluster is down!');
-      res.sendStatus(false);
-      next();
-    } else {
-      console.log('All is well');
-      res.sendStatus(true);
-      next();
-    }
-  });
-}
+                                                      // undocumented params are appended to the query string
+                                                      hello: "elasticsearch"
+                                                    }, function (error) {
+                                                      if (error) {
+                                                        console.error('elasticsearch cluster is down!');
+                                                        res.sendStatus(false);
+                                                        next();
+                                                      } else {
+                                                        logEvent('All is well');
+                                                        res.sendStatus(true);
+                                                        next();
+                                                      }
+                                                    });
+                                                  }
 
 
-// $scope.searchList= [
-//   {ID:"1",Title:"Search Example",SearchString:"searchstring"},
-//   {ID:"2",Title:"Another Search",SearchString:"searchstring"},
-//   {ID:"3",Title:"Another Example",SearchString:"searchstring"},
-// ];
+
 module.exports.ListSearches= function(req,res,next){
-console.log('Get List Of searches');
-
-  //return a list of search types.
   elasticClient.search({
     type:'search',
     'index-pattern': "/settings/objects/savedSearches/"
@@ -66,37 +55,18 @@ console.log('Get List Of searches');
 
     var ii = 0, hits_in, hits_out = [];
     hits_in = (results.hits || {}).hits || [];
-//    deferred.resolve(results.hits);
     var result=[];
     for(; ii < hits_in.length; ii++) {
-        result.push(hits_in[ii]._source);//.kibanaSavedObjectMeta.searchSourceJSON);
-        console.log(result);
-      //  console.log(hits_in[ii]);
+        result.push(hits_in[ii]._source);
+        logEvent(result);
     }
     res.sendStatus(JSON.stringify(result));
-    console.log(result);
-    //next();
-  //  return result;
+     logEvent(result);
   }, function (error) {
     console.trace(error.message);
   });
 }
-///Alternate
-/*
-module.exports.ListSearches= function(req,res,next){
-  console.log('Get List Of searches');
 
-  //return a list of search types.
-  elasticClient.search({
-    type:'search'
-  }).then(function (body) {
-    var hits = body.hits.hits;
-    res.send(hits);
-  }, function (error) {
-    console.trace(error.message);
-  });
-}
-*/
 
 function getQuery(queryName){
   elasticClient.search({
@@ -104,7 +74,6 @@ function getQuery(queryName){
     name:queryName
   }).then(function (body) {
     var hits = body.hits.hits;
-  //  res.send(hits[0]._source.kibanaSavedObjectMeta.searchSourceJSON);
     return hits[0];
 
   }, function (error) {
@@ -122,7 +91,7 @@ var query = getQueryString(queryName).then(function(result){
     next();
   });
 },function(err){
-  console.log(err.message);
+  logEvent(err.message);
   res.sendStatus(err.message);
   next();
 });
@@ -130,23 +99,15 @@ var query = getQueryString(queryName).then(function(result){
 
 //Call search by name
 module.exports.CallQuery= function(req,res,next){
-  console.log("call query called");
   var queryName = req.body.queryName;
 
-  console.log('Get Query');
    var query = getQueryString(queryName).then(function(result){
-      console.log('return from query');
-      console.log(result);
       runSearchInternal(result).then(function(innerresult){
-        console.log("return from inner query");
-        console.log(innerresult);
-        console.log(innerresult.total);
-        //console.log(innerresult);
         res.sendStatus(innerresult);
         next();
       },function(err)
     {
-      console.log(err.message);
+      logEvent(err.message);
     });
    });
 }
@@ -155,17 +116,12 @@ module.exports.CallQuery= function(req,res,next){
 function runSearchInternal(query,timeFrame)
 {
   var deferred = Q.defer();
-  console.log("Run Search Internal");
-  console.log(query);
   var search = JSON.parse(query);
-  console.log("post query" + search.query.query_string);
-  console.log("postedquery");
 
   var x = {
     index:search.index,
     searchType:"count",
     q:'@timestamp:(>now-24h) AND ' +search.query.query_string.query//,
-    //'@timestamp':"(>now-15m)"
   };
 
     //search.query
@@ -178,14 +134,8 @@ function runSearchInternal(query,timeFrame)
       for(; ii < hits_in.length; ii++) {
           result = JSON.stringify(hits_in[ii]._source.kibanaSavedObjectMeta.searchSourceJSON);
       }
-      console.log("Search result");
-      console.log(result.hits);
       return result.hits;
 
-      // console.log("inside result response");
-      // console.log(JSON.stringify(result));
-      // console.log(result);
-      // return JSON.stringify(result);
     }, function (error) {
       console.trace(error.message);
       deferred.reject(error.message);
@@ -198,17 +148,12 @@ function runSearchInternal(query,timeFrame)
 function runTimeFrameSearchInternal(query,timeFrame)
 {
   var deferred = Q.defer();
-  console.log("Run Search Internal");
-  console.log(query);
   var search = JSON.parse(query);
-  console.log("post query" + search.query.query_string);
-  console.log("postedquery");
 
   var x = {
     index:search.index,
     searchType:"count",
     q:'@timestamp:(>now-' + timeFrame + ') AND ' +search.query.query_string.query//,
-    //'@timestamp':"(>now-15m)"
   };
 
     //search.query
@@ -221,14 +166,8 @@ function runTimeFrameSearchInternal(query,timeFrame)
       for(; ii < hits_in.length; ii++) {
           result = JSON.stringify(hits_in[ii]._source.kibanaSavedObjectMeta.searchSourceJSON);
       }
-      console.log("Search result");
-      console.log(result.hits);
       return result.hits;
 
-      // console.log("inside result response");
-      // console.log(JSON.stringify(result));
-      // console.log(result);
-      // return JSON.stringify(result);
     }, function (error) {
       console.trace(error.message);
       deferred.reject(error.message);
@@ -242,10 +181,7 @@ function runTimeFrameSearchInternal(query,timeFrame)
 ///Returns the query based on the query name
 //Params: queryName
 module.exports.getQuery = function (req,res,next){
-  console.log("get query called");
-  console.log(req.body);
   var queryName= req.body.queryName;
-  console.log(queryName);
   elasticClient.search({
     type:'search',
     title: queryName
@@ -254,7 +190,6 @@ module.exports.getQuery = function (req,res,next){
 
     hits_in = (result.hits || {}).hits || [];
     for(; ii < hits_in.length; ii++) {
-     //hits_out.push(hits_in[ii]._source);
      res.sendStatus(JSON.stringify(hits_in[ii]._source.kibanaSavedObjectMeta.searchSourceJSON));
     }
     if(hits_in.length<1)
@@ -268,45 +203,23 @@ module.exports.getQuery = function (req,res,next){
 }
 
 
-
-
-//Test function
-
 module.exports.runSearch = function (req,res,next){
   var query_string = req.body.searchString;
-  console.log(query_string);
   var search = JSON.parse(query_string);
-  console.log(" test query");
-  //search.query.query_string.query.timestamp = "(>now-15m)";
 
   var x =   {
       index:search.index,
       query:search.query.query_string.query,
-    //  timestamp:"(>now-15m)",
     searchType:"count"//,
-  //  '@timestamp':"(>now-15m)"
-    //  filter:JSON.stringify(search.filter)
     };
-    console.log(JSON.stringify(x));
+    logEvent(JSON.stringify(x));
   elasticClient.search(x
-    // {
-    //   index:search.index,
-    //   filter:search.filter,
-    //   query:search.query.query_string.query
-    // }
-    //query_string
-  //  {"index":"logstash-*","highlight":{"pre_tags":["@kibana-highlighted-field@"],"post_tags":["@/kibana-highlighted-field@"],"fields":{"*":{}},"fragment_size":2147483647},"filter":[],"query":{"query_string":{"query":"*","analyze_wildcard":true}}}
   ).then(function (result) {
-    console.log("result");
-    console.log(result);
-    console.log("total result " + result.hits.total);
     var ii = 0, hits_in, hits_out = [];
 
     hits_in = (result.hits || {}).hits || [];
-    console.log(hits.length);
     for(; ii < hits_in.length; ii++) {
      hits_out.push(hits_in[ii]._source);
-     //res.sendStatus(JSON.stringify(hits_in[ii]));
     }
      res.sendStatus(JSON.stringify(hits_out));
 
@@ -324,28 +237,20 @@ module.exports.runSearch = function (req,res,next){
 function getQueryString(queryName, callback)
 {
   var deferred = Q.defer();
-  console.log("get Query String called");
   elasticClient.search({
     type:'search',
     q: queryName
   }).then(function (result) {
-    console.log('Inside get Query string result');
     var ii = 0, hits_in, hits_out = [];
 
     hits_in = (result.hits || {}).hits || [];
-    console.log('Count of Results: ' + hits_in.length);
 
     var result;
     for(; ii < hits_in.length; ii++) {
         result = hits_in[ii]._source.kibanaSavedObjectMeta.searchSourceJSON;
     }
     deferred.resolve(result);
-    console.log("Search result");
-    console.log(result);
     return result;
-  //  console.log("returned query string " + result);
-  //  deferred.promise.nodeify(callback);
-  //  return deferred.promise;
   }, function (error) {
     console.trace(error.message);
      deferred.reject(error.message);
@@ -356,16 +261,11 @@ function getQueryString(queryName, callback)
 
 
 module.exports.testQuery= function(req,res,next){
-console.log('Test Query');
-
-  //return a list of search types.
   elasticClient.search({
     type:'search',
     title:'BlaBla'
   }).then(function (body) {
     var hits = body.hits.hits;
-    //res.send(hits);
-  //  res.send(hits[0]._source.kibanaSavedObjectMeta.searchSourceJSON);
 res.send(hits[0]._source.kibanaSavedObjectMeta.searchSourceJSON);
 var query = hits[0]._source.kibanaSavedObjectMeta.searchSourceJSON;
       elasticClient.search(query
@@ -380,5 +280,11 @@ var query = hits[0]._source.kibanaSavedObjectMeta.searchSourceJSON;
   }, function (error) {
     console.trace(error.message);
   });
-//next();
 }
+
+
+  function logEvent(message){
+                              if(global.tracelevel == 'debug'){
+                                                                console.log(message);
+                                                                }
+                            }

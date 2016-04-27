@@ -3,7 +3,6 @@ var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 var moment = require('moment-timezone');
 var _ = require('lodash');
-//var Resource = require('resourcejs');
 
 // Create the application.
 var app = express();
@@ -15,26 +14,19 @@ app.use(methodOverride('X-HTTP-Method-Override'));
 
 // CORS Support
 app.use(function(req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+                                    res.header('Access-Control-Allow-Origin', '*');
+                                    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+                                    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 
-  next();
-});
-
-// Load the models.FUTURE
-//app.models = require('./models/index');
-
-// Load the routes.FUTURE
-//var routes = require('./routes');
-//_.each(routes, function(controller, route) {
-//  app.use(route, controller(app, route));
-//});
+                                    next();
+                                  });
 
 var epSystem = require('./controllers/EPSystemController');
 var epNotificationSystem = require('./controllers/EPNotificationController');
 
-app.get('/RestartAllServices',epSystem.RestartAllServices);
+global.tracelevel   = 'error';
+global.elastichost  = '127.0.0.1:9200';
+
 //TimeZone
 app.all('/UpdateTimeZone',epSystem.UpdateTimeZone);
 app.all('/GetTimeZone',epSystem.GetTimeZone);
@@ -59,22 +51,11 @@ app.all('/ListUsers',epSystem.ListUsers);
 //notification methods.
 app.all('/Notification/GetNotification',epNotificationSystem.GetNotification);
 app.all('/Notification/GetNotifications',epNotificationSystem.GetNotifications);
-app.all('/UpdateNotification',epNotificationSystem.UpdateNotification);
 app.all('/DeleteNotification',epNotificationSystem.DeleteNotification);
-app.all('/ListSearches',epNotificationSystem.ListSearches);
-
 
 /*Notification Functions*/
-
-var emailcontroller = require('./controllers/emailcontroller');
 var notificationController = require('./controllers/notificationcontroller');
 var elasticquery = require('./controllers/elasticquery');
-
-
-//var notifications = notificationController.GetAllNotifications();
-app.all('/testQuery',elasticquery.testQuery);
-//app.all('/testSearchExists',elasticquery.testSearchExists);
-
 
 //ElasticSearch Controller
 app.all("/Notification/ListSearches",elasticquery.ListSearches);
@@ -83,20 +64,9 @@ app.all('/Notification/getQuery',elasticquery.getQuery);
 app.all('/Notification/CallQuery',elasticquery.CallQuery);
 app.all('/Notification/EvaluateSearch',elasticquery.EvaluateSearch);
 app.all('/Notification/PingCluster',elasticquery.pingCluster);
-//app.all('/CallQueryStep1',elasticquery.CallQueryStep1);
 
 //Notification Controller
 app.all('/Notification/UpdateNotification', notificationController.UpdateNotification);
-//app.all('/Notification/GetNotifications', notificationController.GetNotifications);
-
-//Email Controller
-app.all('/Notification/testEmail',emailcontroller.testEmail);
-
-//app.all('/sendMessage',emailcontroller.sendMessage);
-app.all('/Notification/SendMail',emailcontroller.SendMail);
-
-
-
 
 console.log('Listening on port 3000...');
 app.listen(3000, '127.0.0.1');
