@@ -24,7 +24,8 @@ app.use(function(req, res, next) {
 var epSystem = require('./controllers/EPSystemController');
 var epNotificationSystem = require('./controllers/EPNotificationController');
 
-global.tracelevel =   'info';
+global.tracelevel   = 'error';
+global.elastichost  = '127.0.0.1:9200';
 
 //TimeZone
 app.all('/UpdateTimeZone',epSystem.UpdateTimeZone);

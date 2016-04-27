@@ -18,14 +18,12 @@ var elasticsearch = require('elasticsearch');
 //         }
 //     }
 // }
-var elastichost = '127.0.0.1:9200';//'127.0.0.1:9200';
-var tracelevel = 'debug';
 
 var elasticClient = new elasticsearch.Client({
-    host: elastichost,
+    host: global.elastichost,
     sniffOnStart: true,
     apiVersion:'2.2',
-    log: tracelevel
+    log: global.tracelevel
 });
 
 module.exports.pingCluster = function(req,res,next){
