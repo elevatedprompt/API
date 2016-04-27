@@ -162,7 +162,7 @@ module.exports.GetNotifications = function(req,res,next){
 //Delete Notification
 //Paramerters
 //notificationName - name of the notification
-module.exports.DeleteConfFile = function(req,res,next)
+module.exports.DeleteNotification = function(req,res,next)
 {
   logEvent("Delete Notification")
 

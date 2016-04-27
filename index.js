@@ -66,6 +66,7 @@ app.all('/Notification/PingCluster',elasticquery.pingCluster);
 
 //Notification Controller
 app.all('/Notification/UpdateNotification', notificationController.UpdateNotification);
-app.all('/Notification/DeleteNotification',notificationController.DeleteNotification);
+app.all('/Notification/DeleteNotification', notificationController.DeleteNotification);
+
 console.log('Listening on port 3000...');
 app.listen(3000, '127.0.0.1');
