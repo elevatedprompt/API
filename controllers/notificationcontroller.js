@@ -131,7 +131,6 @@ function UnregisterNotification(notificationName){
   logEvent("Unregister Notification: " + notificationName);
   var methodCall = notificationService + 'UnRegisterNotification';
 
-  logEvent(notification);
   unirest.post(methodCall)
   .headers({'Accept': 'application/json','Content-Type': 'application/json'})
   .send(JSON.stringify(notification))
