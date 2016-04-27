@@ -166,7 +166,7 @@ module.exports.DeleteNotification = function(req,res,next)
 {
   logEvent("Delete Notification")
 
-  var notification = '/opt/API/Notifications/' + req.body.notificationName;
+  var notification = req.body.notificationName;
   var data = fs.readFileSync(notification,'utf8');
   var removedNotification = JSON.parse(data);
 
