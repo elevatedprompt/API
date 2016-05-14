@@ -39,8 +39,7 @@ module.exports.GetNotification = function(req,res,next)
 module.exports.GetNotifications = function(req,res,next)
 {
   var results = [];
-  var dir = '/opt/API/Notifications/';
-  fs.readdirSync(dir)
+  fs.readdirSync(global.notificationsDirectory)
     .forEach(function(file) {
 
        file = dir+'/'+file;

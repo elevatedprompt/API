@@ -26,6 +26,7 @@ var epNotificationSystem = require('./controllers/EPNotificationController');
 
 global.tracelevel   = 'error';
 global.elastichost  = '127.0.0.1:9200';
+global.notificationsDirectory = '/opt/API/Notifications/';
 
 //TimeZone
 app.all('/UpdateTimeZone',epSystem.UpdateTimeZone);

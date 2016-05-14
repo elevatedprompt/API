@@ -25,10 +25,9 @@ module.exports = function(app, route){
 //return the list of notifications
 module.exports.GetNotifications = function(req,res,next)
 {
-  var dir = '/opt/API/Notifications/';
   logEvent('Get Notifiation File List');
 
-  fs.readdirSync(dir)
+  fs.readdirSync(global.notificationsDirectory)
     .forEach(function(file) {
        file = file;
        var stat = fs.statSync(file);
@@ -45,8 +44,7 @@ module.exports.GetNotifications = function(req,res,next)
 module.exports.GetAllNotifications = function ()
 {
   var notifications = [];
-  var dir = '/opt/API/Notifications/';
-  fs.readdirSync(dir)
+  fs.readdirSync(global.notificationsDirectory)
     .forEach(function(file) {
        var data = fs.readFileSync(file,'utf8');
        var obj = JSON.parse(data);
@@ -60,7 +58,7 @@ module.exports.GetAllNotifications = function ()
 module.exports.UpdateNotification = function(req,res,next)
 {
     logEvent('Save Notification');
-    var dir = '/opt/API/Notifications/' + req.body.notificationName;
+    var dir = global.notificationsDirectory + req.body.notificationName;
     var newNotification = {};
 
     newNotification.notificationName = req.body.notificationName;
@@ -145,8 +143,7 @@ function UnregisterNotification(notification){
 //Returns a list of Notifications
 module.exports.GetNotifications = function(req,res,next){
   var results = [];
-  var dir = '/opt/API/Notifications/';
-  fs.readdirSync(dir)
+  fs.readdirSync(global.notificationsDirectory)
     .forEach(function(file) {
        file = dir+'/'+file;
        var stat = fs.statSync(file);
