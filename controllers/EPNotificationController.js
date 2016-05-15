@@ -22,8 +22,7 @@ module.exports = function(app, route){
 
 //GetNotification
 //reads the contents of the notification file at (configfile)
-module.exports.GetNotification = function(req,res,next)
-{
+module.exports.GetNotification = function(req,res,next){
   logEvent('Get Notification File:' + req.body);
   var configfile = req.body.configfile;
   var contents = fs.readFileSync(configfile,'utf8');
@@ -36,8 +35,7 @@ module.exports.GetNotification = function(req,res,next)
 
 //GetNotifications
 //return the list of notifications
-module.exports.GetNotifications = function(req,res,next)
-{
+module.exports.GetNotifications = function(req,res,next){
   var results = [];
   fs.readdirSync(global.notificationsDirectory)
     .forEach(function(file) {
@@ -81,8 +79,7 @@ logEvent('Get List Of searches');
 //conffilename - path to filename
 //conffilecontent - content of the file
 //servicetorestart - service that requires a restart
-module.exports.UpdateNotification = function(req,res,next)
-{
+module.exports.UpdateNotification = function(req,res,next){
 
   logEvent("Update Notification File")
   logEvent(req.body);
@@ -102,8 +99,7 @@ module.exports.UpdateNotification = function(req,res,next)
 //Delete Config file
 //Paramerters
 //conffilename - path to filename
-module.exports.DeleteNotification = function(req,res,next)
-{
+module.exports.DeleteNotification = function(req,res,next){
   logEvent("Delete Notification File")
   logEvent(req.body);
 

@@ -23,8 +23,7 @@ module.exports = function(app, route){
 };
 
 //return the list of notifications
-module.exports.GetNotifications = function(req,res,next)
-{
+module.exports.GetNotifications = function(req,res,next){
   logEvent('Get Notifiation File List');
 
   fs.readdirSync(global.notificationsDirectory)
@@ -41,8 +40,7 @@ module.exports.GetNotifications = function(req,res,next)
 };
 
 
-module.exports.GetAllNotifications = function ()
-{
+module.exports.GetAllNotifications = function (){
   var notifications = [];
   fs.readdirSync(global.notificationsDirectory)
     .forEach(function(file) {
@@ -55,9 +53,10 @@ module.exports.GetAllNotifications = function ()
 }
 
 //UpdateNotification
-module.exports.UpdateNotification = function(req,res,next)
-{
+module.exports.UpdateNotification = function(req,res,next){
     logEvent('Save Notification');
+    logEvent(req.body);
+    
     var dir = global.notificationsDirectory + req.body.notificationName;
     var newNotification = {};
 
@@ -96,7 +95,7 @@ module.exports.UpdateNotification = function(req,res,next)
     logEvent("Saving Configuration to: " + dir);
 
     fs.writeFile(dir, JSON.stringify(newNotification), 'utf8', function (err) {
-          //IF the notification is enabled register it to run
+
           if (newNotification.enabled)
           {
              RegisterNotification(newNotification);
@@ -160,8 +159,7 @@ module.exports.GetNotifications = function(req,res,next){
 //Delete Notification
 //Paramerters
 //notificationName - name of the notification
-module.exports.DeleteNotification = function(req,res,next)
-{
+module.exports.DeleteNotification = function(req,res,next){
   logEvent("Delete Notification")
 
   var notification = req.body.notificationName;
