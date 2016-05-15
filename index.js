@@ -27,7 +27,9 @@ var epNotificationSystem = require('./controllers/EPNotificationController');
 global.tracelevel   = 'error';
 global.elastichost  = '127.0.0.1:9200';
 global.notificationsDirectory = '/opt/API/Notifications/';
-
+global.elasticsearchLocation = '/etc/elasticsearch/';
+global.logstashConfig = '/etc/logstash/conf.d/';
+global.cronJobDirectory = '/var/spool/cron/';
 //TimeZone
 app.all('/UpdateTimeZone',epSystem.UpdateTimeZone);
 app.all('/GetTimeZone',epSystem.GetTimeZone);

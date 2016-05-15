@@ -41,10 +41,10 @@ module.exports.GetConfFile = function(req,res,next)
 module.exports.GetLogstashConfigDirectoryListing = function(req,res,next)
 {
   var results = [];
-  var dir = '/etc/logstash/conf.d/';
-  fs.readdirSync(dir)
+
+  fs.readdirSync(global.logstashConfig)
     .forEach(function(file) {
-       file = dir+'/'+file;
+       file = global.logstashConfig+'/'+file;
        var stat = fs.statSync(file);
 
        if (stat && stat.isDirectory()) {
@@ -63,11 +63,11 @@ module.exports.GetLogstashConfigDirectoryListing = function(req,res,next)
 module.exports.GetElasticConfigDirectoryListing = function(req,res,next)
 {
   var results = [];
-  var dir = '/etc/elasticsearch/';
-  fs.readdirSync(dir)
+
+  fs.readdirSync(global.elasticsearchLocation)
     .forEach(function(file) {
 
-       file = dir+'/'+file;
+       file = global.elasticsearchLocation+'/'+file;
        var stat = fs.statSync(file);
 
        if (stat && stat.isDirectory()) {
@@ -84,11 +84,11 @@ module.exports.GetElasticConfigDirectoryListing = function(req,res,next)
 module.exports.GetCronJobDirectory = function(req,res,next)
 {
   var results = [];
-  var dir = '/var/spool/cron/';
-  fs.readdirSync(dir)
+
+  fs.readdirSync(global.cronJobDirectory)
     .forEach(function(file) {
 
-       file = dir+'/'+file;
+       file = global.cronJobDirectory+'/'+file;
        var stat = fs.statSync(file);
 
        if (stat && stat.isDirectory()) {

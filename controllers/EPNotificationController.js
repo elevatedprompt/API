@@ -42,7 +42,7 @@ module.exports.GetNotifications = function(req,res,next)
   fs.readdirSync(global.notificationsDirectory)
     .forEach(function(file) {
 
-       file = dir+'/'+file;
+       file = global.notificationsDirectory+'/'+file;
        var stat = fs.statSync(file);
 
        if (stat && stat.isDirectory()) {
