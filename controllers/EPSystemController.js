@@ -66,7 +66,7 @@ module.exports.GetElasticConfigDirectoryListing = function(req,res,next)
 
   fs.readdirSync(global.elasticsearchLocation)
     .forEach(function(file) {
-
+      console.log(file);
        file = global.elasticsearchLocation+'/'+file;
        var stat = fs.statSync(file);
 
