@@ -75,7 +75,7 @@ logEvent('Get ElasticSearch File List');
        logEvent(stat.isDirectory());
        if (stat.isDirectory()!=true) {
            results = results.concat(file)
-       } else results.push(file);
+       } //else results.push(file);
    });
 
 
