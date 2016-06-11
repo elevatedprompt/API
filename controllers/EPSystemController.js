@@ -41,18 +41,19 @@ module.exports.GetConfFile = function(req,res,next)
 module.exports.GetLogstashConfigDirectoryListing = function(req,res,next)
 {
   var results = [];
-
+   logEvent('Get Logstash File List');
   fs.readdirSync(global.logstashConfig)
     .forEach(function(file) {
        file = global.logstashConfig+'/'+file;
        var stat = fs.statSync(file);
-
+       logEvent(file);
+       logEvent(stat);
        if (stat && stat.isDirectory()) {
            results = results.concat(_getAllFilesFromFolder(file))
        } else results.push(file);
    });
 
-   logEvent('Get Logstash File List');
+
    logEvent(results);
    res.send(results);
    next();
@@ -63,19 +64,20 @@ module.exports.GetLogstashConfigDirectoryListing = function(req,res,next)
 module.exports.GetElasticConfigDirectoryListing = function(req,res,next)
 {
   var results = [];
-
+logEvent('Get Logstash File List');
   fs.readdirSync(global.elasticsearchLocation)
     .forEach(function(file) {
-      console.log(file);
+
        file = global.elasticsearchLocation+'/'+file;
        var stat = fs.statSync(file);
-
+       logEvent(file);
+       logEvent(stat);
        if (stat && stat.isDirectory()) {
            results = results.concat(file)
        } else results.push(file);
    });
 
-    logEvent('Get Logstash File List');
+
     logEvent(results);
    res.send(results);
    next();
@@ -84,13 +86,14 @@ module.exports.GetElasticConfigDirectoryListing = function(req,res,next)
 module.exports.GetCronJobDirectory = function(req,res,next)
 {
   var results = [];
-
+  logEvent('Get cron folder File List');
   fs.readdirSync(global.cronJobDirectory)
     .forEach(function(file) {
 
        file = global.cronJobDirectory+'/'+file;
        var stat = fs.statSync(file);
-
+       logEvent(file);
+       logEvent(stat);
        if (stat && stat.isDirectory()) {
            results = results.concat(file)
        } else results.push(file);
