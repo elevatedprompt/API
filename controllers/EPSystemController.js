@@ -73,7 +73,7 @@ logEvent('Get Logstash File List');
        logEvent(file);
        logEvent(stat);
        logEvent(stat.isDirectory());
-       if (stat && file.isDirectory()) {
+       if (stat && stat.isDirectory()) {
            results = results.concat(file)
        } else results.push(file);
    });
