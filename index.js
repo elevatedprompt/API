@@ -29,7 +29,7 @@ global.elastichost  = '127.0.0.1:9200';
 global.notificationsDirectory = '/opt/API/Notifications/';
 global.elasticsearchLocation = '/etc/elasticsearch/';
 global.logstashConfig = '/etc/logstash/conf.d/';
-global.cronJobDirectory = '/var/spool/cron/';
+global.cronJobDirectory = '/var/spool/cron/crontabs/';
 //TimeZone
 app.all('/UpdateTimeZone',epSystem.UpdateTimeZone);
 app.all('/GetTimeZone',epSystem.GetTimeZone);

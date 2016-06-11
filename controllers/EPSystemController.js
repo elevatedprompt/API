@@ -72,6 +72,7 @@ logEvent('Get Logstash File List');
        var stat = fs.statSync(file);
        logEvent(file);
        logEvent(stat);
+       logEvent(stat.isDirectory());
        if (stat && stat.isDirectory()) {
            results = results.concat(file)
        } else results.push(file);
@@ -94,6 +95,7 @@ module.exports.GetCronJobDirectory = function(req,res,next)
        var stat = fs.statSync(file);
        logEvent(file);
        logEvent(stat);
+       logEvent(stat.isDirectory());
        if (stat && stat.isDirectory()) {
            results = results.concat(file)
        } else results.push(file);
