@@ -64,7 +64,7 @@ module.exports.GetLogstashConfigDirectoryListing = function(req,res,next)
 module.exports.GetElasticConfigDirectoryListing = function(req,res,next)
 {
   var results = [];
-logEvent('Get Logstash File List');
+logEvent('Get ElasticSearch File List');
   fs.readdirSync(global.elasticsearchLocation)
     .forEach(function(file) {
 
@@ -73,7 +73,7 @@ logEvent('Get Logstash File List');
        logEvent(file);
        logEvent(stat);
        logEvent(stat.isDirectory());
-       if (!stat.isDirectory()) {
+       if (stat.isDirectory()!=true) {
            results = results.concat(file)
        } else results.push(file);
    });
