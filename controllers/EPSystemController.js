@@ -71,7 +71,7 @@ module.exports.GetElasticConfigDirectoryListing = function(req,res,next)
        var stat = fs.statSync(file);
 
        if (stat && stat.isDirectory()) {
-           results = results.concat(_getAllFilesFromFolder(file))
+           results = results.concat(file)
        } else results.push(file);
    });
 
@@ -92,7 +92,7 @@ module.exports.GetCronJobDirectory = function(req,res,next)
        var stat = fs.statSync(file);
 
        if (stat && stat.isDirectory()) {
-           results = results.concat(_getAllFilesFromFolder(file))
+           results = results.concat(file)
        } else results.push(file);
 
    });
