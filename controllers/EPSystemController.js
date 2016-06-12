@@ -166,8 +166,8 @@ module.exports.IsServiceRunning = function(req,res,next)
     var notrunning = "not running";
     var running = "is running";
     var pidFile = "pid file exists";
-    var ubuntu16Active = 'active (running)';
-    var ubuntu16Inactive = 'inactive (dead)';
+    var ubuntu16Active = ' active ';
+    var ubuntu16Inactive = 'inactive ';
     var str = data.toString();
     logEvent("Output from Service Call");
     logEvent(str);
