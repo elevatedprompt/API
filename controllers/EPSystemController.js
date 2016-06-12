@@ -131,9 +131,14 @@ module.exports.GetServiceStatus = function(req,res,next)
   })
 
   result.stdout.on('data', function (data) {
-    logEvent('Got service status: ' + data);
-   res.sendStatus(data);
+  //   logEvent('Got service status: ' + data);
+  //  res.sendStatus(data);
  });
+ result.on('close', function (data,status) {
+   logEvent('Got service status: ' + data);
+  res.sendStatus(data);
+ });
+
 };
 
 //IsServiceRunning
