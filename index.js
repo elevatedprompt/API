@@ -33,13 +33,20 @@ app.use(function(req, res, next) {
 var epSystem = require('./controllers/EPSystemController');
 var epNotificationSystem = require('./controllers/EPNotificationController');
 
-global.UbuntuV16 = true;
-global.tracelevel   = 'debug';
-global.elastichost  = '127.0.0.1:9200';
-global.notificationsDirectory = '/opt/API/Notifications/';
-global.elasticsearchLocation = '/etc/elasticsearch/';
-global.logstashConfig = '/etc/logstash/conf.d/';
-global.cronJobDirectory = '/var/spool/cron/crontabs';
+configurationFile = 'configuration.json';
+fs = require('fs');
+
+var configuration = JSON.parse(
+    fs.readFileSync(configurationFile)
+);
+
+global.UbuntuV16 = configuration.UbuntuV16;
+global.tracelevel =   configuration.tracelevel;
+global.elastichost =  configuration.elastichost;
+global.notificationDirectory = configuration.notificationDirectory;
+global.elasticsearchLocation = configuration.elasticsearchLocation;
+global.logstashConfig = configuration.logstashConfig;
+global.cronJobDirectory = configuration.cronJobDirectory;
 //TimeZone
 app.all('/UpdateTimeZone',epSystem.UpdateTimeZone);
 app.all('/GetTimeZone',epSystem.GetTimeZone);
