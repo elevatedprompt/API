@@ -1,4 +1,12 @@
-/*
+/*!
+* Copyright(c) 2016 elevatedprompt
+*
+* Author: Colin Goss
+ * @ngdoc function
+ * @name EPStack API
+ * @description
+ */
+ /*
 EPNotificationController controller
 
 Methods
@@ -7,6 +15,7 @@ RegisterNotifications
 UpdateNotification
 EvaluateNotification
 */
+
 var express = require('express');
 //var Resource = require('resourcejs');
 var fs = require ('fs');
