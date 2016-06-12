@@ -124,7 +124,7 @@ module.exports.GetServiceStatus = function(req,res,next)
   var servicename = req.body.servicename;
   logEvent(servicename);
 
-  var result = exec("service " + servicename + " status", function (error, stdout, stderr,res, next) {
+  var result = exec("service " + servicename + " status | grep Active", function (error, stdout, stderr,res, next) {
     if (error !== null) {
       logEvent('exec Get Service Status ('+servicename+') error: ' + error);
     }
