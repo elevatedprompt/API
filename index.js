@@ -1,3 +1,12 @@
+/*!
+* Copyright(c) 2016 elevatedprompt
+*
+* Author: Colin Goss
+ * @ngdoc function
+ * @name EPStack API
+ * @description
+ */
+
 var express = require('express');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');

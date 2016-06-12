@@ -1,4 +1,12 @@
-/*
+/*!
+* Copyright(c) 2016 elevatedprompt
+*
+* Author: Colin Goss
+ * @ngdoc function
+ * @name EPStack API
+ * @description
+ */
+ /*
 EPSystem controller
 
 Methods
@@ -149,7 +157,8 @@ module.exports.IsServiceRunning = function(req,res,next)
     var notrunning = "not running";
     var running = "is running";
     var pidFile = "pid file exists";
-
+    var ubuntu16Active = "active (running)";
+    var ubuntu16Inactive = "inactive (dead)";
     var str = data.toString();
     if(str.match(stopped)){
       res.send(false);
@@ -160,8 +169,15 @@ module.exports.IsServiceRunning = function(req,res,next)
       res.send(false);
       logEvent(data + ' service stopped');
     }
-
+    if(str.match(ubuntu16Inactive)){
+      res.send(false);
+      logEvent(data + ' service stopped');
+    }
     if(str.match(running)){
+      res.send(true);
+      logEvent(data + ' service running');
+    }
+    if(str.match(ubuntu16Active)){
       res.send(true);
       logEvent(data + ' service running');
     }

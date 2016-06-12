@@ -1,4 +1,12 @@
-/*
+/*!
+* Copyright(c) 2016 elevatedprompt
+*
+* Author: Colin Goss
+ * @ngdoc function
+ * @name EPStack API
+ * @description
+ */
+ /*
 EPNotificationController controller
 
 Methods
@@ -16,7 +24,6 @@ var notificationService  = 'http://127.0.0.1:3003/';
 var unirest = require('unirest');
 
 module.exports = function(app, route){
-  // Setup the controller for REST;
   return function(req, res, next) {
     next();
   };
@@ -56,7 +63,7 @@ module.exports.GetAllNotifications = function (){
 module.exports.UpdateNotification = function(req,res,next){
     logEvent('Save Notification');
     logEvent(req.body);
-    
+
     var dir = global.notificationsDirectory + req.body.notificationName;
     var newNotification = {};
 
