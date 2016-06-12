@@ -167,6 +167,7 @@ module.exports.IsServiceRunning = function(req,res,next)
     var str = data.toString();
     logEvent("Output from Service Call");
     logEvent(str);
+    logEvent("end of data");
     var status = false;
     if(str.match(stopped)){
       status = false;
