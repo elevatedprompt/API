@@ -33,6 +33,7 @@ app.use(function(req, res, next) {
 var epSystem = require('./controllers/EPSystemController');
 var epNotificationSystem = require('./controllers/EPNotificationController');
 
+global.UbuntuV16 = true;
 global.tracelevel   = 'debug';
 global.elastichost  = '127.0.0.1:9200';
 global.notificationsDirectory = '/opt/API/Notifications/';
