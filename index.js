@@ -33,7 +33,7 @@ app.use(function(req, res, next) {
 var epSystem = require('./controllers/EPSystemController');
 var epNotificationSystem = require('./controllers/EPNotificationController');
 
-global.tracelevel   = 'error';
+global.tracelevel   = 'debug';
 global.elastichost  = '127.0.0.1:9200';
 global.notificationsDirectory = '/opt/API/Notifications/';
 global.elasticsearchLocation = '/etc/elasticsearch/';
