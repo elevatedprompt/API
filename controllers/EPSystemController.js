@@ -184,20 +184,15 @@ module.exports.IsServiceRunning = function(req,res,next)
       status = false;
       logEvent(data + ' service stopped');
     }
-
     if(str.match(running)){
       status = true;
       logEvent(data + ' service running');
     }
-
     if(str.match(pidFile)){
       status = true;
       logEvent(data + ' pid file exists. (Stop to Reset)');
     }
-    res.send(status);
-
-
-
+    res.sendStatus(status);
  });
 };
 
