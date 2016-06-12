@@ -170,7 +170,7 @@ module.exports.IsServiceRunning = function(req,res,next)
     logEvent("Output from Service Call");
     logEvent(str);
     logEvent(str.match(ubuntu16Active));
-  //  var status = false;
+    var status = false;
     if(str.match(stopped)){
       res.sendStatus(false);
       logEvent(data + ' service stopped');
@@ -181,6 +181,7 @@ module.exports.IsServiceRunning = function(req,res,next)
     }
     if(str.match(ubuntu16Active)){
       res.sendStatus(true);
+      status = true;
       logEvent(data + ' service running');
     }
     if(str.match(notrunning)){
@@ -189,10 +190,12 @@ module.exports.IsServiceRunning = function(req,res,next)
     }
     if(str.match(running)){
       res.sendStatus(true);
+      status = true;
       logEvent(data + ' service running');
     }
     if(str.match(pidFile)){
       res.sendStatus(true);
+      status = true;
       logEvent(data + ' pid file exists. (Stop to Reset)');
     }
     //res.sendStatus(status);
@@ -200,7 +203,7 @@ module.exports.IsServiceRunning = function(req,res,next)
  });
 
   result.stdout.on('close', function (data) {
-    res.send(data);
+    res.send(status);
  });
 };
 
