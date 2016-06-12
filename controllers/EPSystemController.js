@@ -156,7 +156,7 @@ module.exports.IsServiceRunning = function(req,res,next)
     return stdout;
   })
 
-  result.stdout.on('data', function (data) {
+  result.stdout.on('close', function (data) {
 
     var stopped = "stopped";
     var notrunning = "not running";
