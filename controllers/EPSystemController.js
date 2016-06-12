@@ -192,7 +192,7 @@ module.exports.IsServiceRunning = function(req,res,next)
       status = true;
       logEvent(data + ' pid file exists. (Stop to Reset)');
     }
-    res.sendStatus(status);
+    //res.sendStatus(status);
     output+= data;
  });
 
