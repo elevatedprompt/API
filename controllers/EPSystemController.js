@@ -217,6 +217,13 @@ module.exports.StopService = function(req,res,next)
   logEvent('Stop Service: ' + req.body);
 
   var servicename = req.body.servicename;
+//"systemctl stop " + servicename
+  var command = "";
+  if(global.UbuntuV16){
+    command = "systemctl stop " + servicename;
+  }else {
+    command ="service " + servicename + " stop";
+  }
 
   var result = exec("service " + servicename + " stop", function (error, stdout, stderr,res, next) {
     logEvent('stdout: ' + stdout);
@@ -250,8 +257,14 @@ module.exports.StartService = function(req,res,next)
 
   var servicename = req.body.servicename;
   var output = '';
+  var command = "";
+  if(global.UbuntuV16){
+    command = "systemctl start " + servicename;
+  }else {
+    command ="service " + servicename + " start";
+  }
 
-  var result = exec("service " + servicename + " start", function (error, stdout, stderr,res, next) {
+  var result = exec(command, function (error, stdout, stderr,res, next) {
     if (error !== null) {
       logEvent('exec Start Service ' + servicename + 'error: ' + stderr);
     }
