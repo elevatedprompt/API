@@ -199,9 +199,9 @@ module.exports.IsServiceRunning = function(req,res,next)
 //    output+= data;
  });
 
-//  result.stdout.on('close', function (data) {
-//    res.send(output);
-// });
+  result.stdout.on('close', function (data) {
+    res.send(data);
+ });
 };
 
 //StopService
