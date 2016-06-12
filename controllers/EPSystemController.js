@@ -146,11 +146,11 @@ module.exports.GetServiceStatus = function(req,res,next)
 //Returns the service status
 module.exports.IsServiceRunning = function(req,res,next)
 {
-  logEvent('Is Service Running' + req.body);
+  logEvent('Is Service Running' + req.body.servicename);
 
   var servicename = req.body.servicename;
 
-  var result = exec("service " + servicename + " status", function (error, stdout, stderr,res, next) {
+  var result = exec("service " + servicename + " status | grep Active", function (error, stdout, stderr,res, next) {
     if (error !== null) {
       logEvent('exec IsServiceRunning('+servicename+') error: ' + error);
     }
