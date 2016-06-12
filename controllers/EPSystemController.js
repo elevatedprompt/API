@@ -136,8 +136,8 @@ module.exports.GetServiceStatus = function(req,res,next)
     output +=data;
  });
  result.on('close', function (data,status) {
-   logEvent('Got service status Close: ' + data);
-   res.sendStatus(data);
+   logEvent('Got service status Close: ' + output);
+   res.sendStatus(output);
  });
 
 };
