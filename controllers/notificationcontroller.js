@@ -103,7 +103,7 @@ module.exports.UpdateNotification = function(req,res,next){
 
     fs.writeFile(dir, JSON.stringify(newNotification), 'utf8', function (err) {
           logEvent(newNotification.enabled);
-          if (newNotification.enabled)
+          if (newNotification.enabled=="true")
           {
               logEvent("Registering Notification");
              RegisterNotification(newNotification);
