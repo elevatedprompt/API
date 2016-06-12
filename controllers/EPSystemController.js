@@ -123,8 +123,14 @@ module.exports.GetServiceStatus = function(req,res,next)
 
   var servicename = req.body.servicename;
   logEvent(servicename);
+  var command = "";
+  if(global.UbuntuV16){
+    command = "service " + servicename + " status | grep Active";
+  }else {
+    command ="service " + servicename + " status";
+  }
 
-  var result = exec("service " + servicename + " status | grep Active", function (error, stdout, stderr,res, next) {
+  var result = exec(command, function (error, stdout, stderr,res, next) {
     if (error !== null) {
       logEvent('exec Get Service Status ('+servicename+') error: ' + error);
     }
@@ -150,7 +156,14 @@ module.exports.IsServiceRunning = function(req,res,next)
 
   var servicename = req.body.servicename;
 
-  var result = exec("service " + servicename + " status | grep Active", function (error, stdout, stderr,res, next) {
+  var command = "";
+  if(global.UbuntuV16){
+    command = "service " + servicename + " status | grep Active";
+  }else {
+    command ="service " + servicename + " status";
+  }
+
+  var result = exec(command, function (error, stdout, stderr,res, next) {
     if (error !== null) {
       logEvent('exec IsServiceRunning('+servicename+') error: ' + error);
     }
