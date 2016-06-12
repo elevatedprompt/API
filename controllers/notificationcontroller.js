@@ -102,12 +102,14 @@ module.exports.UpdateNotification = function(req,res,next){
     logEvent("Saving Configuration to: " + dir);
 
     fs.writeFile(dir, JSON.stringify(newNotification), 'utf8', function (err) {
-
+          logEvent(newNotification.enabled);
           if (newNotification.enabled)
           {
+              logEvent("Registering Notification");
              RegisterNotification(newNotification);
           }
           else {
+            logEvent("UnRegistering Notification");
             UnregisterNotification(newNotification);
           }
       res.sendStatus('');
