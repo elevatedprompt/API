@@ -132,7 +132,7 @@ module.exports.GetServiceStatus = function(req,res,next)
 
   result.stdout.on('data', function (data) {
     logEvent('Got service status: ' + data);
-   res.send(data);
+   res.sendStatus(data);
  });
 };
 
