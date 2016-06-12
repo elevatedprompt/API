@@ -158,6 +158,8 @@ module.exports.IsServiceRunning = function(req,res,next)
   })
 
   var output = '';
+  var status = false;
+  
   result.stdout.on('data', function (data) {
 
     var stopped = "stopped";
@@ -170,7 +172,7 @@ module.exports.IsServiceRunning = function(req,res,next)
     logEvent("Output from Service Call");
     logEvent(str);
     logEvent(str.match(ubuntu16Active));
-    var status = false;
+
     if(str.match(stopped)){
       res.sendStatus(false);
       logEvent(data + ' service stopped');
