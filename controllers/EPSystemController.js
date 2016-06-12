@@ -155,8 +155,8 @@ module.exports.IsServiceRunning = function(req,res,next)
     }
     return stdout;
   })
-
-  result.stdout.on('close', function (data) {
+  var output = '';
+  result.stdout.on('data', function (data) {
 
     var stopped = "stopped";
     var notrunning = "not running";
@@ -193,7 +193,12 @@ module.exports.IsServiceRunning = function(req,res,next)
       logEvent(data + ' pid file exists. (Stop to Reset)');
     }
     res.sendStatus(status);
+    output+= data;
  });
+
+ result.stdout.on('close', function (data) {
+   res.send(output);
+});
 };
 
 //StopService
