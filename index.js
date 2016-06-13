@@ -56,6 +56,7 @@ global.notificationDirectory = configuration.notificationDirectory;
 global.elasticsearchLocation = configuration.elasticsearchLocation;
 global.logstashConfig = configuration.logstashConfig;
 global.cronJobDirectory = configuration.cronJobDirectory;
+logEvent(global.notificationDirectory);
 //TimeZone
 app.all('/UpdateTimeZone',epSystem.UpdateTimeZone);
 app.all('/GetTimeZone',epSystem.GetTimeZone);
