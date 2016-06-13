@@ -33,7 +33,7 @@ module.exports = function(app, route){
 module.exports.GetNotifications = function(req,res,next){
   logEvent('Get Notifiation File List');
 
-  fs.readdirSync(global.notificationsDirectory)
+  fs.readdirSync(global.notificationDirectory)
     .forEach(function(file) {
        file = file;
        var stat = fs.statSync(file);
@@ -49,7 +49,7 @@ module.exports.GetNotifications = function(req,res,next){
 
 module.exports.GetAllNotifications = function (){
   var notifications = [];
-  fs.readdirSync(global.notificationsDirectory)
+  fs.readdirSync(global.notificationDirectory)
     .forEach(function(file) {
        var data = fs.readFileSync(file,'utf8');
        var obj = JSON.parse(data);
@@ -64,8 +64,8 @@ module.exports.UpdateNotification = function(req,res,next){
     logEvent('Save Notification');
     logEvent(req.body);
 
-    var dir = global.notificationsDirectory + req.body.notificationName;
-    logEvent(global.notificationsDirectory);
+    var dir = global.notificationDirectory + req.body.notificationName;
+    logEvent(global.notificationDirectory);
     logEvent(req.body.notificationName);
     var newNotification = {};
     logEvent(dir);
@@ -153,9 +153,9 @@ function UnregisterNotification(notification){
 //Returns a list of Notifications
 module.exports.GetNotifications = function(req,res,next){
   var results = [];
-  fs.readdirSync(global.notificationsDirectory)
+  fs.readdirSync(global.notificationDirectory)
     .forEach(function(file) {
-       file = global.notificationsDirectory+'/'+file;
+       file = global.notificationDirectory+'/'+file;
        var stat = fs.statSync(file);
        if (stat && stat.isDirectory()) {
            results = results.concat(_getAllFilesFromFolder(file))
