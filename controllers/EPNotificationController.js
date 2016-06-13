@@ -46,10 +46,10 @@ module.exports.GetNotification = function(req,res,next){
 //return the list of notifications
 module.exports.GetNotifications = function(req,res,next){
   var results = [];
-  fs.readdirSync(global.notificationsDirectory)
+  fs.readdirSync(global.notificationDirectory)
     .forEach(function(file) {
 
-       file = global.notificationsDirectory+'/'+file;
+       file = global.notificationDirectory+'/'+file;
        var stat = fs.statSync(file);
 
        if (stat && stat.isDirectory()) {
