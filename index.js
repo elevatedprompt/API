@@ -16,6 +16,13 @@ var _ = require('lodash');
 // Create the application.
 var app = express();
 
+function logEvent(message){
+                            if(global.tracelevel == 'debug'){
+                                                              console.log(message);
+                                                              }
+                          }
+
+
 // Add Middleware necessary for REST API's
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
@@ -32,6 +39,8 @@ app.use(function(req, res, next) {
 
 var epSystem = require('./controllers/EPSystemController');
 var epNotificationSystem = require('./controllers/EPNotificationController');
+
+global.tracelevel =   'debug';
 
 configurationFile = 'configuration.json';
 fs = require('fs');
