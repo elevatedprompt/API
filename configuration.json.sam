@@ -2,7 +2,7 @@
   "UbuntuV16"               : true,
   "tracelevel"              : "debug",
   "elastichost"             : "127.0.0.1:9200",
-  "notificationsDirectory"  : "/opt/API/Notifications/",
+  "notificationDirectory"  : "/opt/API/Notifications/",
   "elasticsearchLocation"   : "/etc/elasticsearch/",
   "logstashConfig"          : "/etc/logstash/conf.d/",
   "cronJobDirectory"        : "/var/spool/cron/crontabs"
