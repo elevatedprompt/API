@@ -39,7 +39,7 @@ fs = require('fs');
 var configuration = JSON.parse(
     fs.readFileSync(configurationFile)
 );
-
+logEvent(configuration);
 global.UbuntuV16 = configuration.UbuntuV16;
 global.tracelevel =   configuration.tracelevel;
 global.elastichost =  configuration.elastichost;
