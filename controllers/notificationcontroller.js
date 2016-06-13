@@ -65,8 +65,10 @@ module.exports.UpdateNotification = function(req,res,next){
     logEvent(req.body);
 
     var dir = global.notificationsDirectory + req.body.notificationName;
+    logEvent(global.notificationsDirectory);
+    logEvent(req.body.notificationName);
     var newNotification = {};
-
+    logEvent(dir);
     newNotification.notificationName = req.body.notificationName;
     newNotification.selectedSearch = req.body.selectedSearch;
     newNotification.thresholdType = req.body.thresholdType;
