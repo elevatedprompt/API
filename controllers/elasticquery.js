@@ -50,7 +50,8 @@ module.exports.pingCluster = function(req,res,next){
 module.exports.ListSearches= function(req,res,next){
   elasticClient.search({
     type:'search',
-    'index-pattern': "/settings/objects/savedSearches/"
+    'index-pattern': "/settings/objects/savedSearches/",
+    "size":25
   }).then(function (results) {
 
     var ii = 0, hits_in, hits_out = [];
