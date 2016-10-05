@@ -258,6 +258,13 @@ module.exports.StopService = function(req,res,next)
   });
    result.stderr.on('error', function (error) {
      logEvent(data + ' Stop service error');
+       exec("service " + servicename + " force-stop", function (error, stdout, stderr,res, next) {
+         logEvent('stdout: ' + stdout);
+         logEvent('stderr: ' + stderr);
+         if (error !== null) {
+           logEvent('exec stop service error: ' + stderr);
+         }
+       });
     res.send(error);
   });
 };
