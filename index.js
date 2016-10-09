@@ -73,6 +73,8 @@ global.elastichost =  configuration.elastichost;
 global.notificationDirectory = configuration.notificationDirectory;
 global.elasticsearchLocation = configuration.elasticsearchLocation;
 global.logstashConfig = configuration.logstashConfig;
+global.logstashTemplate = configuration.logstashTemplate;
+global.logstashFilter = configuration.logstashFilter;
 global.cronJobDirectory = configuration.cronJobDirectory;
 logEvent(global.notificationDirectory);
 //TimeZone
