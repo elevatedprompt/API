@@ -73,9 +73,9 @@ module.exports.GetLogstashTemplateDirectoryListing = function(req,res,next)
 {
   var results = [];
    logEvent('Get Logstash File List');
-  fs.readdirSync(global.logstashTemplate)
+  fs.readdirSync(global.logstashTemplates)
     .forEach(function(file) {
-       file = global.logstashTemplate+'/'+file;
+       file = global.logstashTemplates+'/'+file;
        var stat = fs.statSync(file);
        logEvent(file);
        logEvent(stat);
@@ -95,9 +95,9 @@ module.exports.GetLogstashFilterDirectoryListing = function(req,res,next)
 {
   var results = [];
    logEvent('Get Logstash File List');
-  fs.readdirSync(global.logstashFilter)
+  fs.readdirSync(global.logstashFilters)
     .forEach(function(file) {
-       file = global.logstashFilter+'/'+file;
+       file = global.logstashFilters+'/'+file;
        var stat = fs.statSync(file);
        logEvent(file);
        logEvent(stat);
