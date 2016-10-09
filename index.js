@@ -11,6 +11,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 var moment = require('moment-timezone');
+var exec = require('child_process').exec,child;
 var _ = require('lodash');
 
 // Create the application.
@@ -49,7 +50,24 @@ var configuration = JSON.parse(
     fs.readFileSync(configurationFile)
 );
 logEvent(configuration);
+
 global.UbuntuV16 = configuration.UbuntuV16;
+//check for ubuntu version
+var result = exec('lsb_release -r', function (error, stdout, stderr,res, next) {
+  if (error !== null) {
+    console.log('lsb_release -r error ' + error);
+  }
+  return stdout;
+})
+
+  result.stdout.on('data', function (data) {
+    var Ubuntu16 = "16.04";
+    var str = data.toString();
+    if(Ubuntu16.match(data)){
+      global.UbuntuV16 = true;
+    }  
+  });
+
 global.tracelevel =   configuration.tracelevel;
 global.elastichost =  configuration.elastichost;
 global.notificationDirectory = configuration.notificationDirectory;
