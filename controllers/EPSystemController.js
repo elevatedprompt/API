@@ -19,7 +19,7 @@ GetTimeZone - Returns the System time.
 Update Cron Jobs - Updates logstash delete and close index cron settings
 */
 
-var fs = require ('FS');
+var fs = require ('fs');
 var exec = require('child_process').exec,child;
 var moment = require('moment-timezone');
 
