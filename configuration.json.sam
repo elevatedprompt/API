@@ -2,8 +2,10 @@
   "UbuntuV16"               : false,
   "tracelevel"              : "error",
   "elastichost"             : "127.0.0.1:9200",
-  "notificationDirectory"  : "/opt/API/Notifications/",
+  "notificationDirectory"   : "/opt/API/Notifications/",
   "elasticsearchLocation"   : "/etc/elasticsearch/",
   "logstashConfig"          : "/etc/logstash/conf.d/",
+  "logstashTemplate"        : "/etc/logstash/conf.d/templates/",
+  "logstashFilter"          : "/etc/logstash/conf.d/filters/",
   "cronJobDirectory"        : "/var/spool/cron/crontabs"
 }
