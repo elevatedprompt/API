@@ -65,7 +65,7 @@ var result = exec('lsb_release -r', function (error, stdout, stderr,res, next) {
     var str = data.toString();
     if(Ubuntu16.match(data)){
       global.UbuntuV16 = true;
-    }  
+    }
   });
 
 global.tracelevel =   configuration.tracelevel;
@@ -86,6 +86,8 @@ app.all('/StopService',epSystem.StopService);
 //Configuration
 app.all('/GetConfFile',epSystem.GetConfFile);
 app.all('/GetLogstashConfigDirectoryListing',epSystem.GetLogstashConfigDirectoryListing);
+app.all('/GetLogstashTemplateDirectoryListing',epSystem.GetLogstashTemplateDirectoryListing);
+app.all('/GetLogstashFilterDirectoryListing',epSystem.GetLogstashFilterDirectoryListing);
 app.all('/GetCronJobDirectory',epSystem.GetCronJobDirectory);
 app.all('/GetElasticConfigDirectoryListing',epSystem.GetElasticConfigDirectoryListing);
 app.all('/UpdateConfFile',epSystem.UpdateConfFile);

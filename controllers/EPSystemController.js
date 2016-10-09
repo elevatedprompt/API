@@ -67,6 +67,50 @@ module.exports.GetLogstashConfigDirectoryListing = function(req,res,next)
    next();
 };
 
+//GetLogstashTemplateDirectoryListing
+//Returns a list of files in the logstash template directory
+module.exports.GetLogstashTemplateDirectoryListing = function(req,res,next)
+{
+  var results = [];
+   logEvent('Get Logstash File List');
+  fs.readdirSync(global.logstashTemplate)
+    .forEach(function(file) {
+       file = global.logstashTemplate+'/'+file;
+       var stat = fs.statSync(file);
+       logEvent(file);
+       logEvent(stat);
+       if (stat && stat.isDirectory()) {
+           results = results.concat(_getAllFilesFromFolder(file))
+       } else results.push(file);
+   });
+
+   logEvent(results);
+   res.send(results);
+   next();
+};
+
+//GetLogstashFilterDirectoryListing
+//Returns a list of files in the logstash filter directory
+module.exports.GetLogstashFilterDirectoryListing = function(req,res,next)
+{
+  var results = [];
+   logEvent('Get Logstash File List');
+  fs.readdirSync(global.logstashFilter)
+    .forEach(function(file) {
+       file = global.logstashFilter+'/'+file;
+       var stat = fs.statSync(file);
+       logEvent(file);
+       logEvent(stat);
+       if (stat && stat.isDirectory()) {
+           results = results.concat(_getAllFilesFromFolder(file))
+       } else results.push(file);
+   });
+
+   logEvent(results);
+   res.send(results);
+   next();
+};
+
 //GetElasticConfigDirectoryListing
 //Returns a list of Elastic Config files
 module.exports.GetElasticConfigDirectoryListing = function(req,res,next)
@@ -85,7 +129,6 @@ logEvent('Get ElasticSearch File List');
            results = results.concat(file)
        }
    });
-
 
     logEvent(results);
    res.send(results);
