@@ -5,7 +5,7 @@
   "notificationDirectory"   : "/opt/API/Notifications/",
   "elasticsearchLocation"   : "/etc/elasticsearch/",
   "logstashConfig"          : "/etc/logstash/conf.d/",
-  "logstashTemplate"        : "/etc/logstash/conf.d/templates/",
-  "logstashFilter"          : "/etc/logstash/conf.d/filters/",
+  "logstashTemplate"        : "/etc/logstash/templates/",
+  "logstashFilter"          : "/etc/logstash/filters/",
   "cronJobDirectory"        : "/var/spool/cron/crontabs"
 }
