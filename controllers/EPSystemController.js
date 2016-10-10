@@ -443,23 +443,23 @@ module.exports.ValidateLogstashFile = function(req,res,next)
 //returns the system time.
 module.exports.GetTimeZone = function(req,res,next)
 {
-  try {
-    logEvent('Get Timezone');
-    fs.readlink("/etc/localtime", function(err, linkString){
-      try{
-      logEvent(linkString);
-      linkString = linkString.replace('/usr/share/zoneinfo/','');
-      res.send(linkString);
+
+  var getTimezone = exec("timedatectl | grep Timezone", function (error, stdout, stderr) {
+    if (error !== null) {
+      logEvent('exec unlink error: ' + stderr);
     }
-    catch(ex){
-      logEvent(ex);
-      res.sendStatus(ex);
-    }
+    return stdout;
+  })
+  getTimezone.stdout.on('data', function (data) {
+   output+= data;
   });
-  } catch (e) {
-    callback(e);
-  } finally {
-  }
+
+  getTimezone.on('close', function (data,status) {
+    logEvent('Get Current Timezone');
+
+    res.sendStatus(JSON.stringify('{'+data+'}'));
+  });
+
 }
 
 //Update timezone
