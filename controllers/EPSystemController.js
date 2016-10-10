@@ -453,7 +453,7 @@ module.exports.GetTimeZone = function(req,res,next)
     }
     catch(ex){
       logEvent(ex);
-      next();
+      res.sendStatus(ex);
     }
   });
   } catch (e) {
