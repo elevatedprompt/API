@@ -452,12 +452,13 @@ module.exports.GetTimeZone = function(req,res,next)
   })
   getTimezone.stdout.on('data', function (data) {
    output+= data;
+   res.send(data);
   });
 
   getTimezone.on('close', function (data,status) {
     logEvent('Get Current Timezone');
 
-    res.send(JSON.stringify('{'+data+'}'));
+    res.send(data);
   });
 
 }
