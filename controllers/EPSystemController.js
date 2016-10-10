@@ -446,7 +446,7 @@ module.exports.GetTimeZone = function(req,res,next)
 
   var getTimezone = exec("timedatectl | grep Timezone", function (error, stdout, stderr) {
     if (error !== null) {
-      logEvent('exec unlink error: ' + stderr);
+      logEvent('error retrieving timezone: ' + stderr);
     }
     return stdout;
   })
@@ -461,7 +461,7 @@ module.exports.GetTimeZone = function(req,res,next)
     res.send(data);
   });
 
-}
+};
 
 //Update timezone
 //unlink /etc/localtime
