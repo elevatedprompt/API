@@ -457,7 +457,7 @@ module.exports.GetTimeZone = function(req,res,next)
   getTimezone.on('close', function (data,status) {
     logEvent('Get Current Timezone');
 
-    res.sendStatus(JSON.stringify('{'+data+'}'));
+    res.send(JSON.stringify('{'+data+'}'));
   });
 
 }
