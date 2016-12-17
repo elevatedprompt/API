@@ -70,7 +70,8 @@ logEvent('Get List Of searches');
 
   //return a list of search types.
   elasticClient.search({
-    type:'search'
+    type:'search',
+    size:50
   }).then(function (body) {
     var searches=[];
     for(var result in hits)
