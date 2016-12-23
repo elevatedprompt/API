@@ -67,6 +67,8 @@ app.all('/StartService',epSystem.StartService);
 app.all('/StopService',epSystem.StopService);
 //Configuration
 app.all('/GetConfFile',epSystem.GetConfFile);
+app.all('/GetLogstashTemplateDirectoryListing',epSystem.GetLogstashTemplateDirectoryListing);
+app.all('/GetLogstashFilterDirectoryListing',epSystem.GetLogstashFilterDirectoryListing);
 app.all('/GetLogstashConfigDirectoryListing',epSystem.GetLogstashConfigDirectoryListing);
 app.all('/GetCronJobDirectory',epSystem.GetCronJobDirectory);
 app.all('/GetElasticConfigDirectoryListing',epSystem.GetElasticConfigDirectoryListing);
