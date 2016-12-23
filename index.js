@@ -54,6 +54,8 @@ global.tracelevel =   configuration.tracelevel;
 global.elastichost =  configuration.elastichost;
 global.notificationDirectory = configuration.notificationDirectory;
 global.elasticsearchLocation = configuration.elasticsearchLocation;
+global.logstashTemplate = configuration.logstashTemplate;
+global.logstashFilter = configuration.logstashFilter;
 global.logstashConfig = configuration.logstashConfig;
 global.cronJobDirectory = configuration.cronJobDirectory;
 logEvent(global.notificationDirectory);
