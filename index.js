@@ -78,6 +78,10 @@ app.all('/UpdateUser',epSystem.UpdateUser);
 app.all('/DeleteUser',epSystem.DeleteUser);
 app.all('/ListUsers',epSystem.ListUsers);
 
+//Node statistics
+app.all('/NodeStatistics',epSystem.NodeStatistics);
+app.all('/LocalStats',epSystem.LocalStats);
+
 //notification methods.
 app.all('/Notification/GetNotification',epNotificationSystem.GetNotification);
 app.all('/Notification/GetNotifications',epNotificationSystem.GetNotifications);
@@ -97,6 +101,9 @@ app.all('/Notification/PingCluster',elasticquery.pingCluster);
 //Notification Controller
 app.all('/Notification/UpdateNotification', notificationController.UpdateNotification);
 app.all('/Notification/DeleteNotification', notificationController.DeleteNotification);
+
+
+
 
 console.log('Listening on port 3000...');
 app.listen(3000, '127.0.0.1');

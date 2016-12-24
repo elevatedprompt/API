@@ -22,6 +22,7 @@ Update Cron Jobs - Updates logstash delete and close index cron settings
 var fs = require ('fs');
 var exec = require('child_process').exec,child;
 var moment = require('moment-timezone');
+var os = require('os');
 
 module.exports =   function(app, route){
   return function(req, res, next) {
@@ -522,8 +523,7 @@ module.exports.UpdateUser = function(req,res,next)
  };
 
 //Delete User
- module.exports.DeleteUser = function(req,res,next)
- {
+ module.exports.DeleteUser = function(req,res,next) {
    logEvent("Delete User");
    logEvent(req.body.User);
    var user = req.body.User;
@@ -547,6 +547,36 @@ module.exports.UpdateUser = function(req,res,next)
     res.send(error);
    });
   };
+
+//statistics
+module.exports.NodeStatistics = function(req,res,next){
+  logEvent("Node Statistics");
+
+//get the local cluster info
+  elasticClient.cluster.stats({
+    human: true
+  },
+    function (error, response) {
+      // ...
+      var docCount = response.indicies.docs.count;
+      var nodeCount = response.nodes.count.total;
+      res.sendStatus(response);
+      logEvent('state local');
+      console.error(error);
+      console.info(response);
+    });
+
+}
+module.exports.LocalStats = function(req,res,next){
+  logEvent("Node Statistics");
+  var response = {};
+  response.hostname = os.hostname();
+  response.loadAvg = os.loadavg();
+  response.uptime = os.uptime();
+  logEvent(JSON.stringify(response));
+  res.sendStatus(response);
+}
+
 
   function logEvent(message){
                               if(global.tracelevel == 'debug'){
