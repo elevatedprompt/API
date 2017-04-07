@@ -74,6 +74,14 @@ module.exports.ListSearches= function(req,res,next){
 function getSearchCountLength(){
   elasticClient.count({
     type:'search',
+    'index-pattern': "/settings/objects/savedSearches/"
+  }).then(function (response) {
+    var count = response.count;
+    return count;
+
+  }, function (error) {
+    console.trace(error.message);
+    return 25;//return 25 by default
   });
 }
 
