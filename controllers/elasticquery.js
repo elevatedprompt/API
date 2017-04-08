@@ -48,8 +48,12 @@ module.exports.pingCluster = function(req,res,next){
 
 
 module.exports.ListSearches= function(req,res,next){
-  var searchCount = getSearchCountLength();
 
+  elasticClient.count({
+    type:'search',
+    'index-pattern': "/settings/objects/savedSearches/"
+  }, function(error,response){
+  var searchCount = response.count;
   elasticClient.search({
     type:'search',
     'index-pattern': "/settings/objects/savedSearches/",
@@ -68,23 +72,8 @@ module.exports.ListSearches= function(req,res,next){
   }, function (error) {
     console.trace(error.message);
   });
+});
 }
-
-
-function getSearchCountLength(){
-  elasticClient.count({
-    type:'search',
-    'index-pattern': "/settings/objects/savedSearches/"
-  }).then(function (response) {
-    var count = response.count;
-    return count;
-
-  }, function (error) {
-    console.trace(error.message);
-    return 25;//return 25 by default
-  });
-}
-
 
 function getQuery(queryName){
   elasticClient.search({
