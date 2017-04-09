@@ -78,6 +78,7 @@ module.exports.UpdateNotification = function(req,res,next){
     newNotification.timeFrame = req.body.timeFrame;
     newNotification.telegramChatId = req.body.telegramChatId;
     newNotification.notifyData = req.body.notifyData;
+    newNotification.timeStamp = req.body.timeStamp;
     //Calculate the time interval in ms. 1000
     //m = 60,000 ms
     //h = 3600000
